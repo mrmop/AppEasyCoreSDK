@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene with physics enabled -->
+	<Scene Name="Scene1" Current="true" Physics="true" WorldScale="1, 1" Gravity="0, 30" Camera="Camera1">
+
+		<!-- Create touch pan camera -->
+		<Camera Name="Camera1" />
+
+		<!-- create Box2D materials -->
+		<Box2dMaterial Name="Bouncey" Type="dynamic" Density="1.0" Friction="0.3" Restitution="0.6" />
+		<Box2dMaterial Name="Heavy" Type="static" Density="2.0" Friction="0.8" Restitution="0.8" />
+
+		<!-- create Box2D shapes -->
+		<Shape Name="Button" Type="box" Width="100" Height="100" />
+		<Shape Name="Floor" Type="box" Width="1000" Height="100" />
+		
+		<!-- Create the floor -->
+		<Label Position="0, -500" Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="100, 100" Text="Parent" AngularVelocity="30" Shape="Button" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1"  Draggable="true"  >
+			<Label Position="-150, 0" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="70, 70" Text="Child1" AngularVelocity="150" />
+			<Label Position="150, 0" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="70, 70" Text="Child2" AngularVelocity="-150" />
+			<Label Position="0, -150" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="70, 70" Text="Child3" AngularVelocity="150" />
+			<Label Position="0, 150" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="70, 70" Text="Child4" AngularVelocity="-150">
+				<Icon Origin="0, 80" Background="Button1Brush" BackgroundColour="80, 255, 80, 255" Size="20, 20" AngularVelocity="7.5" />
+			</Label>
+		</Label>
+		<Label Position="0, 200" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="1000, 100" Text="Floor" Shape="Floor" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1" />
+		<Label Position="-50, -180" Font="serif" Background="Button1Brush" BackgroundColour="80, 255, 255, 255" Size="100, 100" Text="Bouncey" Shape="Button" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" />
+		<Label Position="50, -180" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 255, 255" Size="100, 100" Text="Bouncey" Shape="Button" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" />
+		<Label Position="-50, -300" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 100" Text="Bouncey" Shape="Button" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" />
+		<Label Position="50, -300" Font="serif" Background="Button1Brush" BackgroundColour="80, 255, 80, 255" Size="100, 100" Text="Bouncey" Shape="Button" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" />
+
+		<Label Font="serif" Text="Demonstration of actors under the control of physics" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

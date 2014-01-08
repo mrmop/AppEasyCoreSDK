@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Load the frace animation image atlas -->
+	<Image Name="FaceAnim" Location="faceanim.png" Tag="Group1" />
+	
+	<!-- Create a brush for the face anim image -->
+	<Brush Name="FaceAnim" Image="FaceAnim" SrcRect="0, 0, 37, 40" Type="image" Tag="Group1" />
+	
+	<!-- Create rect animation for the bitmap animation -->
+	<Animation Name="FaceAnim2" Duration="1.6" Type="rect" Tag="Group1">
+		<Frame Time="0"     Value="0, 0, 37, 40" />
+		<Frame Time="0.2"   Value="0, 40, 37, 40" />
+		<Frame Time="0.4"   Value="0, 80, 37, 40" />
+		<Frame Time="0.6"   Value="0, 120, 37, 40" />
+		<Frame Time="0.8"   Value="0, 160, 37, 40" />
+		<Frame Time="1.0"   Value="0, 200, 37, 40" />
+		<Frame Time="1.2"   Value="0, 240, 37, 40" />
+		<Frame Time="1.4"   Value="0, 280, 37, 40" />
+	</Animation>
+
+	<!-- Create rect animation for the bitmap animation -->
+	<Animation Name="FaceAnim" Duration="1.6" Type="rect" Tag="Group1">
+		<Atlas Count="8" Duration="0.2" Pitch="37, 40" Size="37, 40" Width="37" />
+	</Animation>
+
+
+	<!-- Create a timeline that animated the actors SrcRect -->
+	<Timeline Name="FaceAnim" AutoPlay="true">
+		<Anim Anim="FaceAnim" Target="SrcRect" />
+	</Timeline>
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<!-- Create n Icon with a bitmap animation. When tapped all resources tagged Group1 will be removed -->
+		<Icon Background="FaceAnim" Size="148, 160" Timeline="FaceAnim" Draggable="true" OnTapped="RemoveResources">
+			<Actions Name="RemoveResources">
+				<Action Method="HideActor" />
+				<Action Method="RemoveResources" P1="Group1" />
+			</Actions>
+		</Icon>
+
+		<Label Font="serif" Text="Demonstration of Removing Resources by Group" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

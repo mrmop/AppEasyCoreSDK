@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<!-- Create a bunch of docked labels -->
+		<Label Position="-200, -150" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 150" Size="250, 200" Text="Layer 7" Layer="7"  />
+		<Label Position="-100, -75" Font="serif" Background="Button1Brush" BackgroundColour="80, 255 80, 150" Size="250, 200" Text="Layer 2" Layer="2"  />
+		<Label Position="0, 0" Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 150" Size="250, 200" Text="Layer 0" Layer="0"  />
+		<Label Position="100, 75" Font="serif" Background="Button1Brush" BackgroundColour="80, 255, 255, 150" Size="250, 200" Text="Layer 5" Layer="5" />
+
+		<Label Font="serif" Text="Demonstration of depth sorting actors using layers" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+	</Scene>
+</xml>

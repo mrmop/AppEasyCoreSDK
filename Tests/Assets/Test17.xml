@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene with physics enabled -->
+	<Scene Name="Scene1" Current="true" Physics="true" Gravity="0, 5" Camera="Camera1" DoSleep="false" ScriptEngine="lua" OnTick="TickActions">
+
+		<Image Name="Crate" Location="crate.png" />
+		<Brush Name="Crate" Image="Crate" />
+		<Image Name="Land" Location="land.png" />
+		<Brush Name="Land" Image="Land" />
+
+		<!-- Define and load a Lua script -->
+		<Script Name="Scene1Script" Type="lua" />
+		<File Name="File1" Location="Test17.lua" FileType="lua" Preload="true" Script="Scene1Script" />
+
+		<!-- Create scene OnTick handler that calls a script function each scene update -->
+		<Actions Name="TickActions">
+			<Action Method="CallScript" P1="Scene_OnTick" />
+		</Actions>
+		
+		<!-- Create touch pan camera -->
+		<Camera Name="Camera1" TouchPanX="true" TouchPanY="true" IgnoreActors="false" Scale="0.4" />
+
+		<!-- Create Box2D materials -->
+		<Box2dMaterial Name="Heavy" Type="dynamic" Density="2.0" Friction="0.8" Restitution="0.8" />
+		<Box2dMaterial Name="FixedHeavy" Type="static" Density="1.0" Friction="0.8" Restitution="0.8" FixedRotation="true" GravityScale="0.5" />
+
+		<!-- Create Box2D shapes -->
+		<Shape Name="CrateShape" Type="box" Width="64" Height="64" />
+		<Shape Name="LeftWall" Type="box" Width="100" Height="600" />
+		<Shape Name="RightWall" Type="box" Width="100" Height="600" />
+		<Shape Name="LandScapeBase" Type="polygon">
+			<Point Value="-177, 19" />
+			<Point Value="177, 19" />
+			<Point Value="177, 68" />
+			<Point Value="-177, 68" />
+		</Shape>
+		<Shape Name="LandScapePeak" Type="polygon">
+			<Point Value="177, -67" />
+			<Point Value="177, 9" />
+			<Point Value="64, 9" />
+		</Shape>
+
+		<!-- Create the floor and walls -->
+		<Label Type="2" Position="0, 200" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="2000, 100" Text="Floor" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+		<Icon Name="Slope" Type="2" Position="0, 0" Background="Land" Box2dMaterial="FixedHeavy" BackgroundColour="255, 80, 80, 255" CollisionFlags="1, 1, 1">
+			<Fixtures>
+				<Fixture Shape="LandScapeBase" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" COM="0,0" />
+				<Fixture Shape="LandScapePeak" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" COM="0,0" />
+			</Fixtures>
+		</Icon>
+		<Icon Type="2" Position="-1000, -100" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 600" Shape="LeftWall" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+		<Icon Type="2" Position="1000, -100" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 600" Shape="RightWall" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+
+		<!-- Create an actor that checks for collision -->
+		<Template Name="CrateTemplate">
+			<Icon Type="1" Position="$pos$" Background="Crate" Shape="CrateShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1" Draggable="true" OnCollisionStart="CollisionStart" OnCollisionEnd="CollisionEnd" >
+				<Modifiers>
+					<Modifier Name="iw_notifycollision" Active="true" P1="1" />
+				</Modifiers>
+				<Actions Name="CollisionStart">
+					<Action Method="AddVar" P1="num_collisions" P2="1"/>
+					<Action Method="CallScript" P1="CollisionStarted" />
+				</Actions>
+				<Actions Name="CollisionEnd">
+					<Action Method="CallScript" P1="CollisionEnded" />
+				</Actions>
+			</Icon>
+		</Template>
+
+		<!-- Create a variable to track number of collisions -->
+		<Variable Name="num_collisions" Type="int" Value="0" />
+		
+		<!-- Create a label to display number of collisions -->
+		<Label Font="serif" Background="Button1Brush" Docking="topleft" Binding="[Text]num_collisions" />
+
+		<Label Font="serif" Text="Demonstration of responding to collisions using Lua" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+
+	</Scene>
+
+
+</xml>

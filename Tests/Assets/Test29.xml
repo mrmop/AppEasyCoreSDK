@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+    <!-- Create a scene -->
+    <Scene Name="Scene1" Current="true">
+
+        <Variable Name="Choices" Type="arraystring" Size="3" Value="Rock, Paper, Scissors" />
+        <Variable Name="ComputerChoice" Type="string" Value="" />
+        <Variable Name="Guess" Type="int" Value="1" />
+        <Variable Name="Selected" Type="int" Value="-1" />
+        <Variable Name="Winner" Type="string" Value="" />
+        <Variable Name="IsRock" Type="condition" Value="Guess == 0" />
+        <Variable Name="IsPaper" Type="condition" Value="Guess == 1" />
+        <Variable Name="IsScissors" Type="condition" Value="Guess == 2" />
+
+        <Variable Name="RockWin" Type="condition" Value="Selected == 0 AND Guess == 2" />
+        <Variable Name="PaperWin" Type="condition" Value="Selected == 1 AND Guess == 0" />
+        <Variable Name="ScissorskWin" Type="condition" Value="Selected == 2 AND Guess == 1" />
+        <Variable Name="DrawCond" Type="condition" Value="Selected == Guess" />
+        <Variable Name="HumanWon" Type="condition" Value="DrawCond == 0 AND RockWin == 1 OR PaperWin == 1 OR ScissorskWin == 1" />
+        <Variable Name="ComputerWon" Type="condition" Value="DrawCond == 0 AND HumanWon == 0" />
+
+        <!-- Create a simple program to check for winner -->
+        <Program Name="Main">
+            <!-- Choose rock paper or scissors -->
+            <Command Method="set_var" P1="Guess" P2="rand" P4="0" P5="2.999" />
+            <Command Method="set_var" P1="ComputerChoice" P2="Rock" Condition="IsRock" />
+            <Command Method="set_var" P1="ComputerChoice" P2="Paper" Condition="IsPaper" />
+            <Command Method="set_var" P1="ComputerChoice" P2="Scissors" Condition="IsScissors" />
+            <Command Method="set_var" P1="Winner" P2="Human Wins" Condition="HumanWon" />
+            <Command Method="set_var" P1="Winner" P2="Computer Wins" Condition="ComputerWon" />
+            <Command Method="set_var" P1="Winner" P2="Draw" Condition="DrawCond" />
+        </Program>
+
+        <!-- Create user selection buttons -->
+        <Label  Position="-200, 0" Size="150, 75" Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Text="Rock" OnTapped="Selected">
+            <Actions Name="Selected">
+                <Action Method="SetVar" P1="Selected" P2="0"/>
+                <Action Method="ChangeProgram" P1="Main" P2="start"/>
+            </Actions>
+        </Label>
+        <Label Position="0, 0"  Size="150, 75" Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Text="Paper" OnTapped="Selected">
+            <Actions Name="Selected">
+                <Action Method="SetVar" P1="Selected" P2="1"/>
+                <Action Method="ChangeProgram" P1="Main" P2="start"/>
+            </Actions>
+        </Label>
+        <Label Position="200, 0" Size="150, 75" Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Text="Scissors" OnTapped="Selected">
+            <Actions Name="Selected">
+                <Action Method="SetVar" P1="Selected" P2="2"/>
+                <Action Method="ChangeProgram" P1="Main" P2="start"/>
+            </Actions>
+        </Label>
+
+        <!-- Instructions label  -->
+        <Label Position="0, -150" Size="200, 50" Font="serif" Background="Button2Brush" Text="Choose Rock, Paper or Scissors" />
+
+        <!-- Computers choice label  -->
+        <Label Position="0, 100" Size="200, 50" Font="serif" Background="Button2Brush" Binding="[Text]ComputerChoice" />
+
+        <!-- Winner label  -->
+        <Label Position="0, 150" Size="200, 50" Font="serif" Background="Button2Brush" Binding="[Text]Winner" />
+
+    </Scene>
+
+</xml>

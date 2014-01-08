@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+    
+    <!-- Create a scene with physics enabled -->
+    <Scene Name="Scene1" Current="true" Camera="Camera1" Batch="true" >
+
+		<!-- Load particle image -->
+		<Image Name="Particle" Location="particle.png" Preload="true" />
+		<Image Name="Background" Location="background.jpg" Preload="true" />
+		<Brush Name="Background" Image="Background" />
+
+		<Camera Name="Camera1" TouchPanX="true" TouchPanY="true" IgnoreActors="true" />
+
+        <Icon Brush="Background" Size="1024, 1024" Depth="2" />
+
+        <ActorParticles Name="StreamParticles" Image="Particle" Position="0, 0" Scale="1.0" Depth="1.0" Layer="1" AngularVelocity="30"
+                        PosMode="random" AngVelMode="random" VelMode="random" AngMode="random" ScaleMode="random" DepthMode="random"  DepthVelMode="random"
+                        PositionRange="1000, 1000" AngleRange="0, 360" AngVelRange="-400, 400" ScaleRange="0.25, 0.5"
+                        DepthRange="0.1, 2.0" VelRange="-120, 120, -420, 0" ScaleVelRange="0, -3.0" DepthVelRange="-0.9, 0.3">
+
+            <Particle Count="1000" Position="0, 0" VelocityDamping="0.99, 0.99" SrcRect="0, 0, 128, 128" ColourVelocity="0, 0, 0, -100" Duration="3" Repeat="-1" SpawnDelay="0.01" Gravity="0, 15" />
+
+        </ActorParticles>
+
+        <!--WebView Name="Ads" Position="0, 0" Transparent="true" Docking="top" Size="-100, -80" URI="http://ad.leadboltmobile.net/show_app_wall?section_id=780971284" Tappable="false" /-->
+
+		<Label Font="serif" Text="Demonstration of a particle system actor" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

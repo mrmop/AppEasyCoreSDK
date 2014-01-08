@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<Label Name="Actor1" Font="serif" Background="Button1Brush" Text="Actor1" Position="-150, 0" OnBeginTouch="Touched" OnEndTouch="EndTouched" OnBeginTouch2="Touched2" OnEndTouch2="EndTouched2">
+			<Actions Name="Touched">
+				<Action Method="SetProperty" P1="Scale" P2="1.2, 1.2" />
+				<Action Method="SetProperty" P1="Text" P2="1st"/>
+			</Actions>
+			<Actions Name="Touched2">
+				<Action Method="SetProperty" P1="Scale" P2="1.4, 1.4" />
+				<Action Method="SetProperty" P1="Text" P2="2nd"/>
+			</Actions>
+			<Actions Name="EndTouched">
+				<Action Method="SetProperty" P1="Scale" P2="1.0, 1.0" />
+				<Action Method="SetProperty" P1="Text" P2="Actor1"/>
+			</Actions>
+			<Actions Name="EndTouched2">
+				<Action Method="SetProperty" P1="Scale" P2="1.0, 1.0" />
+				<Action Method="SetProperty" P1="Text" P2="Actor1*"/>
+			</Actions>
+		</Label>
+		<Label Name="Actor2" Font="serif" Background="Button1Brush" Text="Actor2" Position="150, 0" OnBeginTouch="Touched" OnEndTouch="EndTouched" OnBeginTouch2="Touched2" OnEndTouch2="EndTouched2">
+			<Actions Name="Touched">
+				<Action Method="SetProperty" P1="Scale" P2="1.2, 1.2" />
+				<Action Method="SetProperty" P1="Text" P2="1st"/>
+			</Actions>
+			<Actions Name="Touched2">
+				<Action Method="SetProperty" P1="Scale" P2="1.4, 1.4" />
+				<Action Method="SetProperty" P1="Text" P2="2nd"/>
+			</Actions>
+			<Actions Name="EndTouched">
+				<Action Method="SetProperty" P1="Scale" P2="1.0, 1.0" />
+				<Action Method="SetProperty" P1="Text" P2="Actor2"/>
+			</Actions>
+			<Actions Name="EndTouched2">
+				<Action Method="SetProperty" P1="Scale" P2="1.0, 1.0" />
+				<Action Method="SetProperty" P1="Text" P2="Actor2*"/>
+			</Actions>
+		</Label>
+
+
+		<Label Font="serif" Text="Demonstration of multi-touch support" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

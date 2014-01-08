@@ -1,0 +1,3647 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="xml">
+        <xs:complexType>
+            <xs:choice id="commands" minOccurs="0" maxOccurs="unbounded">
+                <xs:group ref="TopLevel" />
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="ActionsEnum">
+        <xs:annotation>
+            <xs:documentation>Action method</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="ActivateActor" />
+            <xs:enumeration value="AddModifier" />
+            <xs:enumeration value="AddProperty" />
+			<xs:enumeration value="AddUserProp" />
+            <xs:enumeration value="AddVar" />
+			<xs:enumeration value="AudioEnable" />
+            <xs:enumeration value="BringtSceneToFront" />
+            <xs:enumeration value="CallActions" />
+            <xs:enumeration value="CallGlobalScript" />
+            <xs:enumeration value="CallScript" />
+            <xs:enumeration value="ChangeVideoCam" />
+            <xs:enumeration value="ChangeModifier" />
+			<xs:enumeration value="ChangeProgram" />
+			<xs:enumeration value="ChangeScene" />
+			<xs:enumeration value="ChangeTimer" />
+			<xs:enumeration value="DeactivateActor" />
+            <xs:enumeration value="DebugText" />
+            <xs:enumeration value="EnterValue" />
+            <xs:enumeration value="Exit" />
+            <xs:enumeration value="FromTemplate" />
+            <xs:enumeration value="HideActor" />
+            <xs:enumeration value="HideScene" />
+            <xs:enumeration value="Inline" />
+            <xs:enumeration value="KillActor" />
+            <xs:enumeration value="KillScene" />
+            <xs:enumeration value="KillAllScenes" />
+            <xs:enumeration value="Launch" />
+            <xs:enumeration value="LoadFile" />
+            <xs:enumeration value="LoadXOML" />
+            <xs:enumeration value="PauseTime" />
+            <xs:enumeration value="PlayMusic" />
+            <xs:enumeration value="PlaySound" />
+            <xs:enumeration value="PlayTimeline" />
+			<xs:enumeration value="Purchase" />
+            <xs:enumeration value="RemoteReq" />
+            <xs:enumeration value="RemoveResource" />
+            <xs:enumeration value="RemoveResources" />
+            <xs:enumeration value="ResumeScene" />
+            <xs:enumeration value="SetAllSceneTimelines" />
+            <xs:enumeration value="SetBGColour" />
+            <xs:enumeration value="SetCurrentScene" />
+            <xs:enumeration value="SetKeyFocus" />
+            <xs:enumeration value="SetProperty" />
+            <xs:enumeration value="SetTimeline" />
+			<xs:enumeration value="SetUserProp" />
+            <xs:enumeration value="SetVar" />
+            <xs:enumeration value="ShowActor" />
+            <xs:enumeration value="ShowScene" />
+            <xs:enumeration value="StopMusic" />
+            <xs:enumeration value="StopTimeline" />
+            <xs:enumeration value="SuspendScene" />
+            <xs:enumeration value="UpdateText" />
+			<xs:enumeration value="UserPropToVar" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CommandEnum">
+        <xs:annotation>
+            <xs:documentation>Command methods</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="add_var" />
+            <xs:enumeration value="call" />
+            <xs:enumeration value="call_global_script" />
+            <xs:enumeration value="call_script" />
+			<xs:enumeration value="change" />
+            <xs:enumeration value="debug_text" />
+            <xs:enumeration value="from_template" />
+            <xs:enumeration value="get_var" />
+			<xs:enumeration value="goto" />
+            <xs:enumeration value="if_var" />
+            <xs:enumeration value="inline" />
+            <xs:enumeration value="nop" />
+            <xs:enumeration value="priority" />
+            <xs:enumeration value="remote_req" />
+            <xs:enumeration value="return" />
+            <xs:enumeration value="run_actions" />
+			<xs:enumeration value="set_property" />
+			<xs:enumeration value="set_userprop" />
+            <xs:enumeration value="set_var" />
+            <xs:enumeration value="stop" />
+            <xs:enumeration value="wait_var_is_value" />
+            <xs:enumeration value="music" />
+            <xs:enumeration value="sound" />
+            <xs:enumeration value="wait" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ImageFormatsEnum">
+        <xs:annotation>
+            <xs:documentation>Image formats</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="RGBA_8888" />
+            <xs:enumeration value="RGB_565" />
+            <xs:enumeration value="RGBA_4444" />
+            <xs:enumeration value="RGBA_5551" />
+            <xs:enumeration value="RGB_888" />
+            <xs:enumeration value="RGBA_6666" />
+            <xs:enumeration value="RGB_332" />
+        </xs:restriction>
+    </xs:simpleType>
+	<xs:simpleType name="GeometryTypesEnum">
+		<xs:annotation>
+			<xs:documentation>Image formats</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:normalizedString">
+			<xs:enumeration value="TriList" />
+			<xs:enumeration value="QuadList" />
+			<xs:enumeration value="Poly" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AlphaModeEnum">
+        <xs:annotation>
+            <xs:documentation>Alpha combine mode</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="none" />
+            <xs:enumeration value="half" />
+            <xs:enumeration value="add" />
+            <xs:enumeration value="sub" />
+            <xs:enumeration value="blend" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ConverterEnum">
+        <xs:annotation>
+            <xs:documentation>Converter used to convert raw file data</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="none" />
+            <xs:enumeration value="html" />
+            <xs:enumeration value="hex" />
+            <xs:enumeration value="urlencoded" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ScriptTypeEnum">
+        <xs:annotation>
+            <xs:documentation>Type of script</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="none" />
+            <xs:enumeration value="lua" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="VideoCodecsEnum">
+        <xs:annotation>
+            <xs:documentation>Video codecs</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="MPEG4" />
+            <xs:enumeration value="3GPP" />
+            <xs:enumeration value="3GPP_VIDEO_H263" />
+            <xs:enumeration value="3GPP_VIDEO_H264" />
+            <xs:enumeration value="3GPP_AUDIO_AMR" />
+            <xs:enumeration value="3GPP_AUDIO_AAC" />
+            <xs:enumeration value="MPEG4_VIDEO_MPEG4" />
+            <xs:enumeration value="MPEG4_VIDEO_H264" />
+            <xs:enumeration value="MPEG4_AUDIO_AAC" />
+            <xs:enumeration value="SWF" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AnimationTypeEnum">
+        <xs:annotation>
+            <xs:documentation>Animation type</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="bool" />
+            <xs:enumeration value="float" />
+            <xs:enumeration value="vec2" />
+            <xs:enumeration value="vec3" />
+            <xs:enumeration value="vec4" />
+            <xs:enumeration value="rect" />
+            <xs:enumeration value="string" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EasingTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="linear" />
+            <xs:enumeration value="quadin" />
+            <xs:enumeration value="quadout" />
+            <xs:enumeration value="cubicin" />
+            <xs:enumeration value="cubicout" />
+            <xs:enumeration value="quarticin" />
+            <xs:enumeration value="quarticout" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Box2dMaterialTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="static" />
+            <xs:enumeration value="dynamic" />
+            <xs:enumeration value="kinematic" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="JointTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+			<xs:enumeration value="weld" />
+			<xs:enumeration value="distance" />
+            <xs:enumeration value="revolute" />
+            <xs:enumeration value="prismatic" />
+            <xs:enumeration value="pulley" />
+            <xs:enumeration value="wheel" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="BrushTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="solid" />
+            <xs:enumeration value="gradient" />
+            <xs:enumeration value="image" />
+            <xs:enumeration value="9patch" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ShapeTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="Box">
+                <xs:annotation>
+                    <xs:documentation>A box shape with width and height</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Circle">
+                <xs:annotation>
+                    <xs:documentation>A circle shape with radius</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Polygon">
+                <xs:annotation>
+                    <xs:documentation>A polygon shape that is built up from 2D points</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="VariableTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="string" />
+            <xs:enumeration value="bool" />
+            <xs:enumeration value="float" />
+            <xs:enumeration value="int" />
+            <xs:enumeration value="vec2" />
+            <xs:enumeration value="vec3" />
+            <xs:enumeration value="vec4" />
+            <xs:enumeration value="condition" />
+            <xs:enumeration value="arraystring" />
+            <xs:enumeration value="arraybool" />
+            <xs:enumeration value="arrayfloat" />
+            <xs:enumeration value="arrayint" />
+            <xs:enumeration value="xml" />
+        </xs:restriction>
+    </xs:simpleType>
+	<xs:simpleType name="PropertyTypeEnum">
+		<xs:restriction base="xs:normalizedString">
+			<xs:enumeration value="string" />
+			<xs:enumeration value="bool" />
+			<xs:enumeration value="float" />
+			<xs:enumeration value="int" />
+			<xs:enumeration value="vec2" />
+			<xs:enumeration value="vec3" />
+			<xs:enumeration value="vec4" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AlignHEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="left" />
+            <xs:enumeration value="centre" />
+            <xs:enumeration value="right" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AlignVEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="top" />
+            <xs:enumeration value="middle" />
+            <xs:enumeration value="bottom" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SimulateEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="error" />
+            <xs:enumeration value="complete" />
+            <xs:enumeration value="refund" />
+            <xs:enumeration value="billingdisabled" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ParticleModeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="normal" />
+            <xs:enumeration value="random" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CanvasFitEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="none">
+                <xs:annotation>
+                    <xs:documentation>Canvas will not be scaled</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="width">
+                <xs:annotation>
+                    <xs:documentation>Canvas will be scaled to fit within the native width of the screen, maintaining aspect ratio</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="height">
+                <xs:annotation>
+                    <xs:documentation>Canvas will be scaled to fit within the native height of the screen, maintaining aspect ratio</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="both">
+                <xs:annotation>
+                    <xs:documentation>Canvas will be scaled to fit both native width and height of the screen, aspect ratio is NOT maintained</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="best">
+                <xs:annotation>
+                    <xs:documentation>Canvas will be scaled to fit either the native width or height of the screen, maintaining aspect ratio. Scaling will be chosen to ensure that the canvas is fully visible on screen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CanvasOriginEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="centre">
+                <xs:annotation>
+                    <xs:documentation>Canvas origin is the centre of the screen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="topleft">
+                <xs:annotation>
+                    <xs:documentation>Canvas origin is the top-left of the screen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="top">
+                <xs:annotation>
+                    <xs:documentation>Canvas origin is the top of the screen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="left">
+                <xs:annotation>
+                    <xs:documentation>Canvas origin is the left of the screen</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DockingTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="left" />
+            <xs:enumeration value="right" />
+            <xs:enumeration value="top" />
+            <xs:enumeration value="bottom" />
+            <xs:enumeration value="topleft" />
+            <xs:enumeration value="topright" />
+            <xs:enumeration value="bottomleft" />
+            <xs:enumeration value="bottomright" />
+        </xs:restriction>
+    </xs:simpleType>
+	<xs:simpleType name="AnchorTypeEnum">
+		<xs:restriction base="xs:normalizedString">
+			<xs:enumeration value="centre" />
+			<xs:enumeration value="topleft" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OrientationTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="horizontal" />
+            <xs:enumeration value="vertical" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SliderTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="horizontal" />
+            <xs:enumeration value="vertical" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ItemsTargetTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="text" />
+            <xs:enumeration value="brush" />
+            <xs:enumeration value="background" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SelectTypeEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="normal" />
+            <xs:enumeration value="toggle" />
+            <xs:enumeration value="sticky" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TextBoxTypeHintEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="text" />
+            <xs:enumeration value="number" />
+            <xs:enumeration value="password" />
+            <xs:enumeration value="email" />
+            <xs:enumeration value="url" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SizeToContentEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="x" />
+            <xs:enumeration value="y" />
+            <xs:enumeration value="xy" />
+            <xs:enumeration value="none" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AspectLockEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="x" />
+            <xs:enumeration value="y" />
+            <xs:enumeration value="none" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="QualityEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="low" />
+            <xs:enumeration value="medium" />
+            <xs:enumeration value="high" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ResolutionEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="low" />
+            <xs:enumeration value="medium" />
+            <xs:enumeration value="high" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CamDirectionEnum">
+        <xs:restriction base="xs:normalizedString">
+            <xs:enumeration value="front" />
+            <xs:enumeration value="rear" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:attributeGroup name="CommonProperties">
+        <xs:attribute name="Name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of element, makes the element searchable</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Tag" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Resource tag group name, can be used to group together specific resources</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="StyleProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="TemplateProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="SceneProperties">
+        <xs:attribute name="Position" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Position of the scene</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Angle" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Orientation of scene in degrees</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Scale" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Scale of the scene</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Type" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Type of scene (numerical value to distinguish between different scene types)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Layer" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Scenes current visible layer (higher layers are drawn on top of lower layers)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CanvasSize" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Virtual canvas size / working resolution. The scene will be created at this size and stretched / fitted to any target device screen size</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CanvasFit" type="CanvasFitEnum">
+            <xs:annotation>
+                <xs:documentation>Sets how the virtual canvas will scale to fit the native size of the devices screen</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CanvasOrigin" type="CanvasOriginEnum">
+            <xs:annotation>
+                <xs:documentation>Sets the canvas origin</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FixAspect" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Deprecated</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LockWidth" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Deprecated</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Extents" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the extents of the scene world (x, y, w, h)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AllowSuspend" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the scene can be suspended by another scene</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Clipping" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the clipping atra of the scene (x, y, w, h), parts of the scene that lie outside the clipping area will not be drawn</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ClipStatic" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Normally the clipping area is local to the scenes position. By setting ClipStatic to true the clipping area will remain in a static position</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Active" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Active state of the scene</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Visible" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Visible state of the scene</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Layers" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>The number of visible sprite layers that the scene should use (default is 10)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Colliders" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Maximum number of collidable objects in the scene (default is 128)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Current" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>When set to true, this scene will be made the current scene as soon as it is created</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Timeline" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Set the current animation timeline that is playing on this scene</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Bindings" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the current property bindings that is active on this scene</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Colour" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the colour of the scene, note that all contained elements will be scaled by the scenes colour</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Opacity" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the opacity level of the scene, note that all contained elements will be scaled by the scenes opacity</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Camera" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines a camera to attach to the scene. When camera is attached the scene follows the transform of the camera</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Batch" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>When true, tells the system to batch sprites for optimised rendering (can cause layering issues with fonts in the same scene)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AllowFocus" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then this scene will receive input focus events that the current scene would usually receive exclusively</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnSuspend" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specify an actions group that is called when the scene is suspended</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnResume" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specify an actions group that is called when the scene is resumed</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnLostFocus" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specify an actions group that is called when the scene loses focus</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnGainedFocus" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specify an actions group that is called when the scene gains focus</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnCreate" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specify an actions group that is called when the scene is first created</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnDestroy" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specify an actions group that is called when the scene is destroyed</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="OnPan" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Specify an actions group that is called when the scene is panned by the user</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnOrientationChange" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the display switches orientation</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnTick" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call each frame</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnKeyBack" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specify an actions group that is called when the back button is pressed</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnKeyMenu" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specify an actions group that is called when the menu button is pressed</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="OnDeviceSuspended" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Event handler that specifies an actions list to call when the device is suspended</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnDeviceResumed" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Event handler that specifies an actions list to call when the device is resumed</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnDeviceVolumeUp" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Event handler that specifies an actions list to call when the device volume up is pressed</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnDeviceVolumeDown" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Event handler that specifies an actions list to call when the device volume down is pressed</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnDeviceNetworkOnline" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Event handler that specifies an actions list to call when the device network access goes online</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnDeviceNetworkOffline" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Event handler that specifies an actions list to call when the device network access goes offline</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Gravity" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Physics engine directional world gravity setting (x, y)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DoSleep" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then actors that utilise physics will be allowed to sleep when they are not moving / interacting</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Physics" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Determines if the scene should support Box2D physics based actors</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="PhysicsTimestep" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Sets the speed at which physics will update in 1\60ths of a second (2 = 1\30th of a second). Setting a value of 0 will use time step based on the frame rate of the app</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WorldScale" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Physics engine world scale setting (x, y), this changes how pixels map to world coordinates</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Style" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets scene properties from a pre-defined style (see Style tag)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ScriptEngine" type="ScriptTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Tells the scene to create a script engine for the specified language</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attributeGroup ref="CommonProperties" />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="FromTemplateProperties">
+        <xs:attribute name="Template" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of template that should be instantiated</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:anyAttribute />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ActionsProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to execute this set of actions (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Local" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>When local is set to false the actions group will be added to the scene instead of the parent actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ActionProperties">
+        <xs:attribute name="Method" type="ActionsEnum">
+            <xs:annotation>
+                <xs:documentation>Method name to call from this action</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param1" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 1</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param2" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 2</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param3" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 3</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param4" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 4</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param5" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 5</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="P1" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 1</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="P2" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 2</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="P3" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 3</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="P4" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 4</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="P5" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 5</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to execute this action (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ProgramProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="AutoRun" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then this program will automatically be ran</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Priority" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then this program will have priority over other pograms and will always be ran before them</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="CommandProperties">
+        <xs:attribute name="Name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of command</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Method" type="CommandEnum">
+            <xs:annotation>
+                <xs:documentation>Method name of command to run</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param1" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 1</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param2" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 2</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param3" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 3</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param4" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 4</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param5" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 5</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="P1" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 1</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="P2" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 2</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="P3" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 3</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="P4" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 4</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="P5" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Method paramater 5</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Parallel" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then all commands defined within this command will be ran in parallel instead of sequentially</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IfReturn" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Used in conjunction with Value, this command will not be executed if the specified command does not return the specified value</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Value" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Value that the specified commands return value should be checked against</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to execute this command (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="AnimationProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Type" type="AnimationTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Type of animation frame data</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Duration" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The duration of the frame in seconds</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="AutoDelete" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>When set to true the animation will automatically be deleted when it finishes being played by a timeline</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+    <xs:attributeGroup name="AtlasProperties">
+        <xs:attribute name="Count" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Number of frames to generate</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Size" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The size of each generated frame</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Position" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Start position on the sprite atlas to begin building frames</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Pitch" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The amount to step across and down the image each frame</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Width" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Width of the atlas image</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Duration" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The duration of each frame</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="FrameProperties">
+        <xs:attribute name="Value" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Animation frame value (type must match the animation type)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Time" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Time that frame should be shown in seconds</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Easing" type="EasingTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Animation easing type</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="TimelineProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="AutoPlay" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>When set to true the animations within the timeline will automatically begin playing when the animation is attached to an object</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="AutoDelete" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>When set to true the timeline will automatically be deleted when it finishes playing</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TimeScale" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Scales the speed at which an animation is played back</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Local" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>When local is set to false the timeline will be added to the scene instead of the parent actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="TimelineAnimProperties">
+        <xs:attribute name="Anim" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of the animation to include in this timeline</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Target" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The target element that the animation will modify such as Position, Angle, Velocity etc..</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Repeat" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>The total number of times to repeat the animation (0 represents play forever)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="StartAtTime" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Allows the animation to be delayed, value provided is in seconds</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Delta" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>True if this animation will update the target property instead of overwriting it. This allows you to for example move something by x amount each frame instead of setting its absolute position</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Interpolate" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then the animation will smoothly animate values from one frame to thenext. False will cause the animation to play the discrete key frames with no interpolation</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnStart" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions list that is called when this animation starts</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnEnd" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions list that is called when this animation ends</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnRepeat" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions list that is called when this animation repeats</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="TimerProperties">
+		<xs:attributeGroup ref="CommonProperties" />
+		<xs:attribute name="Repeat" type="xs:integer">
+			<xs:annotation>
+				<xs:documentation>The total number of times to repeat the timer (0 represents repeat forever)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Duration" type="xs:double">
+			<xs:annotation>
+				<xs:documentation>Duration of the timer in seconds</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AutoStart" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>If set to true then this timer will automatically start</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AutoDelete" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>If set to true then this timer will automatically destroy itself when finished</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnTimeout" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Defines an actions list that is called when this timer times out (not called when repeating)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnRepeat" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Defines an actions list that is called when this timer repeats (not called when timed out)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Local" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>When local is set to false the timer will be added to the scene instead of the parent actor</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="HeaderProperties">
+		<xs:attribute name="Name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Name of the http header</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Value" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Value of the http header</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="ModifiersProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ModifierProperties">
+        <xs:attribute name="Name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of the modifier to attach to the object</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Active" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Modifiers active state (inactive modifiers will not be ran)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param1" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Modifier paramater 1</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param2" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Modifier paramater 2</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param3" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Modifier paramater 3</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Param4" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Modifier paramater 4</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="P1" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Modifier paramater 1</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="P2" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Modifier paramater 2</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="P3" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Modifier paramater 3</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="P4" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Modifier paramater 4</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+    <xs:attributeGroup name="BindingsProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="BindingProperties">
+        <xs:attribute name="Property" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The name of the property that the variable is bound to</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Variable" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of variable that is bound to the target property</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="Box2dMaterialProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Type" type="Box2dMaterialTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Type of physics material</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Density" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The objects density (default is 1.0)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Friction" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The coefficient of friction (default is 1.0)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Restitution" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The coefficient of restitution / bounciness (default is 0.1)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IsBullet" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true, will force the object that this material is attached to to be treat as a high speed moving object (required more processing so use wisely) (default is false)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FixedRotation" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then the object that this material attaches to will not be allowed to rotate (default is false)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="GravityScale" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>This is the amount to scale the affect of gravity on objects that this material is attached to (default is 1.0)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="JointProperty">
+		<xs:attribute name="Name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Name of joint</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Type" type="JointTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Type of joint (check documentation for correct paramaters)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="ActorA" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>When joint is declared outside of an actor definition, ActorA tells the joint which actor should be its parent</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ActorB" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The other actor that the joint is attached to</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OffsetA" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Anchor point on body A</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OffsetB" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Anchor point on body B</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="GroundA" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Anchor point where pulley point for Body A is situated (pulley joints)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="GroundB" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Anchor point where pulley point for Body B is situated (pulley joints)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SelfCollide" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Determines if the two joined actors can collide with each other</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Length" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The max length between the two bodies (distance joints) - This is calculated if not supplied</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LengthA" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Distance between BodyA and Ground Anchor A - This is calculated if not supplied (pulley joints)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LengthB" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Distance between BodyB and Ground Anchor B - This is calculated if not supplied (pulley joints)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Frequency" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Oscillation frequency in Hz (should be less than half the frame rate)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Damping" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Oscillation damping ratio</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MotorEnabled" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>When set to true the joint motor is enabled</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LimitJoint" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>When set to true will limit joint translation / rotation</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LowerLimit" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>:Lower translation / rotation limit</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="UpperLimit" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Upper translation / rotation limit</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MotorSpeed" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Speed of the motor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MaxMotorTorque" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Maximum torque that the motor will apply</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MaxMotorForce" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Maximum force that the motor will apply</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="RefAngle" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The initial angle between the two bodies – This is calculated if not supplied</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Ratio" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The ratio of side A to side B (pulley joints)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Axis" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Axis of movement (wheel and prismatic joints)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+	<xs:attributeGroup name="FixtureProperty">
+		<xs:attribute name="Box2dMaterial" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Sets the physical material used by the fixture</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Shape" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Box2D fixture shape for the fixture</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="COM" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Centre of mass of fixture (x, y)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Sensor" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>Can be used to set the fixture as a sensor</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="CollisionFlags" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The fixtures collision flags (category, mask, group)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="CameraProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Position" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Start world position of the camera (x, y)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Angle" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Rotation of the camera</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Scale" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Scale of the camera (can be used for zoom effects)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TargetX" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Name of actor that the camera should follow on the x axis</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="TargetY" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Name of actor that the camera should follow on the y axis</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FollowSpeed" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Determines how quickly the camera catches up with its target on the x and y axis</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="VelocityDamping" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Amount of damping to apply to the cameras velocity each frame</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TouchPanX" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Setting true causes the camera to move on the x-axis when the user drags their finger on the screen using velocity obtained from the speed of the users drag</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TouchPanY" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Setting true causes the camera to move on the y-axis when the user drags their finger on the screen using velocity obtained from the speed of the users drag</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IgnoreActors" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If an actor is currently focused then it will usually prevent touch panning, this will disable that so that panning takes placed regardless</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+       
+    </xs:attributeGroup>
+    <xs:attributeGroup name="BrushProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Type" type="BrushTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Type of brush</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Image" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Image that is associated with this brush</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SrcRect" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The sub area of the image that represents the brush (x, y, w, h)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="UV" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Set UV coodinates directly (replaces SrcRect)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Colour" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Colour of the brush (r, g, b, a)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ScaleArea" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines the scalable area for a 9-patch brush (start_x, start_y, width, height)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to create this brush (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ShapeProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Type" type="ShapeTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Type of shape</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Width" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Width of shape (box)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Height" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Height of shape (box)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Radius" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Radius of shape (circle)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="Points" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>A list of up to 8 points that describes a shape</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+    <xs:attributeGroup name="RemoteReqProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="URL" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>URL to call</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Data" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Data to send in the request</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Post" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Pass true if request is a POST or false if a GET</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnResponse" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of actions list to call when a response has been received</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnError" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of actions ist to call if an error occurs</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Variable" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Variable to write the response to</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="VideoCamProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Target" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Target image to write camera stream to</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Start" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then camera streaming to image will begin immediately</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Quality" type="QualityEnum">
+            <xs:annotation>
+                <xs:documentation>Quality setting of video cam stream</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Resolution" type="ResolutionEnum">
+            <xs:annotation>
+                <xs:documentation>Image resolution of video cam stream</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Direction" type="CamDirectionEnum">
+            <xs:annotation>
+                <xs:documentation>Choose between front and rear facing cameras</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="MarketProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="OnError" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions list to be called when an error occurs during purchase</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnUnavailable" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions list to be called if in-app purchasing is not available</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnComplete" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions list to be called if a product is purchased successfully</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnBillingDisabled" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions list to be called if billing is disabled (Android)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnRefund" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions list to be called if a refund occurs (Android)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AndroidPublicKey" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines your Google Play public key (Android)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Simulate" type="SimulateEnum">
+            <xs:annotation>
+                <xs:documentation>Defines a condition that the Windows in-app purchasing system should simulate</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="MarketProductProperties">
+        <xs:attribute name="Name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of product</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="iOSId" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>iOS product ID (com.companyname.appname.productname for example)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AndroidId" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Andriod Google Play product ID (productname for example) </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Consumable" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then this product will be marked so that it can be purchased any number of times</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Price" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Price of product (DOES NOT SET THE PRICE OF YOUR PRODUCT ON THE APP STORE)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ImageProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Location" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The web address of the image for web based images, local file name for local images or the group name that contains the image</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Preload" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the image is loaded as soon as it is instantiated, otherwise it is loaded on first access</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Blocking" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the image will be loaded and main loop processing will stop until the image is loaded. If false then the image will be loaded asynchronously. Sprites that use unloaded image will not be displayed until the image has been fully loaded</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to create this image (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Format" type="ImageFormatsEnum">
+            <xs:annotation>
+                <xs:documentation>Texture format to convert this image to</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Filter" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the image will use filtering when scaled</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+	<xs:attributeGroup name="GeometryProperties">
+		<xs:attributeGroup ref="CommonProperties" />
+		<xs:attribute name="Vertices" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>A collection of 2D vertices that defines the shape(s) of this geometry</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="UV" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>A collection of 2D UV texture coordinates (one per vertex)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Colours" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>A collection of r,g,b,a colours that define the colour of each vertex (one per vertex)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Indices" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>A collection of vertex indices that defines the face topology</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Type" type="GeometryTypesEnum">
+			<xs:annotation>
+				<xs:documentation>Format of geometry</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PercVerts" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>If set to true then the vertices will be classed as percentage based</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="SoundProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Location" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The web address of the sound for web based sounds, local file name for local sounds</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Preload" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the sound is loaded as soon as it is instantiated, otherwise it is loaded on first access</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Blocking" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the sound will be loaded and main loop processing will stop until the sound is loaded. If false then the sound will be loaded asynchronously</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to create this sound (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="VideoProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Location" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The web address of the video for web based videos or local file name for local videos</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Preload" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the video is loaded as soon as it is instantiated, otherwise it is loaded on first access (web videos only)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Blocking" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the video will be loaded and main loop processing will stop until the video is loaded. If false then the video will be loaded asynchronously (web videos only)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to create this video (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Codec" type="VideoCodecsEnum">
+            <xs:annotation>
+                <xs:documentation>Video codec that is used by this video</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Repeat" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Default number of times to replay this video</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+	</xs:attributeGroup>
+    <xs:attributeGroup name="FileProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Location" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The web address of the file for web based files or local file name for local files</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Preload" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the file is loaded as soon as it is instantiated, otherwise it is loaded on first access</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Blocking" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the file will be loaded and main loop processing will stop until the file is loaded. If false then the file will be loaded asynchronously</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to create this file (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FileType" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>A string that represents the type of file (has no affect on how the file is loaded or handled)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Variable" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Variable where file data should be written once loaded</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Script" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Script that loaded file data should be written to once loaded</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Converter" type="ConverterEnum">
+            <xs:annotation>
+                <xs:documentation>Converter used to convert raw file data</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ScriptProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Type" type="ScriptTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Type of script</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ResourceGroupProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="GroupFile" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The name of the Marmalade resource group file</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Preload" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the resource group will be loaded into the Marmalade resource manager as soon as it is declared. If false then the resource group will be loaded on first access</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="FontProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Location">
+            <xs:annotation>
+                <xs:documentation>The name of the Marmalade resource group that contains the font</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Preload" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the font is loaded as soon as it is instantiated, otherwise it is loaded on first access</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Blocking" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the font will be loaded and main loop processing will stop until the font is loaded. If false then the font will be loaded asynchronously</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="PointSize" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Point size to generate from the true type font (only works with true type fonts that are loaded from file or web</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AutoPointSize" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>If set then this value tells IwGame to automatically calculate the point size based on this value representing the number of lines of text that should fit onto the display + PointSize</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to create this font (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="VariableProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="Type" type="VariableTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Type of variable</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Value" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Value assigned to the variable</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Size" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Size of the array if this variable is an array</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to create this variable (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="BindXML" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specifies variable:tag:attribute XML data to bnid to an array</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Persist" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then changes to this variable will be saved when the app exits and restored when the app is ran again</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="Instant" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>If true then changes to this variable will be saved as soon as they are made and restored when the app is ran again</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="UserPropertiesProperties">
+		<xs:attributeGroup ref="CommonProperties" />
+	</xs:attributeGroup>
+	
+	<xs:attributeGroup name="PropertyProperties">
+		<xs:attribute name="Name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Name of the property</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Type" type="PropertyTypeEnum">
+			<xs:annotation>
+				<xs:documentation>Type of the property</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Value" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Value assigned to the property</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+
+	<xs:attributeGroup name="ActorProperties">
+        <xs:attributeGroup ref="CommonProperties" />
+        <xs:attribute name="GridPos" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the grid position for this actor when inside a grid (column, row)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Style" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Provides a style that this actor should use to style its properties</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Type" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>A numerical type that can be used to identify the type of this actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Position" type="xs:string">
+            <xs:annotation>
+                <xs:documentation> Position in the scene (x, y)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Origin" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the offset around which the actor will rotate and scale (x, y)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Velocity" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Initial velocity of the actor (x, y)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="VelocityDamping" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The amount to dampen velocity each frame (x, y)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AngularVelocity" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The rate at which the orientation of the actor changes</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Angle" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The orientation of the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AngularVelocityDamping" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The amount to reduce angular velocity each frame</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Scale" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The scale of the actor (x, y)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ScaleX" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The scale of the actor (x-axis)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ScaleY" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>The scale of the actor (y-axis)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Colour" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The initial colour of the actor (r, g, b, a)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Opacity" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The initial opacity of the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="UseParentOpacity" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true this actor will scale its opacity by its parents, if it has a parent</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IgnoreCamera" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true this actor will ignore the scenes camera transform</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Layer" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>The scenes visible layer that the actor should appear on</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Orphan" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation> When set to true sprites are orphaned outside the usual parent / child hierarchy and layered as independent objects</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Active" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Initial actor active state</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Visible" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Initial actor visibility state</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Collidable" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Determines if this actor can collide with others</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Draggable" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Determines if this actor can be dragged by the user</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Tappable" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Determines if this actor can be touched by the user</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CollisionSize" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The circular size of the actor (not used by actors under control of physics)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CollisionRect" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The rectangular collision area that the actor covers (not used by actors under control of physics) (x, y, w, h)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="WrapPosition" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Of true then the actor will wrap at the edges of the scene</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Timeline" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The time line that should be used to animate the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Bindings" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of the bindings set that will be bound to this actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Binding" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Assigns a simple binding in the format [property]variable:array_index</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Depth" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Depth of the actor in 3D (larger values move the sprite further away)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnTapped" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user taps the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnTapped2" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user taps the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnTapped3" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user taps the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnTapped4" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user taps the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnTapped5" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user taps the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnBeginTouch" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user begins to touch the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnBeginTouch2" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user begins to touch the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnBeginTouch3" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user begins to touch the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnBeginTouch4" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user begins to touch the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnBeginTouch5" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user begins to touch the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnEndTouch" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user stops to touching the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnEndTouch2" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user stops to touching the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnEndTouch3" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user stops to touching the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnEndTouch4" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user stops to touching the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnEndTouch5" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the user stops to touching the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnCreate" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when this actor is created</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnDestroy" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when this actor is destroyed</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnOrientationChange" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when the display switches orientation</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnTick" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call each frame</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnCollisionStart" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when this actor starts collding with another, both actors must be under control of Box2D physics and have the iw_notifycollision modifier added</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnCollisionEnd" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Event handler that specifies an actions list to call when this actor stops colliding with another, both actors must be under control of Box2D physics and have the iw_notifycollision modifier added</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="LinkedTo" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of actor that this actor links to</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Box2dMaterial" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the physical material used by the Box2D actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Shape" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Box2D fixture shape for the Box2D actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="COM" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Centre of mass of Box2D body (x, y)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Sensor" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Can be used to set the Box2D actor as a sensor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="BeforeChildren" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>When the actors sprite is drawn it will be drawn before its children (if it is a linked actor) otherwise it will be drawn after them</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CollisionFlags" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The Box2D body collision flags (category, mask, group)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Docking" type="DockingTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Docks the actor to the edge of the visible screen</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="Anchor" type="AnchorTypeEnum">
+			<xs:annotation>
+				<xs:documentation>Sets the anchor anchor point around which the actor is drawn</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Margin" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Margin spacing around the actor, only used when actor is docked or added to an UI element (left, right, top, bottom)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Target" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Used to target / point to another actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Bubbling" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then the element can receive touch events from actors that are linked to it</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="KeyFocus" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then this actor will be the target of key input events</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AspectLock" type="AspectLockEnum">
+            <xs:annotation>
+                <xs:documentation>Determines which axis to lock when sizing</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="PercPos" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then this actors position will be read as a percentage of the displays size</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ActorImageProperties">
+        <xs:attributeGroup ref="ActorProperties" />
+		<xs:attribute name="Geometry" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The geometry to use to drawn the actors visual</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Image" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The image that is to be used as the actors visual</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Size" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The world size of the actor (x, y)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Skew" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>4 paramater skewing (left, right, top, bottom offsets)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SrcRect" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The position and source of the source rectangle in the image atlas (x, y, w, h rect). Used for panning the portion of a sprite atlas shown allowing frame based animation</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="Tiling" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Sets the x, y texture tiling factor (default is 1.0, 1.0), if x or y is > 1.0 then Tiled will be set to true by default</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Tiled" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>If true then the texture used to render this actor will be tiled (default os false)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="FlipX" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Horizontal flipped state</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="FlipY" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Vertical flipped state</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Brush" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specifies a brush that is used to define the image and source rectangle</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Background" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specifies a brush that is used to define the image and source rectangle (same as brush)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlphaMode" type="AlphaModeEnum">
+            <xs:annotation>
+                <xs:documentation>Determines which alpha mode to use when rendering this actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ActorTextProperties">
+        <xs:attributeGroup ref="ActorProperties" />
+        <xs:attribute name="Font" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of font to use to draw the text</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Rect" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The area that the text should be drawn inside of (x, y, w, h)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignH" type="AlignHEnum">
+            <xs:annotation>
+                <xs:documentation>Horizontal alignment</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignV" type="AlignVEnum">
+            <xs:annotation>
+                <xs:documentation>Vertical alignment</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Wrap" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then text is wrapped onto next line if too long</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Text" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Text to display</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AutoHeight" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then this text actor will resize its height to match the size of the text coverage</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Skew" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>4 paramater skewing (left, right, top, bottom offsets)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlphaMode" type="AlphaModeEnum">
+            <xs:annotation>
+                <xs:documentation>Determines which alpha mode to use when rendering this actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ActorParticlesProperties">
+        <xs:attributeGroup ref="ActorProperties" />
+        <xs:attribute name="Image" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Image that is used to draw the particles</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="Size" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Size of the particle system</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AutoDelete" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>If set to true then the particle system actor will be deleted when all patricles have timed out</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="PosMode" type="ParticleModeEnum">
+            <xs:annotation>
+				<xs:documentation>Position spawn mode</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="AngMode" type="ParticleModeEnum" />
+        <xs:attribute name="ScaleMode" type="ParticleModeEnum" />
+        <xs:attribute name="DepthMode" type="ParticleModeEnum" />
+        <xs:attribute name="VelMode" type="ParticleModeEnum" />
+        <xs:attribute name="AngVelMode" type="ParticleModeEnum" />
+        <xs:attribute name="ScaleVelMode" type="ParticleModeEnum" />
+        <xs:attribute name="DepthVelMode" type="ParticleModeEnum" />
+        <xs:attribute name="PositionRange" type="xs:string" />
+        <xs:attribute name="AngleRange" type="xs:string" />
+        <xs:attribute name="ScaleRange" type="xs:string" />
+        <xs:attribute name="DepthRange" type="xs:string" />
+        <xs:attribute name="VelRange" type="xs:string" />
+        <xs:attribute name="AngVelRange" type="xs:string" />
+        <xs:attribute name="ScaleVelRange" type="xs:string" />
+		<xs:attribute name="DepthVelRange" type="xs:string" />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ParticleProperties">
+        <xs:attribute name="Count" type="xs:integer" />
+        <xs:attribute name="Position" type="xs:string" />
+        <xs:attribute name="Velocity" type="xs:string" />
+        <xs:attribute name="VelocityDamping" type="xs:string" />
+        <xs:attribute name="Angle" type="xs:double" />
+        <xs:attribute name="AngularVelocity" type="xs:double" />
+        <xs:attribute name="AngularVelocityDamping" type="xs:double" />
+        <xs:attribute name="Depth" type="xs:double" />
+        <xs:attribute name="DepthVelocity" type="xs:double" />
+        <xs:attribute name="DepthVelocityDamping" type="xs:double" />
+        <xs:attribute name="Scale" type="xs:string" />
+        <xs:attribute name="ScaleVelocity" type="xs:string" />
+        <xs:attribute name="ScaleVelocityDamping" type="xs:string" />
+        <xs:attribute name="SrcRect" type="xs:string" />
+        <xs:attribute name="Colour" type="xs:string" />
+        <xs:attribute name="ColourVelocity" type="xs:string" />
+        <xs:attribute name="ColourVelocityDamping" type="xs:string" />
+        <xs:attribute name="Repeat" type="xs:integer" />
+        <xs:attribute name="SpawnDelay" type="xs:double" />
+        <xs:attribute name="Duration" type="xs:double" />
+        <xs:attribute name="Active" type="xs:boolean" />
+        <xs:attribute name="Visible" type="xs:boolean" />
+        <xs:attribute name="Gravity" type="xs:string" />
+        <xs:attribute name="Attached" type="xs:boolean" />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ActorConnectorProperties">
+        <xs:attributeGroup ref="ActorImageProperties" />
+        <xs:attribute name="TargetA" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Actor whos position will be used for one end of the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TargetB" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Actor whos position will be used for one end of the actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OffsetA" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>An amount to offset the connection point on Actor A. If TargetA actor is not specified then this will be classed as a static world position</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OffsetB" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>An amount to offset the connection point on Actor B. If TargetB actor is not specified then this will be classed as a static world position</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="UIBaseProperties">
+        <xs:attributeGroup ref="ActorImageProperties" />
+        <xs:attribute name="SelectType" type="SelectTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Type of selection method to use</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SelectedBackground" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Background brush to use when item is selected</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DisabledBackground" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Background brush to use when item is disabled</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="BackgroundColour" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Background brusb colour when item is not selected</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SelectedColour" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Background brusb colour when item is selected</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DisabledColour" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Background brusb colour when item is disabled</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Selected" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then the initial state of the item will be selected</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Enabled" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Enabled state of the item</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Spring" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then the when scrollable elements are released after drag over the scroll range they will spring back into place</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnToggledOn" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions group that will be called when the user toggles the item to an on state</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnToggledOff" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions group that will be called when the user toggles the item to an off state</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnBackKey" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions group that will be called when the user presses the back key and this UI element has key focus</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnHomeKey" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an actions group that will be called when the user presses the home key and this UI element has key focus</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ClipMargin" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Amount of space to shrink the clipping area (default is none)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ScrollRange" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The range the controls contents are allowed to scroll</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ScrollPos" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The initial scroll position of the controls contents</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ShowTimeline" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specifies a timeline that should be played when this actor is made visible</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="HideTimeline" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specifies a timeline that should be played when this actor is made invisible</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SizeToContent" type="SizeToContentEnum">
+            <xs:annotation>
+                <xs:documentation>Determines how this control will resize itself to fit to its content</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="StackPanelProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+        <xs:attribute name="Orientation" type="OrientationTypeEnum">
+            <xs:annotation>
+                <xs:documentation>StackPanel orientation (direction of child stacking)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignH" type="AlignHEnum">
+            <xs:annotation>
+                <xs:documentation>Horizontal alignment of actors placed inside this panel</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignV" type="AlignVEnum">
+            <xs:annotation>
+                <xs:documentation>Vertical alignment of actors placed inside this panel</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="WrapPanelProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+        <xs:attribute name="Orientation" type="OrientationTypeEnum">
+            <xs:annotation>
+                <xs:documentation>WrapPanel orientation (direction of child stacking)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="GridProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+        <xs:attribute name="AlignH" type="AlignHEnum">
+            <xs:annotation>
+                <xs:documentation>Horizontal alignment of actors placed inside this panel</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignV" type="AlignVEnum">
+            <xs:annotation>
+                <xs:documentation>Vertical alignment of actors placed inside this panel</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ItemsData" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Binds the lements of an array variable to the grid</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ItemsTargetType" type="ItemsTargetTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Sets the type of property that the grids bound data will update in the grid cell actors (e.g. Text for text actors, Brush for image actors)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ItemsTemplate" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the template that will be used to create grid cell actors</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnSelectionChanged" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specifies an actions list that will be called when an item is selected in the grid</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MultiSelect" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true the the user can select multiple items</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Selection" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Variable where the current selection index will be written to</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SelectedIndex" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the default selection item</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="GridRowProperties">
+        <xs:annotation>
+            <xs:documentation>Grid row properties</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="Name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of this grid row</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Height" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Height of the grid row (-1 for auto)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignV" type="AlignVEnum">
+            <xs:annotation>
+                <xs:documentation>Vertical alignment rule for actors placed inside this row</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Visible" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Visible state of this row (hidden rows will be collapsed)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="GridColumnProperties">
+        <xs:annotation>
+            <xs:documentation>Grid column properties</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="Name" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of this grid column</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Width" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Width of the grid column (-1 for auto)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignH" type="AlignHEnum">
+            <xs:annotation>
+                <xs:documentation>Horizontal alignment rule for actors placed inside this column</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Visible" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>Visible state of this column (hidden columns will be collapsed)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ItemsData" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Binds the elements of an array variable to the column</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ItemsTargetType" type="ItemsTargetTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Sets the type of property that the column bound data will update in the grid cell actors (e.g. Text for text actors, Brush for image actors)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ItemsTemplate" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the template that will be used to create grid cell actors</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="LabelProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+        <xs:attribute name="Font" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of font to use to draw the text</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignH" type="AlignHEnum">
+            <xs:annotation>
+                <xs:documentation>Horizontal alignment of text</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignV" type="AlignVEnum">
+            <xs:annotation>
+                <xs:documentation>Vertical alignment of text</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Wrap" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then text is wrapped onto next line if too long</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Rect" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>The area that the text should be drawn inside of (x, y, w, h)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Text" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Text to display</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SelectedText" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Text to display when item is selected</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DisabledText" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Text to display when item is disabled</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TextColour" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Colour of text</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SelectedTextColour" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Colour of text when selected</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="DisabledTextColour" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Colour of text when disabled</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TextSkew" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>4 paramater text skewing (left, right, top, bottom offsets)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TextMargin" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Margin area to display around the text (left, right, top, bottom margins)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="TextFilter" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>If true then text will use filtering when scaled</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="AutoHeight" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then this label will resize its height to match the size of the text coverage</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TextUseParentOpacity" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true this labels text will scale its opacity by the labels background opacity</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="IconProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="TextBoxProperties">
+        <xs:attributeGroup ref="LabelProperties" />
+        <xs:attribute name="Prompt" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>A message that will be displayed to the user when prompted to enter text</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Variable" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>A variable where entered will be placed</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="TypeHint" type="TextBoxTypeHintEnum">
+            <xs:annotation>
+                <xs:documentation>A hint to the system as to what data the user should enter</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnTextChanged" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an action group that will be called when the user changes the text in the text box</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="SliderProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+        <xs:attribute name="Value" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Slider value</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ValueRange" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Number range of the slider (start, end)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SliderType" type="SliderTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Defines the type of slider</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SliderSize" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Size of slider (major, minor)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnValueChanged" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Defines an action group that will be called when the user changes the slider value</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="ImageViewProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+        <xs:attribute name="Zoom" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>initial zoom scale at which to see the image</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ImageBrush" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Brush that will be used for the image that the user is viewing</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Area" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Area that the image covers by default</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MinZoom" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Minimum zoom scale that the image can be displayed at</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MaxZoom" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Maximum zoom scale that the image can be displayed at</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="TextViewProperties">
+        <xs:attributeGroup ref="LabelProperties" />
+        <xs:attribute name="Zoom" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>initial zoom scale at which to see the image</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MinZoom" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Minimum zoom scale that the image can be displayed at</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MaxZoom" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Maximum zoom scale that the image can be displayed at</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="WebViewProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+        <xs:attribute name="URI" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>URI to navigate to</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Modal" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then web view will fill the screen and pause the calling app until the view is dismissed</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Transparent" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then web page backgruond will be transparent</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="JavaScript" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specifies a string of JavaScript to send to the web page</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Html" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specifies a string of html to display in the web view</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+		<xs:attribute name="OnError" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Defines an actions list to be called if the web view is not supported</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnPageLoaded" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Defines an actions list to be called when the web view has loaded a new page</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnPageLoading" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Defines an actions list to be called when the web view begins loading a new page</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnPageError" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Defines an actions list to be called when the web view encounters an error loading a page</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="OnJavascript" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>Defines an actions list to be called when the web view sends information back to XOML from Javascript</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+    <xs:attributeGroup name="ListBoxProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+        <xs:attribute name="Orientation" type="OrientationTypeEnum">
+            <xs:annotation>
+                <xs:documentation>ListBox orientation (direction of child stacking)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignH" type="AlignHEnum">
+            <xs:annotation>
+                <xs:documentation>Horizontal alignment of actors placed inside this panel</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AlignV" type="AlignVEnum">
+            <xs:annotation>
+                <xs:documentation>Vertical alignment of actors placed inside this panel</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ItemsData" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Binds the elements of an array variable to the list box</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ItemsTargetType" type="ItemsTargetTypeEnum">
+            <xs:annotation>
+                <xs:documentation>Sets the type of property that the list boxes bound data will update in the list box actors (e.g. Text for text actors, Brush for image actors)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ItemsTemplate" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the template that will be used to create list box actors</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnSelectionChanged" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specifies an actions list that will be called when an item is selected in the list</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="MultiSelect" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true the the user can select multiple items</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Selection" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Variable where the current selection index will be written to</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SelectedIndex" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Sets the default selection item</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="CaretColourOffset" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Specifies how to modify the list box items colour to show that it has the keyboard selection carets focus (r, g, b, a offsets)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="VideoOverlayProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+        <xs:attribute name="Video" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Video resource</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AutoPlay" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If true then the video automatically begin play</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Repeat" type="xs:integer">
+            <xs:annotation>
+                <xs:documentation>Number of times that the video should repeat</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Volume" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Volume at which to play the video (0 to 1)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Codec" type="VideoCodecsEnum">
+            <xs:annotation>
+                <xs:documentation>Video codec that is used by this video</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnStart" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Actions to call when the video starts playing</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnEnd" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Actions to call when the video stops playing</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnPause" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Actions to call when video play back is paused</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="OnResume" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Actions to call when video play back is resumed</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="CanvasProperties">
+        <xs:attributeGroup ref="UIBaseProperties" />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="TabBarProperties">
+        <xs:attributeGroup ref="CanvasProperties" />
+        <xs:attribute name="OnViewChanged" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Actions to call when the user changes the view</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="AutoHide" type="xs:boolean">
+            <xs:annotation>
+                <xs:documentation>If set to true then the previous view will be hidden when a new view is shown</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="TabsProperties">
+        <xs:attributeGroup ref="ListBoxProperties" />
+    </xs:attributeGroup>
+    <xs:attributeGroup name="TabProperties">
+        <xs:attributeGroup ref="LabelProperties" />
+    </xs:attributeGroup>
+    <xs:complexType name="StyleType">
+        <xs:annotation>
+            <xs:documentation>Creates a style that can be used to style other elements</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Set">
+                <xs:annotation>
+                    <xs:documentation>Set style property</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attribute name="Property" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Target objects property to style</xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="Value" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>New value for target objects property</xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attributeGroup ref="StyleProperties" />
+    </xs:complexType>
+    <xs:complexType name="TemplateType">
+        <xs:annotation>
+            <xs:documentation>Creates a template that can contain a group of other elements. A template can be later instantiated with FromTemplate. Templates are useful for creating large re-usable components</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="TopLevel" />
+        </xs:choice>
+        <xs:attributeGroup ref="TemplateProperties" />
+    </xs:complexType>
+    <xs:complexType name="SceneType">
+        <xs:annotation>
+            <xs:documentation>Creates a scene that can contain actors and other elements. Scenes are the backbone of the app</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="TopLevel" />
+        </xs:choice>
+        <xs:attributeGroup ref="SceneProperties" />
+    </xs:complexType>
+    <xs:complexType name="FromTemplateType">
+        <xs:annotation>
+            <xs:documentation>Instantiates a template and all that the template contains</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="FromTemplateProperties" />
+    </xs:complexType>
+    <xs:complexType name="ActionsType">
+        <xs:annotation>
+            <xs:documentation>Creates a group of actions. Actions are usually called from events or from the CallActions tag. Actions provide integrated logic to elements</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Action">
+                <xs:annotation>
+                    <xs:documentation>Defines an action that can be executed. See documentation for full list of actions</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="ActionProperties" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attributeGroup ref="ActionsProperties" />
+    </xs:complexType>
+    <xs:complexType name="AnimationType">
+        <xs:annotation>
+            <xs:documentation>Creates an animation sequence, many different types of animation are supported</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Atlas">
+                <xs:annotation>
+                    <xs:documentation>Generates a number of rect image frames from a sprite atlas</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="AtlasProperties" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="Frame">
+                <xs:annotation>
+                    <xs:documentation>Discrete animation key frame</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="FrameProperties" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attributeGroup ref="AnimationProperties" />
+    </xs:complexType>
+    <xs:complexType name="TimelineType">
+        <xs:annotation>
+            <xs:documentation>Creates a timeline which contains instances of Animations. Timelines can be attached to actors and scenes to animate them</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Animation">
+                <xs:annotation>
+                    <xs:documentation>Animation to be played by this timeline</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="TimelineAnimProperties" />
+                </xs:complexType>
+            </xs:element>
+			<xs:element name="Anim">
+				<xs:annotation>
+					<xs:documentation>Animation to be played by this timeline</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="TimelineAnimProperties" />
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+        <xs:attributeGroup ref="TimelineProperties" />
+    </xs:complexType>
+	<xs:complexType name="TimerType">
+		<xs:annotation>
+			<xs:documentation>Creates a timer. Timers can be attached to actors and scenes to fire off events in the future</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="TimerProperties" />
+	</xs:complexType>
+	<xs:complexType name="ModifierType">
+        <xs:annotation>
+            <xs:documentation>Creates a modifiers list (can only be declared inside a scene or actor). Modifiers provide building block style functionality that can be used to create complex logic</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Modifier">
+                <xs:annotation>
+                    <xs:documentation>Adds a modifier to an object</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="ModifierProperties" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attributeGroup ref="ModifiersProperties" />
+    </xs:complexType>
+    <xs:complexType name="BindingsType">
+        <xs:annotation>
+            <xs:documentation>Creates a group of property / variable bindings</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Binding">
+                <xs:annotation>
+                    <xs:documentation>Adds a binding between an objects property and a variable</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="BindingProperties" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attributeGroup ref="BindingsProperties" />
+    </xs:complexType>
+    <xs:complexType name="Box2dMaterialType">
+        <xs:annotation>
+            <xs:documentation>Creates a Box2D Material. Box2D materials can be attached to actors to put them under control of the physics engine</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="Box2dMaterialProperties" />
+    </xs:complexType>
+    <xs:complexType name="JointsType">
+        <xs:annotation>
+            <xs:documentation>Creates a physics joint that can join two actors that are under control of physics</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Joint">
+                <xs:annotation>
+                    <xs:documentation>Creates a physics joint between two bodies</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="JointProperty" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+	<xs:complexType name="FixturesType">
+		<xs:annotation>
+			<xs:documentation>Creates a fixture that can be used to define the shape of an actor to te physics system</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Fixture">
+				<xs:annotation>
+					<xs:documentation>Creates a fixture</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="FixtureProperty" />
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="CameraType">
+        <xs:annotation>
+            <xs:documentation>Creates a camera that can be attached to a scene</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="CameraProperties" />
+    </xs:complexType>
+    <xs:complexType name="BrushType">
+        <xs:annotation>
+            <xs:documentation>Creates a brush that can be used to set the visual style of actors</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="BrushProperties" />
+    </xs:complexType>
+    <xs:complexType name="ShapeType">
+        <xs:annotation>
+            <xs:documentation>Creates a Shape. Shapes can be attached to actors to put them under control of the physics engine</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Point">
+                <xs:annotation>
+                    <xs:documentation>Creates a point (vertex) for a polygon shape</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attribute name="Value" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Polygon shape vertex value (x, y)</xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attributeGroup ref="ShapeProperties" />
+    </xs:complexType>
+
+    <xs:complexType name="RemoteReqType">
+        <xs:annotation>
+            <xs:documentation>Creates a remote request resource that can be sent to an external web server</xs:documentation>
+        </xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Header">
+				<xs:annotation>
+					<xs:documentation>Headers that will be applied to the remote request</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="HeaderProperties" />
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+		<xs:attributeGroup ref="RemoteReqProperties" />
+    </xs:complexType>
+
+	<xs:complexType name="VideoCamType">
+        <xs:annotation>
+            <xs:documentation>Creates a video camera streaming object that streams video camera to a target image</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="VideoCamProperties" />
+    </xs:complexType>
+
+    <xs:complexType name="MarketType">
+        <xs:annotation>
+            <xs:documentation>Creates a in-app purchassing Market object</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Product">
+                <xs:annotation>
+                    <xs:documentation>Product that should be made available to purchase</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="MarketProductProperties" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attributeGroup ref="MarketProperties" />
+    </xs:complexType>
+
+	<xs:complexType name="GeometryType">
+		<xs:annotation>
+			<xs:documentation>Create a geometry</xs:documentation>
+		</xs:annotation>
+		<xs:attributeGroup ref="GeometryProperties" />
+	</xs:complexType>
+	<xs:complexType name="ImageType">
+        <xs:annotation>
+            <xs:documentation>Loads an image</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="ImageProperties" />
+    </xs:complexType>
+    <xs:complexType name="SoundType">
+        <xs:annotation>
+            <xs:documentation>Loads a sound effect</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="SoundProperties" />
+    </xs:complexType>
+    <xs:complexType name="VideoType">
+        <xs:annotation>
+            <xs:documentation>Loads a video</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="VideoProperties" />
+    </xs:complexType>
+    <xs:complexType name="FileType">
+        <xs:annotation>
+            <xs:documentation>Loads a generic file</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="FileProperties" />
+    </xs:complexType>
+    <xs:complexType name="ScriptType">
+        <xs:annotation>
+            <xs:documentation>Creates a script placeholder</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="ScriptProperties" />
+    </xs:complexType>
+    <xs:complexType name="VariableType">
+        <xs:annotation>
+            <xs:documentation>Creates a variable</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="VariableProperties" />
+    </xs:complexType>
+	<xs:complexType name="UserPropertiesType">
+		<xs:annotation>
+			<xs:documentation>Creates a user properties list</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="Property">
+				<xs:annotation>
+					<xs:documentation>A user property</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attributeGroup ref="PropertyProperties" />
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+		<xs:attributeGroup ref="UserPropertiesProperties" />
+	</xs:complexType>
+	<xs:complexType name="LoadXOMLType">
+        <xs:annotation>
+            <xs:documentation>Loads and processes another XOML file</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="File" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Name of XOML file to load</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Condition" type="xs:string">
+            <xs:annotation>
+                <xs:documentation>Conditions that must be met in order to load the specified XOML file (see variables and conditions)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="FontType">
+        <xs:annotation>
+            <xs:documentation>Creates a font</xs:documentation>
+        </xs:annotation>
+        <xs:attributeGroup ref="FontProperties" />
+    </xs:complexType>
+    <xs:complexType name="ActorImageType">
+        <xs:annotation>
+            <xs:documentation>Creates an image based actor, can be used to display sprites</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="ActorImageProperties" />
+    </xs:complexType>
+    <xs:complexType name="ActorTextType">
+        <xs:annotation>
+            <xs:documentation>Creates a text based actor, can be used to display text</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="ActorTextProperties" />
+    </xs:complexType>
+    <xs:complexType name="ActorParticlesType">
+        <xs:annotation>
+            <xs:documentation>Creates a particle system based actor, can be used to display a particle system based actor</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+            <xs:element name="Particle">
+                <xs:annotation>
+                    <xs:documentation>Adds a particle or group of particles to the particle generator</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="ParticleProperties" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attributeGroup ref="ActorParticlesProperties" />
+    </xs:complexType>
+    <xs:complexType name="ActorConnectorType">
+        <xs:annotation>
+            <xs:documentation>Creates a Connector actor, can be used to visually connect two actors or two points in space</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="ActorConnectorProperties" />
+    </xs:complexType>
+    <xs:complexType name="StackPanelType">
+        <xs:annotation>
+            <xs:documentation>Creates a StackPanel UI actor that can contain other actors</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="StackPanelProperties" />
+    </xs:complexType>
+    <xs:complexType name="WrapPanelType">
+        <xs:annotation>
+            <xs:documentation>Creates a WrapPanel UI actor that can contain other actors</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="WrapPanelProperties" />
+    </xs:complexType>
+    <xs:complexType name="GridType">
+        <xs:annotation>
+            <xs:documentation>Creates a Grid UI actor that can contain other actors</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+            <xs:element name="RowDefinition">
+                <xs:annotation>
+                    <xs:documentation>Adds a row to the grid</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="GridRowProperties" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ColumnDefinition">
+                <xs:annotation>
+                    <xs:documentation>Adds a column to the grid</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:attributeGroup ref="GridColumnProperties" />
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attributeGroup ref="GridProperties" />
+    </xs:complexType>
+    <xs:complexType name="ListBoxType">
+        <xs:annotation>
+            <xs:documentation>Creates a ListBox UI actor that can contain other actors that form a list</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="ListBoxProperties" />
+    </xs:complexType>
+    <xs:complexType name="SliderType">
+        <xs:annotation>
+            <xs:documentation>Creates a Slider UI actor that can be used to select a number from a range</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="SliderProperties" />
+    </xs:complexType>
+    <xs:complexType name="ImageViewType">
+        <xs:annotation>
+            <xs:documentation>Creates an image viewer UI actor that can be used to navigate a large image</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="ImageViewProperties" />
+    </xs:complexType>
+    <xs:complexType name="TextViewType">
+        <xs:annotation>
+            <xs:documentation>Creates a text viewer UI actor that can be used to navigate a large area of text</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="TextViewProperties" />
+    </xs:complexType>
+    <xs:complexType name="WebViewType">
+        <xs:annotation>
+            <xs:documentation>Creates a view UI actor that can be used to view web content</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="WebViewProperties" />
+    </xs:complexType>
+    <xs:complexType name="VideoOverlayType">
+        <xs:annotation>
+            <xs:documentation>Creates a vido overlay that plays a video</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="VideoOverlayProperties" />
+    </xs:complexType>
+    <xs:complexType name="CanvasType">
+        <xs:annotation>
+            <xs:documentation>Creates a Canvas UI actor that can contain other actors that can be placed anywhere or coked to its edges</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="CanvasProperties" />
+    </xs:complexType>
+    <xs:complexType name="TabBarType">
+        <xs:annotation>
+            <xs:documentation>Creates a TabBar UI actor that can be used to navigate a grouop of container actors</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="TabBarProperties" />
+    </xs:complexType>
+    <xs:complexType name="TabsType">
+        <xs:annotation>
+            <xs:documentation>Creates a Tabs UI actor that contains buttons that can be used to navigate a collection of container actors</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="TabsProperties" />
+    </xs:complexType>
+    <xs:complexType name="TabType">
+        <xs:annotation>
+            <xs:documentation>Creates a Tab UI actor that when tapped will switch to and dispaly a different actor container, hiding the other actor containers</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="TabProperties" />
+    </xs:complexType>
+    <xs:complexType name="LabelType">
+        <xs:annotation>
+            <xs:documentation>Creates a text Label actor</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="LabelProperties" />
+    </xs:complexType>
+    <xs:complexType name="IconType">
+        <xs:annotation>
+            <xs:documentation>Creates an image based Icon actor</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="IconProperties" />
+    </xs:complexType>
+    <xs:complexType name="TextBoxType">
+        <xs:annotation>
+            <xs:documentation>Creates a TextBox based actor</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="ActorGroup" />
+        </xs:choice>
+        <xs:attributeGroup ref="TextBoxProperties" />
+    </xs:complexType>
+    <xs:complexType name="ProgramType">
+        <xs:annotation>
+            <xs:documentation>A program of commands that are executed in sequence</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Command" type="CommandType" />
+        </xs:sequence>
+        <xs:attributeGroup ref="ProgramProperties" />
+    </xs:complexType>
+    <xs:complexType name="CommandType">
+        <xs:annotation>
+            <xs:documentation>A custom program command</xs:documentation>
+        </xs:annotation>
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="Command" type="CommandType" />
+        </xs:sequence>
+        <xs:attributeGroup ref="CommandProperties" />
+    </xs:complexType>
+    <xs:group name="TopLevel">
+        <xs:choice>
+            <xs:element name="Style" type="StyleType" />
+            <xs:element name="Template" type="TemplateType" />
+            <xs:element name="Scene" type="SceneType" />
+            <xs:element name="GameScene" type="SceneType" />
+            <xs:element name="HudScene" type="SceneType" />
+            <xs:element name="FromTemplate" type="FromTemplateType" />
+            <xs:element name="Actions" type="ActionsType" />
+            <xs:element name="Animation" type="AnimationType" />
+			<xs:element name="Timeline" type="TimelineType" />
+			<xs:element name="Timer" type="TimerType" />
+            <xs:element name="Modifiers" type="ModifierType" />
+            <xs:element name="Bindings" type="BindingsType" />
+            <xs:element name="Box2dMaterial" type="Box2dMaterialType" />
+			<xs:element name="Joints" type="JointsType" />
+			<xs:element name="Fixtures" type="FixturesType" />
+            <xs:element name="Camera" type="CameraType" />
+            <xs:element name="Brush" type="BrushType" />
+            <xs:element name="Shape" type="ShapeType" />
+            <xs:element name="RemoteReq" type="RemoteReqType" />
+            <xs:element name="VideoCam" type="VideoCamType" />
+            <xs:element name="Market" type="MarketType" />
+			<xs:element name="Geometry" type="GeometryType" />
+			<xs:element name="Image" type="ImageType" />
+            <xs:element name="Sound" type="SoundType" />
+            <xs:element name="File" type="FileType" />
+            <xs:element name="Script" type="ScriptType" />
+            <xs:element name="Video" type="VideoType" />
+            <xs:element name="Variable" type="VariableType" />
+            <xs:element name="LoadXOML" type="LoadXOMLType" />
+            <xs:element name="Font" type="FontType" />
+            <xs:element name="ActorImage" type="ActorImageType" />
+            <xs:element name="ActorText" type="ActorTextType" />
+            <xs:element name="ActorParticles" type="ActorParticlesType" />
+            <xs:element name="ActorConnector" type="ActorConnectorType" />
+            <xs:element name="StackPanel" type="StackPanelType" />
+            <xs:element name="WrapPanel" type="WrapPanelType" />
+            <xs:element name="Canvas" type="CanvasType" />
+            <xs:element name="VideoOverlay" type="VideoOverlayType" />
+            <xs:element name="Grid" type="GridType" />
+            <xs:element name="Label" type="LabelType" />
+            <xs:element name="Icon" type="IconType" />
+            <xs:element name="TextBox" type="TextBoxType" />
+            <xs:element name="ListBox" type="ListBoxType" />
+            <xs:element name="Slider" type="SliderType" />
+            <xs:element name="ImageView" type="ImageViewType" />
+            <xs:element name="TextView" type="TextViewType" />
+            <xs:element name="WebView" type="WebViewType" />
+            <xs:element name="TabBar" type="TabBarType" />
+            <xs:element name="Tabs" type="TabsType" />
+            <xs:element name="Tab" type="TabType" />
+            <xs:element name="Program" type="ProgramType" />
+			<xs:element name="UserProperties" type="UserPropertiesType" />
+		</xs:choice>
+    </xs:group>
+    <xs:group name="ActorGroup">
+        <xs:choice>
+            <xs:element name="FromTemplate" type="FromTemplateType" />
+            <xs:element name="ActorImage" type="ActorImageType" />
+            <xs:element name="ActorText" type="ActorTextType" />
+            <xs:element name="ActorParticles" type="ActorParticlesType" />
+            <xs:element name="ActorConnector" type="ActorConnectorType" />
+            <xs:element name="Actions" type="ActionsType" />
+            <xs:element name="Timeline" type="TimelineType" />
+			<xs:element name="Timer" type="TimerType" />
+			<xs:element name="Modifiers" type="ModifierType" />
+			<xs:element name="Joints" type="JointsType" />
+			<xs:element name="Fixtures" type="FixturesType" />
+            <xs:element name="StackPanel" type="StackPanelType" />
+            <xs:element name="WrapPanel" type="WrapPanelType" />
+            <xs:element name="VideoOverlay" type="VideoOverlayType" />
+            <xs:element name="Canvas" type="CanvasType" />
+            <xs:element name="Grid" type="GridType" />
+            <xs:element name="Label" type="LabelType" />
+            <xs:element name="Icon" type="IconType" />
+            <xs:element name="TextBox" type="TextBoxType" />
+            <xs:element name="ListBox" type="ListBoxType" />
+            <xs:element name="ImageView" type="ImageViewType" />
+            <xs:element name="TextView" type="TextViewType" />
+            <xs:element name="WebView" type="WebViewType" />
+            <xs:element name="TabBar" type="TabBarType" />
+            <xs:element name="Tabs" type="TabsType" />
+            <xs:element name="Tab" type="TabType" />
+            <xs:element name="Slider" type="SliderType" />
+			<xs:element name="UserProperties" type="UserPropertiesType" />
+			<xs:element name="LoadXOML" type="LoadXOMLType" />
+		</xs:choice>
+    </xs:group>
+</xs:schema>

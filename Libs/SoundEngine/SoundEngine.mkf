@@ -1,0 +1,39 @@
+includepath h
+includepath source
+
+files
+{
+    (h)
+    IwResHandlerWAV.h
+    IwSound.h
+    IwSoundWAV.h
+    IwSoundADPCM.h
+    IwSoundManager.h
+    IwSoundData.h
+    IwSoundGroup.h
+    IwSoundInst.h
+    IwSoundParams.h
+    IwSoundPCM.h
+    IwSoundSpec.h
+
+    (source)
+    IwResHandlerWAV.cpp
+    IwSoundWAV.cpp
+    IwSoundADPCM.cpp
+    IwSoundManager.cpp
+    IwSoundData.cpp
+    IwSoundGroup.cpp
+    IwSoundInst.cpp
+    IwSoundParams.cpp
+    IwSoundPCM.cpp
+    IwSoundSpec.cpp
+
+    [Docs]
+    (docs)
+    iwsound.config.txt
+}
+
+subprojects
+{
+    iwutil
+}

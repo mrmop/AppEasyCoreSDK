@@ -1,0 +1,84 @@
+# lua-vec for the Marmalade SDK
+# lua-vec is a version of lua that has support for 2d, 3d and 4d vector types
+# To add lua-vec to your build, copy the lua-vec folder to your build foder and add lua-vec.mkf to your MKB subprojects section
+
+options
+{
+}
+
+packages
+{
+}
+
+subprojects
+{
+}
+
+includepath
+{
+	src
+}
+
+files
+{
+	[src]
+	(src)
+	lapi.c
+	lapi.h
+	lauxlib.c
+	lauxlib.h
+	lbaselib.c
+	lcode.c
+	lcode.h
+	ldblib.c
+	ldebug.c
+	ldebug.h
+	ldo.c
+	ldo.h
+	ldump.c
+	lfunc.c
+	lfunc.h
+	lgc.c
+	lgc.h
+	lgcveclib.c
+	linit.c
+	liolib.c
+	llex.c
+	llex.h
+	llimits.h
+	lmathlib.c
+	lmem.c
+	lmem.h
+	loadlib.c
+	lobject.c
+	lobject.h
+	lopcodes.c
+	lopcodes.h
+	loslib.c
+	lparser.c
+	lparser.h
+	lstate.c
+	lstate.h
+	lstring.c
+	lstring.h
+	lstrlib.c
+	ltable.c
+	ltable.h
+	ltablib.c
+	ltm.c
+	ltm.h
+#	lua.c
+	lua.h
+#	luac.c
+	luaconf.h
+	lualib.h
+	lundump.c
+	lundump.h
+	lveclib.c
+	lvm.c
+	lvm.h
+	lzio.c
+	lzio.h
+	print.c
+}
+

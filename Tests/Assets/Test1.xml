@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
+
+	<!-- Create scene -->
+	<Scene Name="Scene1" Current="true" Timeline="pos_anim1" Camera="Camera1">
+		<UserProperties Name="GameProperties">
+			<Property Name="Level" Type="int" Value="3" />
+			<Property Name="NumBaddies" Type="float" Value="10" />
+		</UserProperties>
+
+		<!-- Create a camera -->
+		<Camera Name="Camera1" />
+
+		<!-- Create a vector animation -->
+		<Animation Name="pos_anim" Duration="5" Type="vec2">
+			<Frame Time="0" Value="0, 0" Easing="quadin"/>
+			<Frame Time="1" Value="100, 100" Easing="quadout"/>
+			<Frame Time="2" Value="0, 100" Easing="quadin"/>
+			<Frame Time="3" Value="-100, 100" Easing="quadout"/>
+			<Frame Time="4" Value="0, 0" />
+		</Animation>
+		<Animation Name="ang_anim" Duration="5" Type="float">
+			<Frame Time="0" Value="0" />
+			<Frame Time="2.5" Value="180" />
+			<Frame Time="5" Value="0" />
+		</Animation>
+		<Animation Name="scale_anim" Duration="5" Type="float">
+			<Frame Time="0" Value="1" />
+			<Frame Time="2.5" Value="2" />
+			<Frame Time="5" Value="1" />
+		</Animation>
+		<Animation Name="colour_anim" Duration="5" Type="vec4">
+			<Frame Time="0" Value="128, 128, 128, 128" />
+			<Frame Time="2.5" Value="255, 255, 255, 255" />
+			<Frame Time="5" Value="128, 128, 128, 128" />
+		</Animation>
+		<Animation Name="opacity_anim" Duration="5" Type="float">
+			<Frame Time="0" Value="128" />
+			<Frame Time="2.5" Value="255" />
+			<Frame Time="5" Value="128" />
+		</Animation>
+
+		<!-- Create a timeline that targets the pos_anim at the Position property -->
+		<Timeline Name="pos_anim1" AutoPlay="true">
+			<Anim Anim="pos_anim" Repeat="0" Target="Position" />
+			<Anim Anim="ang_anim" Repeat="0" Target="Angle" />
+			<Anim Anim="scale_anim" Repeat="0" Target="Scale" />
+			<Anim Anim="opacity_anim" Repeat="0" Target="Opacity" />
+		</Timeline>
+
+		<!-- Create a label object -->
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Text="Scene Animation" />
+
+		<Label Font="serif" Text="Demonstration of Scene Animation" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

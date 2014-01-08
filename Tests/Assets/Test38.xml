@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" Extents="-500, -500, 1000, 1000" >
+
+		<!-- Create a template for our car -->
+		<Template Name="CarTemplate">
+			<Icon Name="$name$" Position="$pos$" Velocity="$speed$, 0" BackgroundColour="$colour$" Background="Button1Brush" Size="200, 50" WrapPosition="true">
+				<Icon Background="Button1Brush" Size="50, 50" Position="-50, 25" AngularVelocity="$speed$" />
+				<Icon Background="Button1Brush" Size="50, 50" Position="50, 25" AngularVelocity="$speed$" />
+			</Icon>
+		</Template>
+
+		<!-- Create a program that instantiates a car from a template -->
+        <Program Name="CreateCars" AutoRun="true">
+            <Command Method="from_template" P1="CarTemplate" P2="name=Car1:pos=0,0:speed=30:colour=80,255,255,255" />
+        </Program>
+
+        <!-- Create a label button that when tapped will instantiate new cars -->
+        <Label Font="serif" Text="New Car" Background="Button1Brush" Position="0, 200" OnTapped="CreateCar">
+            <Actions Name="CreateCar">
+                <Action Method="FromTemplate" P1="CarTemplate" P2="name=Car1:pos=0,-100:speed=90:colour=255,0,255,255" />
+            </Actions>
+        </Label>
+
+		<Label Font="serif" Text="Demonstration of Using Templates. Templates can be used to generate whole pieces of custom XOML" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" ScriptEngine="lua" OnCreate="Create">
+
+		<!-- Load script -->
+		<Script Name="Script1" Type="lua" />
+		<File Name="ScriptFile1" Location="Test69.lua" Script="Script1" />
+
+		<!-- Create buttons to start and stop global timer -->
+		<Label Font="serif" Text="Test SQL" Position="0, -100" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="100, 100" AutoHeight="true" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="CallScript" P1="Test1" />
+			</Actions>
+		</Label>
+		<Label Name="Results" Font="serif" Text="" Position="0, 150" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, 300" />
+
+		<Label Font="serif" Text="Test SQLite - create table and select results" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

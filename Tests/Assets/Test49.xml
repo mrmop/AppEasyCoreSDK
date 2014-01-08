@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" Camera="Cam1">
+
+		<Camera Name="Cam1" />
+
+		<!-- Create variables to store the text we enter -->
+		<Variable Name="FirstName" Type="string" />
+		<Variable Name="Surname" Type="string" />
+		<Variable Name="Age" Type="string" />
+		<Variable Name="Address" Type="string" />
+		<Variable Name="City" Type="string" />
+		<Variable Name="ZipCode" Type="string" />
+		<Variable Name="TelNo" Type="string" />
+		<Variable Name="MobileNo" Type="string" />
+
+		<!-- Create a grid to arrange the controls -->
+		<Grid Size="-100, -100">
+			<RowDefinition Height="80" AlignV="middle" />
+			<RowDefinition Height="80" AlignV="middle" />
+			<RowDefinition Height="80" AlignV="middle" />
+			<RowDefinition Height="140" AlignV="middle" />
+			<RowDefinition Height="80" AlignV="middle" />
+			<RowDefinition Height="80" AlignV="middle" />
+			<RowDefinition Height="80" AlignV="middle" />
+			<RowDefinition Height="80" AlignV="middle" />
+			<ColumnDefinition Width="-30" />
+			<ColumnDefinition Width="-70" />
+			<Label Font="serif" Background="SmallPanelBrush" Size="-30, 76" Text="First Name:" GridPos="0, 0" />
+			<Label Font="serif" Background="SmallPanelBrush" Size="-30, 76" Text="Surname:" GridPos="0, 1" />
+			<Label Font="serif" Background="SmallPanelBrush" Size="-30, 76" Text="Age:" GridPos="0, 2" />
+			<Label Font="serif" Background="SmallPanelBrush" Size="-30, 136" Text="Address:" GridPos="0, 3" />
+			<Label Font="serif" Background="SmallPanelBrush" Size="-30, 76" Text="City:" GridPos="0, 4" />
+			<Label Font="serif" Background="SmallPanelBrush" Size="-30, 76" Text="Zip Code:" GridPos="0, 5" />
+			<Label Font="serif" Background="SmallPanelBrush" Size="-30, 76" Text="Tel No:" GridPos="0, 6" />
+			<Label Font="serif" Background="SmallPanelBrush" Size="-30, 76" Text="Mobile No:" GridPos="0, 7" />
+			<TextBox Font="serif" Background="SmallPanelBrush" Size="-65, 76" Variable="FirstName" GridPos="1, 0" />
+			<TextBox Font="serif" Background="SmallPanelBrush" Size="-65, 76" Variable="Surname" GridPos="1, 1" />
+			<TextBox Font="serif" Background="SmallPanelBrush" Size="-65, 76" Variable="Age" GridPos="1, 2" />
+			<TextBox Font="serif" Background="SmallPanelBrush" Size="-65, 136" Variable="Address" GridPos="1, 3" />
+			<TextBox Font="serif" Background="SmallPanelBrush" Size="-65, 76" Variable="City" GridPos="1, 4" />
+			<TextBox Font="serif" Background="SmallPanelBrush" Size="-65, 76" Variable="ZipCode" GridPos="1, 5" />
+			<TextBox Font="serif" Background="SmallPanelBrush" Size="-65, 76" Variable="TelNo" GridPos="1, 6" />
+			<TextBox Font="serif" Background="SmallPanelBrush" Size="-65, 76" Variable="MobileNo" GridPos="1, 7" />
+		</Grid>
+
+		<Label Font="serif" Text="Demonstration of UI TextBox" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

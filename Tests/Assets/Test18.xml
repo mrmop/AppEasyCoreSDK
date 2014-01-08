@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" >
+
+		<!-- Create vec2 animation (we will use this to animate position of the label) -->
+		<Animation Name="PosAnim" Duration="4" Type="vec2">
+			<Frame Time="0" Value="0, 0" />
+			<Frame Time="1" Value="100, 0" />
+			<Frame Time="2" Value="100, 100" />
+			<Frame Time="3" Value="0, 100" />
+			<Frame Time="4" Value="0, 0" />
+		</Animation>
+
+		<!-- Create rotation animation (we will use this to animate angle of the label) -->
+		<Animation Name="AngleAnim" Duration="4" Type="float">
+			<Frame Time="0" Value="0" />
+			<Frame Time="4" Value="360" />
+		</Animation>
+
+		<!-- Create a timeline that can be used to animate an actor -->
+		<Timeline Name="Anim1" AutoPlay="true">
+			<Anim Anim="PosAnim" Target="Position" />
+			<Anim Anim="AngleAnim" Target="Angle" />
+		</Timeline>
+
+		<!-- Create a label with an animation -->
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="100, 100" Text="Animation" Timeline="Anim1"  />
+
+		<Label Font="serif" Text="Demonstration of a basic actor animation timelines" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

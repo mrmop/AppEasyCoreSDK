@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" >
+
+		<!-- Create a grid label animation -->
+		<Animation Name="GridButtonBreath" Duration="1.0" Type="vec2">
+			<Frame Value="1.1, 1.1" Time="0" Easing="quadin" />
+			<Frame Value="0.5, 0.5" Time="0.5" Easing="quadin" />
+			<Frame Value="1.1, 1.1" Time="1.0" Easing="quadin" />
+		</Animation>
+
+		<!-- Create variable to accept the current grid cell selection -->
+		<Variable Name="grid_selection" Type="string" Value="0"/>
+
+		<!-- Create a template that will be used to generate the animating label grid cell actors -->
+		<Template Name="GridItemTemp">
+			<Label Background="SmallPanelBrush" BackgroundColour="200, 200, 200, 255" SelectedColour="200, 255, 200, 255" Font="serif" GridPos="$gridpos$" Tappable="true" OnTapped="GridOnTapped" SelectType="toggle" Selected="false">
+				<Timeline Name="GridItemAnim" AutoPlay="true">
+					<Anim Anim="GridButtonBreath" Repeat="0" Target="Scale" />
+				</Timeline>
+				<Actions Name="GridOnTapped">
+					<Action Method="SetTimeline" P1="GridItemAnim" />
+				</Actions>
+			</Label>
+		</Template>
+
+		<!-- Create a 2nd template that we can change to -->
+		<Template Name="GridItemTemp2">
+			<Label Background="Button1Brush" BackgroundColour="255, 100, 100, 255" SelectedColour="200, 255, 200, 255" Font="serif" GridPos="$gridpos$" Tappable="true" OnTapped="GridOnTapped" SelectType="toggle" Selected="false">
+				<Timeline Name="GridItemAnim" AutoPlay="true">
+					<Anim Anim="GridButtonBreath" Repeat="0" Target="Scale" />
+				</Timeline>
+				<Actions Name="GridOnTapped">
+					<Action Method="SetTimeline" P1="GridItemAnim" />
+				</Actions>
+			</Label>
+		</Template>
+		
+		<!-- Create data that will be bound to grid columns -->
+		<Variable Name="GridItems" Type="arraystring" Size="40" Value="A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, B1, B2, B3, B4, B5, B6, B7, B8, B9, B10, C1, C2, C3, C4, C5, C6, C7, C8, C9, C10, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10" />
+		<Variable Name="GridItemsA" Type="arraystring" Size="30" Value="X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, Y1, Y2, Y3, Y4, Y5, Y6, Y7, Y8, Y9, Y10, Z1, Z2, Z3, Z4, Z5, Z6, Z7, Z8, Z9, Z10" />
+
+		<!-- Generate the grid -->
+		<Grid Name="ItemsGrid" Size="-100, -100" Background="PanelBrush" BackgroundColour="255, 255, 255, 255" Tappable="true" ClipMargin="10, 10, 10, 10" ItemsTemplate="GridItemTemp" ItemsData="GridItems" ItemsTargetType="text" MultiSelect="false" Selection="grid_selection" SelectedIndex="5" UseParentOpacity="false">
+			<RowDefinition AlignV="middle" Height="100" />
+			<RowDefinition AlignV="middle" Height="100" />
+			<RowDefinition AlignV="middle" Height="100" />
+			<RowDefinition AlignV="middle" Height="100" />
+			<RowDefinition AlignV="middle" Height="100" />
+			<RowDefinition AlignV="middle" Height="100" />
+			<RowDefinition AlignV="middle" Height="100" />
+			<RowDefinition AlignV="middle" Height="100" />
+			<RowDefinition AlignV="middle" Height="100" />
+			<RowDefinition AlignV="middle" Height="100" />
+			<ColumnDefinition Width="-20" />
+			<ColumnDefinition Width="-20" />
+			<ColumnDefinition Width="-20" />
+			<ColumnDefinition Width="-20" />
+		</Grid>
+
+		<StackPanel Orientation="vertical" Size="-10, -100" Docking="right" >
+			<Label Font="serif" Text="Toggle Column 0" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="AddProperty" P1="ShowColumn" P2="0, 0" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Toggle Column 1" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="AddProperty" P1="ShowColumn" P2="1, 0" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Toggle Column 2" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="AddProperty" P1="ShowColumn" P2="2, 0" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Toggle Column 3" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="AddProperty" P1="ShowColumn" P2="3, 0" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Toggle Row 0" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="AddProperty" P1="ShowRow" P2="0, 0" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Toggle Row 1" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="AddProperty" P1="ShowRow" P2="1, 0" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Toggle Row 2" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="AddProperty" P1="ShowRow" P2="2, 0" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Use Template 1" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="ItemsTemplate" P2="GridItemTemp" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Use Template 2" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="ItemsTemplate" P2="GridItemTemp2" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Use Data 1" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="ItemsData" P2="GridItems" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Use Data 2" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="ItemsData" P2="GridItemsA" P3="ItemsGrid" />
+				</Actions>
+			</Label>
+		</StackPanel>
+		
+		
+
+		<Label Font="serif" Text="Demonstration of building a UI Grid automatically from bound data" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>    
+	
+
+
+
+</xml>

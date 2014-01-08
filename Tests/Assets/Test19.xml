@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<!-- Create a variable that holds the labels position -->
+		<Variable Name="LabelPosition" Type="vec2" Value="0, 0" />
+
+		<!-- Create a variable that holds the labels angle -->
+		<Variable Name="LabelAngle" Type="float" Value="0" />
+
+		<!-- Create a data bindings list -->
+		<Bindings Name="LabelBindings">
+			<Binding Property="Position" Variable="LabelPosition" />
+			<Binding Property="Angle" Variable="LabelAngle" />
+		</Bindings>
+
+		<!-- Create a button that is bound using the LabelBindings list -->
+		<Label Font="serif" Text="Tap Me" BackgroundColour="80, 80, 255, 255" Background="Button1Brush" Bindings="LabelBindings" OnTapped="Update">
+			<Actions Name="Update">
+				<Action Method="AddVar" P1="LabelPosition" P2="20, 15" />
+				<Action Method="AddVar" P1="LabelAngle" P2="5" />
+			</Actions>
+		</Label>
+
+		<Label Font="serif" Text="A variable is bound to the labels position. Each time the button is tapped the variable changes changing the labels position" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

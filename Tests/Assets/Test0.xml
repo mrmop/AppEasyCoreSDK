@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" CanvasOrigin="topleft">
+
+		<Label Anchor="topleft" Position="0, 0" AngularVelocity="0" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 150" Size="200, 200" Text="0, 0" />
+		<Label Anchor="topleft" Position="100, 100" AngularVelocity="0" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 150" Size="200, 200" Text="100, 100" />
+		<Label Anchor="topleft" Position="200, 200" AngularVelocity="0" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 150" Size="200, 200" Text="200, 200" />
+
+		<Label Anchor="topleft" Font="serif" Text="Demonstration of anchors" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+	</Scene>
+</xml>

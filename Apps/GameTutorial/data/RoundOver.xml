@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Round over scene -->
+	<Scene Name="round_over" Style="generic_scene_style" Camera="cam" Visible="true" Layer="5">
+		<Camera Name="cam" />
+
+		<!-- Create round in / out animations -->
+		<Animation Name="round_over_out" Type="float" Duration="1" >
+			<Frame Value="0" Time="0" Easing="cubicout" />
+			<Frame Value="2000" Time="1" />
+		</Animation>
+		<Animation Name="round_over_in" Type="float" Duration="1" >
+			<Frame Value="2000" Time="0" Easing="cubicout" />
+			<Frame Value="0" Time="1" />
+		</Animation>
+		<Timeline Name="round_over_out" AutoPlay="false">
+			<Animation Anim="round_over_out" Target="PositionX" Repeat="1" StartAtTime="0" />
+		</Timeline>
+		<Timeline Name="round_over_in" AutoPlay="false">
+			<Animation Anim="round_over_in" Target="PositionX" Repeat="1" StartAtTime="0" />
+		</Timeline>
+		
+		<!-- Create round over dialog -->
+		<StackPanel Name="end_round_dialog" Position="2000,0" Orientation="vertical" Background="PanelBrush" Tappable="false" AlignV="top">
+			<Label Font="font1" Text="End of Round" Background="SmallPanelBrush" Tappable="false" Size="-100, -25" />
+			<Label Font="font1" Text="Round Score" Tappable="false" Size="-100, -15" />
+			<Label Name="end_round_score" Font="font1" Text="0" Tappable="false" TextColour="255, 180, 80, 255" Size="-100, -15" />
+			<StackPanel Orientation="horizontal" Tappable="false" Size="-100, -20" Margin="0, 0, 60, 0">
+				<Label Font="font1" Text="Restart" Size="-45 -100" Background="Button1Brush" SelectedColour="255, 255, 255, 128" Margin="5, 5, 0, 0" OnTapped="tapped">
+					<Actions Name="tapped">
+						<Action Method="SetTimeline" P1="round_over_out" P2="end_round_dialog" />
+						<Action Method="CallGlobalScript" P1="restartRound" />
+					</Actions>
+				</Label>
+				<Label Font="font1" Text="Continue" Size="-45, -100" Background="Button1Brush" SelectedColour="255, 255, 255, 128" Margin="5, 5, 0, 0" OnTapped="tapped">
+					<Actions Name="tapped">
+						<Action Method="SetTimeline" P1="round_over_out" P2="end_round_dialog" />
+						<Action Method="CallGlobalScript" P1="nextRound" />
+					</Actions>
+				</Label>
+			</StackPanel>
+		</StackPanel>
+	</Scene>
+
+</xml>

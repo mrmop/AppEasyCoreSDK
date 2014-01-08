@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Load a UI style to style the user interface  -->
+	<LoadXOML File="UIStyle.xml" />
+
+	<Style Name="TestButtonStyle">
+		<Set Property="Background" Value="Button1Brush" />
+		<Set Property="Size" Value="-80, -8" />
+		<Set Property="BackgroundColour" Value="55, 55, 55, 255" />
+		<Set Property="SelectedColour" Value="128, 128, 255, 255" />
+		<Set Property="Font" Value="serif" />
+	</Style>
+
+	<Animation Name="SceneIn" Duration="1" Type="vec2">
+		<Frame Value="-1000, 0" Time="0" Easing="quadout" />
+		<Frame Value="0, 0" Time="1" />
+	</Animation>
+	<Animation Name="SceneOut" Duration="1" Type="vec2">
+		<Frame Value="0, 0" Time="0" Easing="quadin" />
+		<Frame Value="-1000, 0" Time="1" />
+	</Animation>
+	<Timeline Name="SceneIn" AutoPlay="true">
+		<Anim Anim="SceneIn" Repeat="1" Target="Position" />
+	</Timeline>
+	<Timeline Name="SceneOut" AutoPlay="true">
+		<Anim Anim="SceneOut" Repeat="1" Target="Position" />
+	</Timeline>
+
+	<!-- Create a scene -->
+	<Scene Name="Tests" Current="true" AllowSuspend="false" AllowFocus="true" Camera="Cam" OnKeyBack="Exit" OnDeviceResumed="DeviceResume">
+		<Actions Name="Exit">
+			<Action Method="Exit"/>
+		</Actions>
+		<Actions Name="DeviceResume">
+			<Action Method="SetProperty" P1="BackgroundColour" P2="128, 128, 255, 255" P3="Menu" />
+		</Actions>
+
+		<Camera Name="Cam" />
+
+		<Template Name="TestButton">
+			<Label Name="$name$" Text="$name$" Style="TestButtonStyle" OnTapped="Tapped">
+				<Actions Name="Tapped">
+					<Action Method="LoadXOML" P1="Test$num$.xml" />
+					<Action Method="ShowScene" P1="HUD" />
+					<Action Method="SetTimeline" P1="SceneOut" P2="Tests" />
+				</Actions>
+			</Label>
+		</Template>
+
+		<!-- Create a basic list box -->
+		<ListBox Name="Menu" Size="-100, -100" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10">
+			<FromTemplate Template="TestButton" name="0 - Anchors" num="0" />
+			<FromTemplate Template="TestButton" name="1 - Scene Animation" num="1" />
+			<FromTemplate Template="TestButton" name="2 - Scene Clipping" num="2" />
+			<FromTemplate Template="TestButton" name="3 - Scene Augmentation" num="3" />
+			<FromTemplate Template="TestButton" name="4 - Scene Events" num="4" />
+			<FromTemplate Template="TestButton" name="5 - Scene Extents" num="5" />
+			<FromTemplate Template="TestButton" name="6 - Scene Layers" num="6" />
+			<FromTemplate Template="TestButton" name="7 - Scene Panning" num="7" />
+			<FromTemplate Template="TestButton" name="8 - Scene Physics" num="8" />
+			<FromTemplate Template="TestButton" name="9 - Actor Children" num="9" />
+			<FromTemplate Template="TestButton" name="10 - Actor Collision Flags" num="10" />
+			<FromTemplate Template="TestButton" name="11 - Actor Connectors" num="11" />
+			<FromTemplate Template="TestButton" name="12 - Actor Docking" num="12" />
+			<FromTemplate Template="TestButton" name="13 - Actor Layers" num="13" />
+			<FromTemplate Template="TestButton" name="14 - Actor Modifiers" num="14" />
+			<FromTemplate Template="TestButton" name="15 - Actor Particles" num="15" />
+			<FromTemplate Template="TestButton" name="16 - Actor Physics" num="16" />
+			<FromTemplate Template="TestButton" name="17 - Advanced Collision" num="17" />
+			<FromTemplate Template="TestButton" name="18 - Basic Animation" num="18" />
+			<FromTemplate Template="TestButton" name="19 - Basic Data Bindings" num="19" />
+			<FromTemplate Template="TestButton" name="20 - Bitmap Animation" num="20" />
+			<FromTemplate Template="TestButton" name="21 - Complex Program" num="21" />
+			<FromTemplate Template="TestButton" name="22 - Conditional Actions" num="22" />
+			<FromTemplate Template="TestButton" name="23 - Conditional Images" num="23" />
+			<FromTemplate Template="TestButton" name="24 - DataGrid Bindings" num="24" />
+			<FromTemplate Template="TestButton" name="25 - Dynamic WebView" num="25" />
+			<FromTemplate Template="TestButton" name="26 - Files" num="26" />
+			<FromTemplate Template="TestButton" name="27 - Game of 10" num="27" />
+			<FromTemplate Template="TestButton" name="28 - Hang Man" num="28" />
+			<FromTemplate Template="TestButton" name="29 - Rock, Paper, Scissors Game" num="29" />
+			<FromTemplate Template="TestButton" name="30 - Physics Joints" num="30" />
+			<FromTemplate Template="TestButton" name="31 - Music Playback" num="31" />
+			<FromTemplate Template="TestButton" name="32 - Overlapping Actor Tests" num="32" />
+			<FromTemplate Template="TestButton" name="33 - Persistent Variables" num="33" />
+			<FromTemplate Template="TestButton" name="34 - Program Loops" num="34" />
+			<FromTemplate Template="TestButton" name="35 - Resource Removal by Group" num="35" />
+			<FromTemplate Template="TestButton" name="36 - Sound Effects" num="36" />
+			<FromTemplate Template="TestButton" name="37 - Styles" num="37" />
+			<FromTemplate Template="TestButton" name="38 - Templates" num="38" />
+			<FromTemplate Template="TestButton" name="39 - Tiled Textures" num="39" />
+			<FromTemplate Template="TestButton" name="40 - Complex UI" num="40" />
+			<FromTemplate Template="TestButton" name="41 - UI Canvas" num="41" />
+			<FromTemplate Template="TestButton" name="42 - UI Grid (Manual)" num="42" />
+			<FromTemplate Template="TestButton" name="43 - UI Grid (auto generated)" num="43" />
+			<FromTemplate Template="TestButton" name="44 - UI ImageView" num="44" />
+			<FromTemplate Template="TestButton" name="45 - UI ListBox (Manual)" num="45" />
+			<FromTemplate Template="TestButton" name="46 - UI ListBox (auto generated)" num="46" />
+			<FromTemplate Template="TestButton" name="47 - UI StackPanel" num="47" />
+			<FromTemplate Template="TestButton" name="48 - UI TabBar" num="48" />
+			<FromTemplate Template="TestButton" name="49 - UI TextBox" num="49" />
+			<FromTemplate Template="TestButton" name="50 - UI WrapPanel" num="50" />
+			<FromTemplate Template="TestButton" name="51 - Video Playback" num="51" />
+			<FromTemplate Template="TestButton" name="52 - Video Cam Streaming" num="52" />
+			<FromTemplate Template="TestButton" name="53 - XML Variables" num="53" />
+			<FromTemplate Template="TestButton" name="54 - Http Test" num="54" />
+			<FromTemplate Template="TestButton" name="55 - Simple car physics" num="55" />
+			<FromTemplate Template="TestButton" name="56 - Simple bridge physics" num="56" />
+			<FromTemplate Template="TestButton" name="57 - Video Cam Snapshots" num="57" />
+			<FromTemplate Template="TestButton" name="58 - Market Test" num="58" />
+			<FromTemplate Template="TestButton" name="59 - Multitouch Test" num="59" />
+			<FromTemplate Template="TestButton" name="60 - User Properties" num="60" />
+			<FromTemplate Template="TestButton" name="61 - Accelerometer" num="61" />
+			<FromTemplate Template="TestButton" name="62 - Compass" num="62" />
+			<FromTemplate Template="TestButton" name="63 - Ads" num="63" />
+			<FromTemplate Template="TestButton" name="64 - Remote Request" num="64" />
+			<FromTemplate Template="TestButton" name="65 - Keyboard" num="65" />
+			<FromTemplate Template="TestButton" name="66 - Create Resources" num="66" />
+			<FromTemplate Template="TestButton" name="67 - Timers" num="67" />
+			<FromTemplate Template="TestButton" name="68 - Polygon sprites" num="68" />
+			<FromTemplate Template="TestButton" name="69 - SQLite test" num="69" />
+			<FromTemplate Template="TestButton" name="70 - Facebook" num="70" />
+		</ListBox>
+
+	</Scene>
+
+	<Scene Name="HUD" AllowSuspend="false" AllowFocus="true" Visible="false" Layer="9">
+
+		<Label Name="MenuButton" Text="Menu" Style="TestButtonStyle" OnTapped="Tapped" Docking="bottom" Size="-50, -10">
+			<Actions Name="Tapped">
+				<Action Method="KillScene" P1="Scene1" />
+				<Action Method="SetCurrentScene" P1="Tests" />
+				<Action Method="HideScene" P1="HUD" />
+				<Action Method="SetTimeline" P1="SceneIn" P2="Tests" />
+			</Actions>
+		</Label>
+
+	</Scene>
+
+</xml>

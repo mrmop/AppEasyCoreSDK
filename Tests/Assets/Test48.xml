@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" Batch="false" CanvasFit="none" Camera="Cam1">
+
+		<Camera Name="Cam1" />
+
+		<!-- Create a tab bar with 4 tabs that displays 4 different views -->
+		<TabBar Name="TabBar1" Size="-100, -100" Background="PanelBrush" AutoHide="true" Draggable="true" >
+			<!-- Create horizontal tabs -->
+			<Tabs Name="TabHeader" Background="SmallPanelBrush" Size="-95, -10" Margin="0, 0, -2, -2" Orientation="horizontal">
+				<Tab Name="Tab1" Text="Tab 1" Font="serif" Background="Button2Brush" Size="-22, -90" Margin="-2, -2, 0, 0" SelectedColour="200, 200, 200, 255" SelectType="sticky" Selected="true" />
+				<Tab Name="Tab2" Text="Tab 2" Font="serif" Background="Button2Brush" Size="-22, -90" Margin="-2, -2, 0, 0" SelectedColour="200, 200, 200, 255" SelectType="sticky" />
+				<Tab Name="Tab3" Text="Tab 3" Font="serif" Background="Button2Brush" Size="-22, -90" Margin="-2, -2, 0, 0" SelectedColour="200, 200, 200, 255" SelectType="sticky" />
+				<Tab Name="Tab4" Text="Tab 4" Font="serif" Background="Button2Brush" Size="-22, -90" Margin="-2, -2, 0, 0" SelectedColour="200, 200, 200, 255" SelectType="sticky" />
+			</Tabs>
+
+			<!-- Create 4 different views -->
+			<Canvas Name="View1" Size="-95, -84" Background="PanelBrush" BackgroundColour="200, 255, 200, 255" ShowTimeline="PA_ScrollOnFromLeft" HideTimeline="PA_ScrollOffToRight">
+				<Label Text="View 1" Font="serif" Rect="-50, -25, 100, 50" Background="Button1Brush" SelectedColour="80, 80, 255, 255" />
+			</Canvas>
+			<Canvas Name="View2" Size="-95, -84" Background="PanelBrush" BackgroundColour="255, 80, 200, 255" ShowTimeline="PA_ScrollOnFromBottom" HideTimeline="PA_ScrollOffToTop">
+				<Label Text="View 2" Font="serif" Rect="-50, -25, 100, 50" Background="Button1Brush" SelectedColour="80, 80, 255, 255" />
+			</Canvas>
+			<Canvas Name="View3" Size="-95, -84" Background="PanelBrush" BackgroundColour="200, 255, 200, 255" ShowTimeline="PA_ScrollOnFromLeft" HideTimeline="PA_ScrollOffToRight">
+				<Label Text="View 3" Font="serif" Rect="-50, -25, 100, 50" Background="Button1Brush" SelectedColour="80, 80, 255, 255" />
+			</Canvas>
+			<Canvas Name="View4" Size="-95, -84" Background="PanelBrush" BackgroundColour="200, 255, 255, 255" ShowTimeline="PA_FadeOn" HideTimeline="PA_FadeOff">
+				<ListBox Name="Menu" Size="-90, -90" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10" SelectedIndex="1">
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 1" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 2" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 3" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 4" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 5" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 6" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 7" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 8" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 9" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 10" Font="serif" />
+				</ListBox>
+			</Canvas>
+
+		</TabBar>
+
+		<Tab Name="Tab5" Text="Tab 5" Font="serif" Background="Button2Brush" Size="-22, -90" Margin="-2, -2, 0, 0" SelectedColour="200, 200, 200, 255" SelectType="sticky" Depth="0" Position="-1000, 0" />
+		<Canvas Name="View5" Size="-90, -50" Background="PanelBrush" BackgroundColour="20, 20, 20, 255" ShowTimeline="PA_ScrollOnFromLeft" HideTimeline="PA_ScrollOffToRight" Depth="0" Position="-1000, 0">
+			<Label Text="View 5" Font="serif" Rect="-50, -25, 100, 50" Background="Button1Brush" SelectedColour="80, 80, 255, 255" />
+		</Canvas>
+
+		<StackPanel Orientation="vertical" Size="-10, -100" Docking="right" >
+			<Label Font="serif" Text="Add" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="LinkedTo" P2="TabBar1" P3="View5" />
+					<Action Method="SetProperty" P1="AddTab" P2="Tab5" P3="TabBar1" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Remove" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="RemoveTab" P2="Tab5" P3="TabBar1" />
+				</Actions>
+			</Label>
+		</StackPanel>
+		
+		<Label Font="serif" Text="Demonstration of UI TabBar containers" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+	</Scene>
+	
+
+
+</xml>

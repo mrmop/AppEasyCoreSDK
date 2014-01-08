@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Ground shape -->
+	<!--Shape Name="bg1" Points="-512,-71,-496,-71,-497,387,-512,387" Type="polygon" Tag="environment" />
+	<Shape Name="bg2" Points="-497,355,498,355,498,388,-497,387" Type="polygon" Tag="environment" />
+	<Shape Name="bg3" Points="498,-71,514,-71,514,388,498,388" Type="polygon" Tag="environment" /-->
+	<Shape Name="bg1" Type="Polygon" Points="-511,-71,-443,51,-406,387,-512,387" />
+	<Shape Name="bg2" Type="Polygon" Points="-443,51,-386,168,-300,387,-406,387" />
+	<Shape Name="bg3" Type="Polygon" Points="-385,171,-289,255,-194,387,-301,387" />
+	<Shape Name="bg4" Type="Polygon" Points="-289,255,-176,244,-89,386,-194,387" />
+	<Shape Name="bg5" Type="Polygon" Points="-176,244,-53,302,22,385,-89,386" />
+	<Shape Name="bg6" Type="Polygon" Points="-53,302,92,258,128,384,22,384" />
+	<Shape Name="bg10" Type="Polygon" Points="446,52,513,-73,512,384,406,384" />
+	<Shape Name="bg7" Type="Polygon" Points="92,258,133,273,234,384,128,384" />
+	<Shape Name="bg8" Type="Polygon" Points="133,273,237,273,338,384,232,384" />
+	<Shape Name="bg9" Type="Polygon" Points="237,273,427,210,408,384,336,384" />
+	<!-- Ground geometry -->
+	<!--Geometry Name="ground" Vertices="498,-71,514,-71,514,388,498,388,-512,-71,-496,-71,-497,387,-512,387,-497,355,498,355,498,388,-497,387" Type="QuadList" Tag="environment" /-->
+	<Geometry Name="ground" Type="QuadList" Vertices="237,273,427,210,408,384,336,384,133,273,237,273,338,384,232,384,92,258,133,273,234,384,128,384,446,52,513,-73,512,384,406,384,-53,302,92,258,128,384,22,384,-176,244,-53,302,22,385,-89,386,-289,255,-176,244,-89,386,-194,387,-385,171,-289,255,-194,387,-301,387,-443,51,-386,168,-300,387,-406,387,-511,-71,-443,51,-406,387,-512,387" />
+	<!-- Create ground actor -->
+	<Icon Name="ground" Background="ground" Geometry="ground" Box2dMaterial="Static" Tiling="5,2.5" Tag="environment">
+		<Fixtures>
+			<Fixture Shape="bg1" Box2dMaterial="static" CollisionFlags="1,1,1" />
+			<Fixture Shape="bg2" Box2dMaterial="static" CollisionFlags="1,1,1" />
+			<Fixture Shape="bg3" Box2dMaterial="static" CollisionFlags="1,1,1" />
+			<Fixture Shape="bg4" Box2dMaterial="static" CollisionFlags="1,1,1" />
+			<Fixture Shape="bg5" Box2dMaterial="static" CollisionFlags="1,1,1" />
+			<Fixture Shape="bg6" Box2dMaterial="static" CollisionFlags="1,1,1" />
+			<Fixture Shape="bg7" Box2dMaterial="static" CollisionFlags="1,1,1" />
+			<Fixture Shape="bg8" Box2dMaterial="static" CollisionFlags="1,1,1" />
+			<Fixture Shape="bg9" Box2dMaterial="static" CollisionFlags="1,1,1" />
+			<Fixture Shape="bg10" Box2dMaterial="static" CollisionFlags="1,1,1" />
+		</Fixtures>
+	</Icon>
+
+	<Icon Name="image2991" Background="crate" Position="-175,215" Size="64,64" Angle="24.747" />
+	<Icon Name="image2991-4" Background="crate" Position="408,86" Size="64,64" Angle="3.887" />
+	<Icon Name="image2991-8" Background="crate" Position="-306,294" Size="64,64" Angle="-30.003" />
+	<Icon Name="image2991-5" Background="crate" Position="-428,235" Size="112,98" Angle="-12.653" />
+</xml>

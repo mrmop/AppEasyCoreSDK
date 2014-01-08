@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" >
+
+		<!-- Create a canvas that contains a number of docked and none docked labels -->
+		<Canvas Name="Canvas1" Position="0,0" Size="-100, -100" Background="Button2Brush" ScrollRange="-500, -500, 1000, 1000" ScrollPos="-256,-200" Bubbling="true">
+			<Label Font="serif" Text="Dock Top" Docking="top" Background="Button1Brush" Size="100, 100" Margin="-20, -20, -20, -20" />
+			<Label Font="serif" Text="Not docked" Background="Button1Brush" Size="100, 100" Margin="20, 20, 20, 20" AngularVelocity="200" />
+			<Label Font="serif" Text="Not docked" Position="100, 100" Background="Button1Brush" Size="100, 100" Margin="20, 20, 20, 20" AngularVelocity="-200" />
+			<Label Font="serif" Text="Dock Right" Docking="right" Background="Button1Brush" Size="100, 100" Margin="20, 20, 20, 20" />
+			<Label Font="serif" Text="Dock Left" Docking="topleft" Background="Button1Brush" Size="100, 100" Margin="20, 20, 20, 20" />
+			<Label Font="serif" Text="Dock BottomLeft" Docking="bottomleft" Background="Button1Brush" Size="100, 100" Margin="20, 20, 20, 20" />
+			<Label Font="serif" Text="Dock TopRight" Docking="topright" Background="Button1Brush" Size="100, 100" Margin="20, 20, 20, 20" />
+			<Label Font="serif" Text="Dock BottomRight" Docking="bottomright" Background="Button1Brush" Size="100, 100" Margin="20, 20, 20, 20" />
+		</Canvas>
+
+		<Label Font="serif" Text="Demonstration of UI Canvas Container" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

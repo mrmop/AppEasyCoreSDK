@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" OnCreate="Created" ScriptEngine="lua" >
+		<Actions Name="Created">
+			<Action Method="Inline" P1="file_number = 0" />
+		</Actions>
+
+		<!-- Create a blank image to hold the camera feed -->
+		<Image Name="CamImage" />
+		<!-- Create a brush that refers to the camera image -->
+		<Brush Name="CamBrush" Image="CamImage" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+
+		<!-- Create image / brushes that will hold the snapshots -->
+		<Image Name="Image0" Location="saved_image0.jpg" />
+		<Image Name="Image1" Location="saved_image1.jpg" />
+		<Image Name="Image2" Location="saved_image2.jpg" />
+		<Image Name="Image3" Location="saved_image3.jpg" />
+		<Image Name="Image4" Location="saved_image4.jpg" />
+		<Image Name="Image5" Location="saved_image5.jpg" />
+		<Image Name="Image6" Location="saved_image6.jpg" />
+		<Image Name="Image7" Location="saved_image7.jpg" />
+		<Image Name="Image8" Location="saved_image8.jpg" />
+		<Brush Name="Brush0" Image="Image0" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+		<Brush Name="Brush1" Image="Image1" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+		<Brush Name="Brush2" Image="Image2" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+		<Brush Name="Brush3" Image="Image3" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+		<Brush Name="Brush4" Image="Image4" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+		<Brush Name="Brush5" Image="Image5" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+		<Brush Name="Brush6" Image="Image6" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+		<Brush Name="Brush7" Image="Image7" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+		<Brush Name="Brush8" Image="Image8" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+
+		<!-- Create a video camera stream that targets Image1 image -->
+		<VideoCam Name="Cam1" Target="CamImage" Quality="low" Resolution="low" Start="true" Direction="front" />
+
+		<!-- Create a basic list box -->
+		<Grid Name="Menu" Size="-100, -100" Position="0, 50" Background="Button1Brush" AlignH="centre" ClipMargin="10, 10, 10, 10" SelectedIndex="1">
+			<RowDefinition Height="-20" />
+			<RowDefinition Height="-20" />
+			<RowDefinition Height="-20" />
+			<ColumnDefinition Width="-33" />
+			<ColumnDefinition Width="-33" />
+			<ColumnDefinition Width="-33" />
+			<Icon Background="Brush0" Size="0, -20" GridPos="0, 0" SelectedColour="128, 255, 128, 255" AspectLock="y" />
+			<Icon Background="Brush1" Size="0, -20" GridPos="1, 0" SelectedColour="128, 255, 200, 255" AspectLock="y" />
+			<Icon Background="Brush2" Size="0, -20" GridPos="2, 0" SelectedColour="128, 255, 200, 255" AspectLock="y" />
+			<Icon Background="Brush3" Size="0, -20" GridPos="0, 1" SelectedColour="128, 128, 200, 255" AspectLock="y" />
+			<Icon Background="Brush4" Size="0, -20" GridPos="1, 1" SelectedColour="128, 255, 200, 255" AspectLock="y" />
+			<Icon Background="Brush5" Size="0, -20" GridPos="2, 1" SelectedColour="128, 255, 128, 255" AspectLock="y" />
+			<Icon Background="Brush6" Size="0, -20" GridPos="0, 2" SelectedColour="128, 128, 200, 255" AspectLock="y" />
+			<Icon Background="Brush7" Size="0, -20" GridPos="1, 2" SelectedColour="128, 128, 200, 255" AspectLock="y" />
+			<Icon Background="Brush8" Size="0, -20" GridPos="2, 2" SelectedColour="128, 128, 200, 255" AspectLock="y" />
+		</Grid>
+
+		<!-- When the label below is tapped a shor lua script is ran which saves the current cam snapshot then  -->
+		<!-- loads it into one of the images in the scene  -->
+		<Label Background="CamBrush" Size="-30, -20" Docking="bottom" SelectedColour="128, 255, 128, 255" Text="Save" Font="serif" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="Inline" P1="
+						local filename = 'saved_image' .. tostring(file_number);
+						media.snapshotVideoCam(filename, 100);
+						local image_name = 'image' .. tostring(file_number);
+						local scene = scene.find('Scene1');
+						local myimage = resource.find(image_name, 'image', scene);
+						image.reload(myimage, filename .. '.jpg');
+						file_number = file_number + 1;
+						if (file_number == 9) then 
+							file_number = 0;
+						end
+						" />
+			</Actions>
+		</Label>
+
+		<Label Font="serif" Text="Demonstration of Video snapshots" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

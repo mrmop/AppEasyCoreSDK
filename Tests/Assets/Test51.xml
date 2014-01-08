@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" >
+
+		<!-- Create a video resource -->
+		<Video Name="Video1" Location="video1.mp4" Codec="MPEG4" />
+
+		<!-- Create a label that will be shown when the video stops playing -->
+		<Label Name="Label1" Font="serif" Text="Video has Stopped" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-60, -20" AutoHeight="true" Visible="false" />
+
+		<!-- Create a video overlay to show the video -->
+		<VideoOverlay Name="Vid1" Video="Video1" Size="-20, 100" AutoPlay="true" Volume="0.3" Repeat="1" AspectLock="x" OnEnd="VideoStopped">
+			<Actions Name="VideoStopped">
+				<Action Method="ShowActor" P1="Label1" />
+			</Actions>
+		</VideoOverlay>
+
+		<Label Font="serif" Text="Demonstration of Video Playback" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

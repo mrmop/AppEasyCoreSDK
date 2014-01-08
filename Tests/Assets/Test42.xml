@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<Style Name="Button1">
+			<Set Property="Font" Value="serif" />
+			<Set Property="Background" Value="Button1Brush" />
+			<Set Property="BackgroundColour" Value="0, 120, 255, 255" />
+			<Set Property="Margin" Value="10, 10, 10, 10" />
+			<Set Property="SelectType" Value="toggle" />
+			<Set Property="Size" Value="-25, 50" />
+		</Style>
+
+		<!-- Create a grid -->
+		<Grid Name="ItemsGrid" Size="-100, -100" Background="PanelBrush" BackgroundColour="255, 255, 255, 255" Tappable="true" ClipMargin="10, 10, 10, 10" SelectedIndex="5">
+			
+			<!-- Create grid rows -->
+			<RowDefinition Height="100" />
+			<RowDefinition Height="100" />
+			<RowDefinition Height="100" />
+			<RowDefinition Height="100" />
+			<RowDefinition Height="100" />
+			<RowDefinition Height="100" />
+			<!-- Create grid columns -->
+			<ColumnDefinition Width="-33" />
+			<ColumnDefinition Width="-33" />
+			<ColumnDefinition Width="-33" />
+
+			<!-- Fill grid cells -->
+			<Label Style="Button1" Text="Cell 0" GridPos="0, 0" />
+			<Label Style="Button1" Text="Cell 1" GridPos="1, 0" />
+			<Label Style="Button1" Text="Cell 2" GridPos="2, 0" />
+			<Label Style="Button1" Text="Cell 3" GridPos="0, 1" />
+			<Label Style="Button1" Text="Cell 4" GridPos="1, 1" />
+			<Label Style="Button1" Text="Cell 5" GridPos="2, 1" />
+			<Label Style="Button1" Text="Cell 6" GridPos="0, 2" />
+			<Label Style="Button1" Text="Cell 7" GridPos="1, 2" />
+			<Label Style="Button1" Text="Cell 8" GridPos="2, 2" />
+			<Label Style="Button1" Text="Cell 9" GridPos="0, 3" />
+			<Label Style="Button1" Text="Cell 10" GridPos="1, 3" />
+			<Label Style="Button1" Text="Cell 11" GridPos="2, 3" />
+			<Label Style="Button1" Text="Cell 12" GridPos="0, 4" />
+			<Label Style="Button1" Text="Cell 13" GridPos="1, 4" />
+			<Label Style="Button1" Text="Cell 14" GridPos="2, 4" />
+			<Label Style="Button1" Text="Cell 15" GridPos="0, 5" />
+			<Label Style="Button1" Text="Cell 16" GridPos="1, 5" />
+			<Label Style="Button1" Text="Cell 17" GridPos="2, 5" />
+
+		</Grid>
+
+		<Label Font="serif" Text="Demonstration of Manually building a UI Grid" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

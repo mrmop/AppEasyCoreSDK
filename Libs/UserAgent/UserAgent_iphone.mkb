@@ -1,0 +1,13 @@
+#!/usr/bin/env mkb
+# Builder mkb file for the UserAgent extension on iphone
+platform IPHONE
+
+options
+{
+    lib
+    output-name="lib/iphone/libUserAgent.a"
+    output-name-debug="lib/iphone/libUserAgent_d.a"
+}
+define S3E_BUILD_EXT
+
+subproject UserAgent_build

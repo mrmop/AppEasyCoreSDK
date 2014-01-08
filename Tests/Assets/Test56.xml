@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene with physics enabled -->
+	<Scene Name="Scene1" Current="true" Physics="true" Gravity="0, 10" Camera="Camera1" DoSleep="false">
+
+		<Image Name="Crate" Location="crate.png" />
+		<Image Name="Wheel" Location="bob.png" />
+		<Brush Name="Crate" Image="Crate" />
+		<Brush Name="Wheel" Image="Wheel" />
+
+		<!-- Create touch pan camera -->
+		<Camera Name="Camera1" TouchPanX="true" TouchPanY="true" VelocityDamping="0.05, 0.05" FollowSpeed="2.0, 2.0" IgnoreActors="false" TargetX="CarBody2" TargetY="CarBody2" />
+
+		<!-- Create Box2D materials -->
+		<Box2dMaterial Name="Bouncey" Type="dynamic" Density="1.0" Friction="0.3" Restitution="0.6" />
+		<Box2dMaterial Name="Wheel" Type="dynamic" Density="1.0" Friction="1.0" Restitution="1.0" />
+		<Box2dMaterial Name="FixedHeavy" Type="static" Density="1.0" Friction="1.0" Restitution="0.8" FixedRotation="true" />
+
+		<!-- Create Box2D shapes -->
+		<Shape Name="WheelShape" Type="circle" Radius="30" />
+		<Shape Name="CarShape" Type="box" Width="200" Height="100" />
+		<Shape Name="BoxShape" Type="box" Width="20" Height="20" />
+		<Shape Name="BoxShapeWide" Type="box" Width="50" Height="20" />
+		<Shape Name="LeftWall" Type="box" Width="100" Height="600" />
+		<Shape Name="RightWall" Type="box" Width="100" Height="600" />
+		<Shape Name="BridgeLink" Type="box" Width="200" Height="20" />
+
+		<!-- Create walls -->
+		<Icon Position="-1000, -100" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 600" Shape="LeftWall" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+		<Icon Position="1000, -100" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 600" Shape="RightWall" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+
+		<Icon Name="BridgStart" Position="-800, -100" Background="Crate" Size="200, 20" Shape="BridgeLink" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Link1" Position="-600, -100" Background="Crate" Size="200, 20" Shape="BridgeLink" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Link2" Position="-400, -100" Background="Crate" Size="200, 20" Shape="BridgeLink" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Link3" Position="-200, -100" Background="Crate" Size="200, 20" Shape="BridgeLink" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Link4" Position="0, -100" Background="Crate" Size="200, 20" Shape="BridgeLink" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Link5" Position="200, -100" Background="Crate" Size="200, 20" Shape="BridgeLink" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Link6" Position="400, -100" Background="Crate" Size="200, 20" Shape="BridgeLink" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Link7" Position="600, -100" Background="Crate" Size="200, 20" Shape="BridgeLink" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Link8" Position="800, -100" Background="Crate" Size="200, 20" Shape="BridgeLink" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="BridgEnd" Position="1000, -100" Background="Crate" Size="200, 20" Shape="BridgeLink" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" Draggable="true" />
+
+		<Joints>
+			<Joint ActorA="BridgStart" ActorB="Link1" Type="revolute" OffsetA="100, 0" OffsetB="-100, 0" SelfCollide="true" />
+			<Joint ActorA="Link1" ActorB="Link2" Type="revolute" OffsetA="100, 0" OffsetB="-100, 0" SelfCollide="true" />
+			<Joint ActorA="Link2" ActorB="Link3" Type="revolute" OffsetA="100, 0" OffsetB="-100, 0" SelfCollide="true" />
+			<Joint ActorA="Link3" ActorB="Link4" Type="revolute" OffsetA="100, 0" OffsetB="-100, 0" SelfCollide="true" />
+			<Joint ActorA="Link4" ActorB="Link5" Type="revolute" OffsetA="100, 0" OffsetB="-100, 0" SelfCollide="true" />
+			<Joint ActorA="Link5" ActorB="Link6" Type="revolute" OffsetA="100, 0" OffsetB="-100, 0" SelfCollide="true" />
+			<Joint ActorA="Link6" ActorB="Link7" Type="revolute" OffsetA="100, 0" OffsetB="-100, 0" SelfCollide="true" />
+			<Joint ActorA="Link7" ActorB="Link8" Type="revolute" OffsetA="100, 0" OffsetB="-100, 0" SelfCollide="true" />
+			<Joint ActorA="Link8" ActorB="BridgEnd" Type="revolute" OffsetA="100, 0" OffsetB="-100, 0" SelfCollide="true" />
+		</Joints>
+
+		<!-- Create car 1 -->
+		<Icon Name="CarBody" Background="Crate" Position="-700, -380" Size="200, 100" Box2dMaterial="Bouncey" Shape="CarShape" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="BackWheel" Background="Wheel" Position="-780, -300" Size="60, 60" Box2dMaterial="Wheel" Shape="WheelShape" CollisionFlags="1, 1, 1" />
+		<Icon Name="FrontWheel" Background="Wheel" Position="-620, -300" Size="60, 60" Box2dMaterial="Wheel" Shape="WheelShape" CollisionFlags="1, 1, 1" />
+		<Joints>
+			<Joint Name="RearSuspension" Type="wheel" ActorA="CarBody" ActorB="BackWheel" OffsetA="-80, 80" Frequency="20" Damping="0.5" />
+			<Joint Name="FrontSuspension" Type="wheel" ActorA="CarBody" ActorB="FrontWheel" OffsetA="80, 80" Frequency="20" Damping="0.5" MotorEnabled="true" MotorSpeed="200" MaxMotorTorque="2000" />
+		</Joints>
+
+		<!-- Create car 2 -->
+		<Icon Name="CarBody2" Background="Crate" Position="700, -280" Size="200, 100" Box2dMaterial="Bouncey" Shape="CarShape" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="BackWheel2" Background="Wheel" Position="620, -200" Size="60, 60" Box2dMaterial="Wheel" Shape="WheelShape" CollisionFlags="1, 1, 1" />
+		<Icon Name="FrontWheel2" Background="Wheel" Position="780, -200" Size="60, 60" Box2dMaterial="Wheel" Shape="WheelShape" CollisionFlags="1, 1, 1" />
+		<Joints>
+			<Joint Name="RearSuspension2" Type="wheel" ActorA="CarBody2" ActorB="BackWheel2" OffsetA="-80, 80" Frequency="20" Damping="0.5" />
+			<Joint Name="FrontSuspension2" Type="wheel" ActorA="CarBody2" ActorB="FrontWheel2" OffsetA="80, 80" Frequency="20" Damping="0.5" MotorEnabled="true" MotorSpeed="-200" MaxMotorTorque="2000" />
+		</Joints>
+
+		<Label Font="serif" Text="Demonstration of simple bridge physics" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

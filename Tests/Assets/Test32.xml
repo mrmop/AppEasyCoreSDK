@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" Camera="Camera1" ScriptEngine="lua">
+
+		<!-- Load Crate image and create a brush  -->
+		<Image Name="Crate" Location="crate.png" />
+		<Brush Name="Crate" Image="Crate" />
+
+		<!-- Define and load a Lua script -->
+		<Script Name="Script1" Type="lua" />
+		<File Name="File1" Location="Test32.lua" FileType="lua" Preload="true" Script="Script1" />
+
+		<!-- Create touch pan camera -->
+		<Camera Name="Camera1" TouchPanX="true" TouchPanY="true" IgnoreActors="false" />
+
+		<!-- Create a bunch of labels -->
+		<Icon Name="I1" Background="Crate" Position="-200, -100" Size="100, 100" AngularVelocity="100" />
+		<Icon Name="I2" Background="Crate" Position="-100, -100" Size="100, 100" />
+		<Icon Name="I3" Background="Crate" Position="0, -100" Size="100, 100" />
+		<Icon Name="I4" Background="Crate" Position="100, -100" Size="100, 100" />
+		<Icon Name="I5" Background="Crate" Position="200, -100" Size="100, 100" />
+		<Icon Name="I6" Background="Crate" Position="-200, 0" Size="100, 100" />
+		<Icon Name="I7" Background="Crate" Position="-100, 0" Size="100, 100" />
+		<Icon Name="I8" Background="Crate" Position="0, 0" Size="100, 100" />
+		<Icon Name="I9" Background="Crate" Position="100, 0" Size="100, 100" />
+		<Icon Name="I10" Background="Crate" Position="200, 0" Size="100, 100" />
+
+		<!-- Create a tester object that can be dragged around -->
+		<Icon Name="tester" Background="Crate" BackgroundColour="80, 255, 80, 255" Position="0, 150" Size="100, 100" Draggable="true" AngularVelocity="60.0" OnTick="TickActions">
+			<Actions Name="TickActions">
+				<Action Method="CallScript" P1="CrateTick" />
+			</Actions>
+		</Icon>
+
+		<Label Font="serif" Text="Demonstration of Overlapping Actor Detection" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" Camera="Camera1" Bindings="SceneBindings" ScriptEngine="lua">
+		<!-- Create user properties list that is assigned to the scene -->
+		<UserProperties Name="GameProperties">
+			<Property Name="Counter" Type="int" Value="0" />
+			<Property Name="MyAngle" Type="float" Value="0" />
+		</UserProperties>
+
+		<!-- Load script -->
+		<Script Name="Scene1Script" Type="lua" />
+		<File Name="ScriptFile1" Location="Test60.lua" Script="Scene1Script" />
+
+		<!-- Create a camera -->
+		<Camera Name="Camera1" />
+		
+		<!-- Create a variable that holds the scene angle -->
+		<Variable Name="SceneAngle" Type="float" Value="0" />
+
+		<!-- Create a variable that holds the labels angle -->
+		<Variable Name="LabelAngle" Type="float" Value="0" />
+
+		<!-- Create a data bindings list for the scene -->
+		<Bindings Name="SceneBindings">
+			<Binding Property="Angle" Variable="SceneAngle" />
+		</Bindings>
+
+		<!-- Create large background image -->
+		<Icon Size="-100, -100" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" OnTapped="Update">
+			<Actions Name="Update">
+				<Action Method="AddUserProp" P1="MyAngle" P2="10" P4="Scene1" />
+				<Action Method="UserPropToVar" P1="MyAngle" P2="SceneAngle" P4="Scene1" />
+			</Actions>
+		</Icon>
+			
+		<!-- Create a button that is bound to the LabelAngle variable -->
+		<Label Font="serif" Text="Tap Me" BackgroundColour="80, 80, 255, 255" Background="Button1Brush" Binding="[Angle]LabelAngle" OnTapped="Update">
+			<!-- Create user properties list that is assigned to the label -->
+			<UserProperties Name="PlayerProperties">
+				<Property Name="MyProperty1" Type="int" Value="1" />
+				<Property Name="MyProperty2" Type="float" Value="1" />
+				<Property Name="MyProperty3" Type="string" Value="Hello" />
+				<Property Name="MyAngle" Type="float" Value="0" />
+			</UserProperties>
+			<Actions Name="Update">
+				<Action Method="AddUserProp" P1="MyAngle" P2="10" />
+				<Action Method="UserPropToVar" P1="MyAngle" P2="LabelAngle" />
+				<Action Method="CallScript" P1="ChangeProperties" />
+			</Actions>
+		</Label>
+
+		<Label Font="serif" Text="Demonstration of scene and actor user properties" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

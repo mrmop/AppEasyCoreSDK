@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<!-- Create a variable that holds the players sctore -->
+		<Variable Name="PlayerScore" Type="int" Value="0" />
+
+		<!-- Create a condition variable -->
+		<Variable Name="PlayerScoreTooHigh" Type="condition" Value="PlayerScore GT 10"/>
+
+		<!-- Create a button with the players score bound to the text property -->
+		<Label Font="serif" BackgroundColour="80, 80, 255, 255" Background="Button1Brush" Binding="[Text]PlayerScore" OnTapped="UpdateScore">
+			<Actions Name="UpdateScore">
+				<Action Method="AddVar" P1="PlayerScore" P2="1" Condition="!PlayerScoreTooHigh" />
+				<Action Method="SetVar" P1="PlayerScore" P2="0" Condition="PlayerScoreTooHigh" />
+			</Actions>
+		</Label>
+
+		<Label Font="serif" Text="Demonstration showing how actions can be executed based on conditions of variables" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

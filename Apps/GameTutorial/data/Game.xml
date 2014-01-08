@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="game" Style="physics_scene_style" Current="true" Camera="cam" OnKeyBack="exit" OnCreate="created" OnTick="tick">
+		<!-- Exit game actions -->
+		<Actions Name="exit">
+			<Action Method="Exit"/>
+		</Actions>
+		<!-- Game created actions -->
+		<Actions Name="created">
+			<Action Method="CallGlobalScript" P1="created" />
+		</Actions>
+		<!-- Per frame game update actins -->
+		<Actions Name="tick">
+			<Action Method="CallGlobalScript" P1="tick" />
+		</Actions>
+		<!-- Spawn pegs actions and timer -->
+		<Actions Name="spawn_pegs">
+			<Action Method="CallGlobalScript" P1="spawnPegs" />
+		</Actions>
+		<Timer Name="spawn_pegs" Duration="3" Repeat="1" AutoStart="false" OnTimeout="spawn_pegs" />
+
+		<!-- Create a camera -->
+		<Camera Name="cam" />
+
+		<!-- Create sky actor -->
+		<Icon Name="sky" Background="sky" Size="1024, 768" />
+		
+		<!-- HUD -->
+		<Animation Name="score_anim" Type="vec2" Duration="1.5" >
+			<Frame Value="1.4, 1.4" Time="0.0" Easing="cubicout" />
+			<Frame Value="1.0, 1.0" Time="1.5" />
+		</Animation>
+		<Timeline Name="score_anim" AutoPlay="false">
+			<Animation Anim="score_anim" Target="Scale" Repeat="1" StartAtTime="0" />
+		</Timeline>
+		<Timeline Name="bcount_anim" AutoPlay="false">
+			<Animation Anim="score_anim" Target="Scale" Repeat="1" StartAtTime="0" />
+		</Timeline>
+
+		<!-- Create HUD background -->
+		<Icon Name="hud_bg" Background="score_board" Docking="top" Layer="5">
+
+			<!-- Gems left Icon -->
+			<Icon Name="target_gem" Position="-145, -2" Background="gem1" Tappable="false" />
+
+			<!-- Add number of gems remaining -->
+			<Label Name="gems_remaining" Position="-90, -16" Font="font1" Text="x10" TextColour="0, 0, 0, 255" Timeline="bcount_anim" Tappable="false" />
+
+			<!-- Add score text -->
+			<Label Position="30, -12" Font="font1" Text="Score:" TextColour="0, 0, 0, 255" Tappable="false" />
+
+			<!-- Add score -->
+			<Label Name="score" Position="120, -12" Font="font1" TextColour="0, 0, 0, 255" Text="0" Timeline="score_anim" Tappable="false"/>
+
+			<!-- Add record text -->
+			<Label Position="30, 12" Font="font1" Text="Record:" TextColour="255, 225, 219, 255" Tappable="false" />
+
+			<!-- Add record score -->
+			<Label Name="record_score" Position="120, 12" Font="font1" AngularVelocity="0" TextColour="255, 125, 19, 255" Tappable="false" />
+
+			<!-- Create menu button -->
+			<Icon Name="menu_button" Position="260, 0" Background="menu_button" SelectedColour="128, 128, 255, 180" OnTapped="tapped">
+				<Actions Name="tapped">
+					<Action Method="CallGlobalScript" Param1="pauseGame" />
+				</Actions>
+			</Icon>
+		</Icon>
+		
+	</Scene>
+
+</xml>

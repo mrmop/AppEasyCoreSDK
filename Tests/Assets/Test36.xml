@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" ScriptEngine="lua" >
+
+		<!-- Load sound effect -->
+		<Sound Name="explosion" Location="explosion.wav" />
+
+		<!-- Create a label button that when tapped plays a sound effect  -->
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="100, 100" Position="-100, -100" Text="Play" OnTapped="Explosion">
+			<Actions Name="Explosion">
+				<Action Method="PlaySound" P1="explosion" />
+			</Actions>
+		</Label>
+
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="100, 100" Position="100, -100" Text="Play Looped" OnTapped="Explosion">
+			<Actions Name="Explosion">
+				<Action Method="PlaySound" P1="explosion" P2="true" />
+			</Actions>
+		</Label>
+
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="200, 100" Position="0, 0" Text="Play Looped (Script)" OnTapped="Explosion" FlipY="true">
+			<Actions Name="Explosion">
+				<Action Method="Inline" P1="
+						local scene = scene.find('Scene1');
+						local sound = resource.find('explosion', 'sound', scene);
+						media.playSound(sound, true);
+						" />
+			</Actions>
+		</Label>
+		
+		<Label Font="serif" Text="Demonstration of Playing Sound Effects" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

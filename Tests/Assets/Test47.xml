@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" >
+
+		<!-- Create a vertical stack panel with a collection of buttons -->
+		<StackPanel Name="sp1" Background="PanelBrush" Orientation="vertical" Position="0, -200" SizeToContent="xy" Draggable="true">
+			<Label Font="serif" Text="Item 1" Background="Button1Brush" BackgroundColour="0, 120, 255, 255" Margin="10, 10, 10, 0" />
+			<Label Font="serif" Text="Item 2" Background="Button1Brush" BackgroundColour="0, 120, 255, 255" />
+			<Label Font="serif" Text="Item 3" Background="Button1Brush" BackgroundColour="0, 120, 255, 255" />
+			<Label Font="serif" Text="Item 4" Background="Button1Brush" BackgroundColour="0, 120, 255, 255" />
+			<Label Font="serif" Text="Item 5" Background="Button1Brush" BackgroundColour="0, 120, 255, 255" Margin="0, 0, 0, 10" />
+		</StackPanel>
+
+		<!-- Create an horizontal stack panel with a collection of buttons -->
+		<StackPanel Name="sp2" Background="PanelBrush" Orientation="horizontal" Position="0, 200" SizeToContent="xy" Draggable="true">
+			<Label Font="serif" Text="Item 1" Size="-32, 50" Background="Button1Brush" BackgroundColour="0, 120, 255, 255" Margin="10, 0, 10, 0" />
+			<Label Font="serif" Text="Item 2" Size="-32, 50" Background="Button1Brush" BackgroundColour="0, 120, 255, 255" />
+			<Label Font="serif" Text="Item 3" Size="-32, 50" Background="Button1Brush" BackgroundColour="0, 120, 255, 255" Margin="0, 10, 0, 10" />
+		</StackPanel>
+
+		<Label Name="add_label1" Font="serif" Text="New 1" Background="Button1Brush" BackgroundColour="255, 120, 255, 255" Depth="0" />
+		
+		<StackPanel Orientation="vertical" Size="-10, -100" Docking="right" >
+			<Label Font="serif" Text="Horizontal" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="Orientation" P2="horizontal" P3="sp1" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Vertical" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="Orientation" P2="vertical" P3="sp1" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Add" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="LinkedTo" P2="sp1" P3="add_label1" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Remove" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="LinkedTo" P2="" P3="add_label1" />
+				</Actions>
+			</Label>
+		</StackPanel>
+
+		<Label Font="serif" Text="Demonstration of StackPanel UI containers" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

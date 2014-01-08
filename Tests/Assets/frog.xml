@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:\AppEasy\docs\XOML.xsd">
+    
+    <!-- Create frog image and brushes -->
+    <Image Name="Sprites" Location="sprites.png" Preload="false" Format="RGBA_5551" Filter="true" />
+    <Brush Name="FrogGreenBrush" Type="image" Image="Sprites" SrcRect="0, 0, 116, 75"/>
+    <Brush Name="FrogYellowBrush" Type="image" Image="Sprites" SrcRect="116, 0, 116, 75"/>
+    <Brush Name="FrogBlueBrush" Type="image" Image="Sprites" SrcRect="232, 0, 116, 75"/>
+    <Brush Name="FrogRedBrush" Type="image" Image="Sprites" SrcRect="348, 0, 116, 75"/>
+    <Brush Name="FrogHeadBrush" Type="image" Image="Sprites" SrcRect="0, 75, 84, 64"/>
+    <Brush Name="FrogEyeBrush" Type="image" Image="Sprites" SrcRect="84, 75, 35, 33"/>
+
+    <!-- Create frog animations -->
+    <Animation Name="head_bob" Type="vec2" Duration="3" >
+        <Frame Value="0, 0"    Time="0.0" Easing="quadin" />
+        <Frame Value="0, 5"   Time="1.0" Easing="quadout" />
+        <Frame Value="0, 0"    Time="1.5" Easing="quadin" />
+        <Frame Value="0, -5"  Time="2.0" Easing="quadout" />
+        <Frame Value="0, 0"    Time="3.0" Easing="quadin" />
+    </Animation>
+    <Animation Name="head_rock" Type="float" Duration="4" >
+        <Frame Value="0"    Time="0.0"/>
+        <Frame Value="25"   Time="1.0"/>
+        <Frame Value="0"    Time="2.0"/>
+        <Frame Value="-25"   Time="3.0"/>
+        <Frame Value="0"    Time="4.0"/>
+    </Animation>
+    <Animation Name="eye_roll" Type="float" Duration="2" >
+        <Frame Value="0"    Time="0.0"/>
+        <Frame Value="30"   Time="0.5"/>
+        <Frame Value="0"    Time="1.0"/>
+        <Frame Value="-30"   Time="1.5"/>
+        <Frame Value="0"    Time="2.0"/>
+    </Animation>
+    
+    <!-- Create a template that defines a basic frog -->
+    <Template Name="FrogTemp">
+        <StackPanel Background="SmallPanelBrush" Orientation="vertical" Size="-95, 120" BackgroundColour="255, 255, 255, 128" SelectedColour="255, 255, 200, 255" AlignH="centre" Margin="0, 0, 20, 0" SelectType="toggle" Selected="false" >
+            <Label Name="Body$base$" Background="Frog$colour$Brush" Text="Frog $base$" Font="serif" TextColour="255, 255, 255, 255" Margin="0, 0, 0, 0" HitTest="false" UseParentOpacity="false">
+                <Icon Name="Head$base$" Size="82, 62" Origin="0, -35" Background="FrogHeadBrush" Timeline="head_rock" HitTest="false">
+                    <Timeline Name="head_rock" AutoPlay="true">
+                        <Animation Anim="head_rock" Target="Angle" Repeat="0" StartAtTime="$delay$" />
+                        <Animation Anim="head_bob" Target="Position" Repeat="0" StartAtTime="$delay$" />
+                    </Timeline>
+                    <Icon Name="Eye1$base$" Size="33, 31" Position="-17, -20" Background="FrogEyeBrush" Timeline="eye_roll" HitTest="false">
+                        <Timeline Name="eye_roll" AutoPlay="true">
+                            <Animation Anim="eye_roll" Target="Angle" Repeat="0" StartAtTime="$delay$" />
+                        </Timeline>
+                    </Icon>
+                    <Icon Name="Eye2$base$" Size="33, 31" Position="17, -20" Background="FrogEyeBrush" FlipX="true" Timeline="eye_roll" HitTest="false">
+                        <Timeline Name="eye_roll" AutoPlay="true">
+                            <Animation Anim="eye_roll" Target="Angle" Repeat="0" StartAtTime="$delay$" />
+                        </Timeline>
+                    </Icon>
+                </Icon>
+            </Label>
+        </StackPanel>
+    </Template>
+
+</xml>

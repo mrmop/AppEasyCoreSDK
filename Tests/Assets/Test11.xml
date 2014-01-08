@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene with physics enabled -->
+	<Scene Name="Scene1" Current="true" Physics="true" WorldScale="1, 1" Gravity="0, 30" Camera="Camera1">
+
+		<!-- Create touch pan camera -->
+		<Camera Name="Camera1" />
+
+		<!-- Create Box2D materials -->
+		<Box2dMaterial Name="Bouncey" Type="dynamic" Density="1.0" Friction="0.3" Restitution="0.6" />
+		<Box2dMaterial Name="Heavy" Type="static" Density="2.0" Friction="0.8" Restitution="0.8" />
+
+		<!-- Create Box2D shapes -->
+		<Shape Name="Button" Type="box" Width="100" Height="100" />
+		<Shape Name="Floor" Type="box" Width="1000" Height="100" />
+		
+		<!-- Create the floor -->
+		<Label Position="0, 200" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="1000, 100" Text="Floor" Shape="Floor" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1" />
+
+		<!-- Create boxes -->
+		<Label Name="Box1" Position="-50, -180" Angle="35" Font="serif" Background="Button1Brush" BackgroundColour="80, 255, 255, 255" Size="100, 100" Text="Bouncey" Shape="Button" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Label Name="Box2" Position="50, -180" Angle="25" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 255, 255" Size="100, 100" Text="Bouncey" Shape="Button" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Label Name="Box3" Position="-50, -300" Angle="15" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 100" Text="Bouncey" Shape="Button" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Label Name="Box4" Position="50, -300" Angle="75" Font="serif" Background="Button1Brush" BackgroundColour="80, 255, 80, 255" Size="100, 100" Text="Bouncey" Shape="Button" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 1" Draggable="true" />
+
+		<!-- Create connector actors that join the actors -->
+		<ActorConnector Name="Joiner1" Position="0, 0" Size="100, 20" Brush="Button1Brush" TargetA="Box1" TargetB="Box2" OnTapped="Swap">
+			<Actions Name="Swap">
+				<Action Method="SetProperty" P1="TargetB" P2="Box2" P3="Joiner1" />
+				<Action Method="SetProperty" P1="TargetB" P2="Box4" P3="Joiner2" />
+			</Actions>
+		</ActorConnector>
+		<ActorConnector Name="Joiner2" Position="0, 0" Size="100, 20" Brush="Button1Brush" TargetA="Box3" TargetB="Box4" OnTapped="Swap">
+			<Actions Name="Swap">
+				<Action Method="SetProperty" P1="TargetB" P2="Box4" P3="Joiner1" />
+				<Action Method="SetProperty" P1="TargetB" P2="Box2" P3="Joiner2" />
+			</Actions>
+		</ActorConnector>
+
+		<Label Font="serif" Text="Demonstration of a custom 'connector' actor that connects actors or points" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

@@ -1,0 +1,56 @@
+#!/usr/bin/env mkb
+options
+{
+	module_path="../../;../../Libs"
+	arm-fpu=vfp
+}
+
+defines
+{
+	IW_GXFONT_TTF
+	IW_REMOVE_DUPLICATES
+}
+
+subprojects
+{
+	AppEasy
+}
+
+
+includepath
+{
+	source
+}
+
+files
+{
+	[Source]
+	(source)
+	# App
+	App.cpp
+	App.h
+	Main.cpp
+	Main.h
+
+	[Data]
+	(data)
+	Common.xml
+	Game.xml
+	Menu.xml
+	Objects.xml
+	Start.xml
+	RoundOver.xml
+	L1.xml
+	L2.xml
+	L3.xml
+
+	game.lua
+}
+
+assets
+{
+	[Data]
+	(data)
+	.
+}
+

@@ -1,0 +1,25 @@
+options
+{
+}
+
+packages
+{
+}
+
+subprojects
+{
+}
+
+includepath
+{
+	src
+}
+
+files
+{
+	[src]
+	(src)
+	lsqlite3.c
+	lsqlite3.h
+}
+

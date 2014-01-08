@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" ScriptEngine="lua" OnCreate="Create">
+		<Actions Name="Create">
+			<Action Method="CallScript" P1="CreateXomlObjectsFromLua" />
+		</Actions>
+
+		<!-- Load script -->
+		<Script Name="Script1" Type="lua" />
+		<File Name="ScriptFile1" Location="Test66.lua" Script="Script1" />
+
+		<Label Font="serif" Text="Test creating XOML resources from Lua" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

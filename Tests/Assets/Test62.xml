@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" Camera="Camera1" ScriptEngine="lua" OnTick="TickActions">
+		<!-- Create user properties list that is assigned to the scene -->
+		<UserProperties Name="GameProperties">
+			<Property Name="Counter" Type="int" Value="0" />
+			<Property Name="MyAngle" Type="float" Value="0" />
+		</UserProperties>
+
+		<!-- Load script -->
+		<Script Name="Script1" Type="lua" />
+		<File Name="ScriptFile1" Location="Test62.lua" Script="Script1" />
+
+		<!-- Create scene OnTick handler that calls a script function each scene update -->
+		<Actions Name="TickActions">
+			<Action Method="CallScript" P1="Scene_OnTick" />
+		</Actions>
+
+		<!-- Create touch pan camera -->
+		<Camera Name="Camera1" />
+
+		<Variable Name="heading_x" Type="float" Value="0"/>
+		<Variable Name="heading_y" Type="float" Value="0"/>
+		<Variable Name="heading_z" Type="float" Value="0"/>
+		<Variable Name="direction" Type="float" Value="0"/>
+
+		<!-- Create a label to display accelerometer -->
+		<StackPanel Orientation="vertical">
+			<Label Font="serif" Background="Button1Brush" Binding="[Text]heading_x" />
+			<Label Font="serif" Background="Button1Brush" Binding="[Text]heading_y" />
+			<Label Font="serif" Background="Button1Brush" Binding="[Text]heading_z" />
+			<Label Font="serif" Background="Button1Brush" Binding="[Text]direction" />
+		</StackPanel>
+
+		<Label Font="serif" Text="Demonstration of compass" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

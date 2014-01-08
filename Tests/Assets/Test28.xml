@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\AppEasy\docs\XOML.xsd">
+
+    <Scene Name="Scene1" Current="true" Camera="Cam" ScriptEngine="lua" OnCreate="Create" Timeline="scene_anim_in" >
+        
+        <!-- Create scene camera -->
+        <Camera Name="Cam" Position="0, 1000" />
+
+        <!-- Create scene animations -->
+        <Animation Name="scene_anim_in" Type="vec2" Duration="1.0">
+            <Frame Time="0" Value="0, 1000" Easing="cubicout" />
+            <Frame Time="1" Value="0, 0" />
+        </Animation>
+        <Animation Name="scene_anim_out" Type="vec2" Duration="1.0">
+            <Frame Time="0" Value="0, 0" Easing="cubicin" />
+            <Frame Time="1" Value="0, 1000" />
+        </Animation>
+        <Timeline Name="scene_anim_in" AutoPlay="true">
+            <Anim Anim="scene_anim_in" Target="Position" Repeat="1" />
+        </Timeline>
+        <Actions Name="KillScene">
+            <Action Method="KillScene" />
+        </Actions>
+        <Timeline Name="scene_anim_out" AutoPlay="false">
+            <Anim Anim="scene_anim_out" Target="Position" Repeat="1" OnEnd="KillScene" />
+        </Timeline>
+
+        <!-- Set up background image -->
+        <Image Name="Background" Location="bg1.png" Format="RGB_565" />
+        <Brush Name="Background" Type="9patch" Image="Background" ScaleArea="11, 11, 318, 198"/>
+        <Icon Background="Background" Size="-100, -100" />
+        
+        <!-- Load script -->
+        <Script Name="Scene1Script" Type="lua" />
+        <File Name="ScriptFile1" Location="Test28.lua" Script="Scene1Script" />
+
+        <!-- Load a UI style to style the user interface  -->
+        <LoadXOML File="UIStyle.xml" />
+
+        <!-- Create label styles -->
+        <Style Name="LabelStyle">
+            <Set Property="Font" Value="serif" />
+            <Set Property="Background" Value="Button1Brush" />
+            <Set Property="BackgroundColour" Value="80, 80, 255, 255" />
+            <Set Property="SelectedColour" Value="80, 80, 255, 255" />
+            <Set Property="Size" Value="-7, -7" />
+            <Set Property="PercPos" Value="true" />
+        </Style>
+        <Style Name="LabelStyle2">
+            <Set Property="Font" Value="serif" />
+            <Set Property="Background" Value="Button1Brush" />
+            <Set Property="BackgroundColour" Value="80, 255, 80, 255" />
+            <Set Property="Size" Value="-7, -7" />
+            <Set Property="PercPos" Value="true" />
+            <Set Property="OnTapped" Value="MakeGuess" />
+            <Set Property="Text" Value="_" />
+        </Style>
+        
+        <!-- Create menu animations -->
+        <Animation Name="menu_anim_in" Type="vec2" Duration="1.0">
+            <Frame Time="0" Value="0, -1000" Easing="cubicout" />
+            <Frame Time="1" Value="0, 0" />
+        </Animation>
+        <Animation Name="menu_anim_out" Type="vec2" Duration="1.0">
+            <Frame Time="0" Value="0, 0" Easing="cubicin" />
+            <Frame Time="1" Value="0, -1000" />
+        </Animation>
+
+        <!-- Actions -->
+        <Actions Name="Create">
+            <Action Method="CallScript" P1="InitGame" />
+        </Actions>
+        <Actions Name="MakeGuess">
+            <Action Method="CallScript" P1="Guess" />
+        </Actions>
+
+        <!-- Define template for letter clue and answer -->
+        <Template Name="CharacterTemp">
+            <Label Position="$posx$, $posy1$" Style="LabelStyle" Text="$letter$" />
+            <Label Name="$name$" Position="$posx$, $posy2$" Style="LabelStyle2" Text="_" />
+        </Template>
+
+        <!-- Create score display -->
+        <StackPanel Orientation="horizontal" Docking="topright" SizeToContent="xy">
+            <Label Style="LabelStyle" Text="Attempts Left: " Size="-25, -5" AutoHeight="true" />
+            <Label Name="AttemptsLeft" Style="LabelStyle" Text="5" AutoHeight="true" />
+        </StackPanel>
+
+        <!-- Create game over menu -->
+        <Canvas Name="GameOverMenu" Background="Button1Brush" Size="-60, -60" Layer="2" Position="0, -1000">
+            <!-- Create menu animation timelines -->
+            <Timeline Name="menu_anim_in" AutoPlay="false">
+                <Anim Anim="menu_anim_in" Target="Position" Repeat="1" />
+            </Timeline>
+            <Timeline Name="menu_anim_out" AutoPlay="false">
+                <Anim Anim="menu_anim_out" Target="Position" Repeat="1" />
+            </Timeline>
+            <Label Font="Serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" SelectedColour="80, 255, 80, 255" Text="Hard luck, you failed" AutoHeight="true" Size="-80, -20" PercPos="true" TextMargin="-5, -5, -20, -20" Position="0, -20" Layer="2" />
+            <Label Font="Serif" Background="Button1Brush" BackgroundColour="80, 180, 255, 255" Text="Try Again" PercPos="true" Size="-20, -20" Position="-12, 0" OnTapped="Restart" Layer="2">
+                <Actions Name="Restart">
+                    <Action Method="CallScript" P1="ResetGame" />
+                </Actions>
+            </Label>
+            <Label Font="Serif" Background="Button1Brush" BackgroundColour="80, 180, 255, 255" Text="Bypass" PercPos="true" Size="-20, -20" Position="12, 0" Layer="2" OnTapped="Bypass">
+                <Actions Name="Bypass">
+                    <Action Method="SetTimeline" P1="scene_anim_out" P2="Scene1" />
+                </Actions>
+            </Label>
+        </Canvas>
+
+        <!-- Create game complete menu -->
+        <Canvas Name="GameCompleteMenu" Background="Button1Brush" Size="-60, -60" Layer="2" Position="0, -1000">
+            <!-- Create menu animation timelines -->
+            <Timeline Name="menu_anim_in" AutoPlay="false">
+                <Anim Anim="menu_anim_in" Target="Position" Repeat="1" />
+            </Timeline>
+            <Timeline Name="menu_anim_out" AutoPlay="false">
+                <Anim Anim="menu_anim_out" Target="Position" Repeat="1" />
+            </Timeline>
+            <Label Font="Serif" Background="Button1Brush" BackgroundColour="80, 255, 80, 255" SelectedColour="80, 255, 80, 255" Text="Well done, game completed!" AutoHeight="true" Size="-80, -20" PercPos="true" TextMargin="-5, -5, -20, -20" Position="0, -20" Layer="2" />
+            <Label Font="Serif" Background="Button1Brush" BackgroundColour="80, 180, 255, 255" Text="Tap to Continue" PercPos="true" Size="-20, -20" Position="0, 0" Layer="2" OnTapped="Bypass">
+                <Actions Name="Bypass">
+                    <Action Method="SetTimeline" P1="scene_anim_out" P2="Scene1" />
+                </Actions>
+            </Label>
+        </Canvas>
+
+    </Scene>
+
+
+</xml>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<!-- Create touch pan camera -->
+		<Camera Name="Camera1" TouchPanX="true" TouchPanY="true" VelocityDamping="0.9, 0.9"/>
+		
+		<!-- Create a bunch of labels -->
+		<Label Position="-200, -100" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 100" Text="Hello"  />
+		<Label Position="0, -100" Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="100, 100" Text="Hallo"  />
+		<Label Position="200, -100" Font="serif" Background="Button1Brush" BackgroundColour="80, 255, 80, 255" Size="100, 100" Text="Hej"  />
+
+		<Label Font="serif" Text="Demonstration of Scene Augmentation (adding new content to a scene after it has been declared)" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+	<!-- Augment scene 1 -->
+	<Scene Name="Scene1">
+
+		<!-- These labels will be added to Scene1 -->
+		<Label Position="-150, 100" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 255, 255" Size="100, 100" Text="Bonjour"  />
+		<Label Position="150, 100" Font="serif" Background="Button1Brush" BackgroundColour="80, 255, 255, 255" Size="100, 100" Text="¡Hola"  />
+	
+	</Scene>
+
+
+</xml>

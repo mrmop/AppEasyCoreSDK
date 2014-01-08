@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene with physics enabled -->
+	<Scene Name="Scene1" Current="true" Physics="true" Gravity="0, 10" Camera="Camera1" DoSleep="false">
+
+		<Image Name="Crate" Location="crate.png" />
+		<Image Name="Wheel" Location="bob.png" />
+		<Brush Name="Crate" Image="Crate" />
+		<Brush Name="Wheel" Image="Wheel" />
+
+		<!-- Create touch pan camera -->
+		<Camera Name="Camera1" TouchPanX="true" TouchPanY="true" VelocityDamping="0.05, 0.05" FollowSpeed="2.0, 2.0" IgnoreActors="false" TargetX="CarBody" TargetY="CarBody" />
+
+		<!-- Create Box2D materials -->
+		<Box2dMaterial Name="Bouncey" Type="dynamic" Density="1.0" Friction="0.3" Restitution="0.6" />
+		<Box2dMaterial Name="Wheel" Type="dynamic" Density="1.0" Friction="1.0" Restitution="1.0" />
+		<Box2dMaterial Name="FixedHeavy" Type="static" Density="1.0" Friction="1.0" Restitution="0.8" FixedRotation="true" />
+
+		<!-- Create Box2D shapes -->
+		<Shape Name="WheelShape" Type="circle" Radius="30" />
+		<Shape Name="CarShape" Type="box" Width="200" Height="100" />
+		<Shape Name="BoxShape" Type="box" Width="20" Height="20" />
+		<Shape Name="BoxShapeWide" Type="box" Width="50" Height="20" />
+		<Shape Name="Floor" Type="box" Width="2000" Height="100" />
+		<Shape Name="LeftWall" Type="box" Width="100" Height="600" />
+		<Shape Name="RightWall" Type="box" Width="100" Height="600" />
+
+		<!-- Create the floor and walls -->
+		<Label Position="0, 200" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="2000, 100" Text="Floor" Shape="Floor" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+		<Icon Position="-1000, -100" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 600" Shape="LeftWall" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+		<Icon Position="1000, -100" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 600" Shape="RightWall" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+
+		<!-- Create none static crates -->
+		<Icon Name="Crate1" Background="Crate" Position="300, 20" Size="20, 20" Box2dMaterial="Bouncey" Shape="BoxShape" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Crate2" Background="Crate" Position="300, 40" Size="20, 20" Box2dMaterial="Bouncey" Shape="BoxShape" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Crate3" Background="Crate" Position="300, 60" Size="20, 20" Box2dMaterial="Bouncey" Shape="BoxShape" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Crate4" Background="Crate" Position="300, 80" Size="20, 20" Box2dMaterial="Bouncey" Shape="BoxShape" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Crate5" Background="Crate" Position="300, 100" Size="20, 20" Box2dMaterial="Bouncey" Shape="BoxShape" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="Crate6" Background="Crate" Position="300, 120" Size="20, 20" Box2dMaterial="Bouncey" Shape="BoxShape" CollisionFlags="1, 1, 1" Draggable="true" />
+
+		<!-- Create static crates -->
+		<Icon Name="SolidCrate1" Background="Crate" Position="200, 150" Size="20, 20" Box2dMaterial="FixedHeavy" Shape="BoxShape" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="SolidCrate2" Background="Crate" Position="300, 150" Size="50, 20" Box2dMaterial="FixedHeavy" Shape="BoxShape" CollisionFlags="1, 1, 1" Draggable="true" />
+		
+		<!-- Create car 1 -->
+		<Icon Name="CarBody" Background="Crate" Position="-800, 0" Size="200, 100" Box2dMaterial="Bouncey" Shape="CarShape" CollisionFlags="1, 1, 1" Draggable="true" />
+		<Icon Name="BackWheel" Background="Wheel" Position="-880, 80" Size="60, 60" Box2dMaterial="Wheel" Shape="WheelShape" CollisionFlags="1, 1, 1" />
+		<Icon Name="FrontWheel" Background="Wheel" Position="-720, 80" Size="60, 60" Box2dMaterial="Wheel" Shape="WheelShape" CollisionFlags="1, 1, 1" />
+		<Joints>
+			<Joint Name="RearSuspension" Type="wheel" ActorA="CarBody" ActorB="BackWheel" OffsetA="-80, 80" Frequency="20" Damping="0.5" />
+			<Joint Name="FrontSuspension" Type="wheel" ActorA="CarBody" ActorB="FrontWheel" OffsetA="80, 80" Frequency="20" Damping="0.5" MotorEnabled="true" MotorSpeed="200" MaxMotorTorque="2000" />
+		</Joints>
+
+		<!-- Join the wheels with an actor connector-->
+		<ActorConnector TargetA="BackWheel" TargetB="FrontWheel" Background="Crate" Size="100, 10" />
+
+		<Label Font="serif" Text="Demonstration of simple car physics" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

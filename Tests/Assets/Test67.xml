@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a global actions list that will be called when the global timer repeats -->
+	<Actions Name="GlobalActions1">
+		<Action Method="AddProperty" P1="Colour" P2="-2, -2, -2, 0" P4="Scene1" />
+	</Actions>
+	
+	<!-- Create a global timer -->
+	<Timer Name="GlobalTimer1" Duration="0.1" Repeat="0" OnRepeat="GlobalActions1" AutoStart="true" AutoDelete="true" />
+	
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" ScriptEngine="lua" OnCreate="Create" Camera="Cam">
+
+		<Camera Name="Cam" />
+
+		<!-- Load script -->
+		<Script Name="Script1" Type="lua" />
+		<File Name="ScriptFile1" Location="Test67.lua" Script="Script1" />
+
+		<!-- Create buttons to start and stop global timer -->
+		<Label Font="serif" Text="Stop Global Timer" Position="-100, -100" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="100, 100" AutoHeight="true" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="ChangeTimer" P1="GlobalTimer1" P3="stop" />
+			</Actions>
+		</Label>
+		<Label Font="serif" Text="Start Global Timer" Position="100, -100" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="100, 100" AutoHeight="true" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="ChangeTimer" P1="GlobalTimer1" P3="start" />
+			</Actions>
+		</Label>
+
+		<!-- Create buttons to start and stop Timer1 timer in Label1 -->
+		<Label Font="serif" Text="Stop Label1 Timer" Position="-100, 100" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="100, 100" AutoHeight="true" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="CallScript" P1="StopTimer" />
+			</Actions>
+		</Label>
+		<Label Font="serif" Text="Restart Label1 Timer" Position="100, 100" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="100, 100" AutoHeight="true" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="CallScript" P1="RestartTimer" />
+			</Actions>
+		</Label>
+
+		<!-- Create a label that contains a timer -->
+		<Label Name="Label1" Font="serif" Text="Label1" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="100, 100" AutoHeight="true">
+			<!-- Create a timer that repeats 10 times -->
+			<Timer Name="Timer1" Duration="1" Repeat="10" OnRepeat="TimerRepeat" OnTimeout="TimerTimeout" />
+			
+			<!-- Create an actions list that is called each time the Test1 timer repeats -->
+			<Actions Name="TimerRepeat">
+				<Action Method="AddProperty" P1="Position" P2="10,0" />
+			</Actions>
+			
+			<!-- Create an actions list that is called when the Test1 timer times out -->
+			<Actions Name="TimerTimeout">
+				<Action Method="SetProperty" P1="Position" P2="0,0" />
+			</Actions>
+		</Label>
+		
+		<Label Font="serif" Text="Test timers" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

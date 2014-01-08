@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" ScriptEngine="lua" OnTick="Tick">
+		<Actions Name="Tick">
+			<Action Method="CallScript" P1="CheckForKeyPress" />
+		</Actions>
+
+		<!-- Load script -->
+		<Script Name="Script1" Type="lua" />
+		<File Name="ScriptFile1" Location="Test65.lua" Script="Script1" />
+
+		<!-- Variables to hold key -->
+		<Variable Name="KeyPressed" Type="string" Value="Invalid" />
+		<Variable Name="KeyCode" Type="int" Value="Invalid" />
+
+		<!-- Display key code of key pressed -->
+		<Label Name="Label1" Font="serif" Position="0, -100" Text="Last Key Pressed" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, 50" AutoHeight="true" />
+		<Label Name="KeyPressed" Font="serif" Position="0, 0" Background="Button1Brush" Size="300, 50" AutoHeight="true" Binding="[Text]KeyPressed" />
+		<Label Name="KeyCodePressed" Font="serif" Position="0, 50" Background="Button1Brush" Size="300, 50" AutoHeight="true" Binding="[Text]KeyCode" />
+
+		<Label Font="serif" Text="Keyboard Test" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

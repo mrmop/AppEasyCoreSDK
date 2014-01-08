@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<Variable Name="ResponseVar" Type="string" Value="Response...." />
+		
+		<Actions Name="Error">
+			<Action Method="SetVar" P1="ResponseVar" P2="Error requesting data" />
+		</Actions>
+		<Actions Name="GotData">
+			<Action Method="SetVar" P1="ResponseVar" P2="Data retrieved" />
+		</Actions>
+		<RemoteReq Name="Request1" URL="http://www.appeasymobile.com/test.php" Data="name=Mat" Post="true" OnResponse="GotData" OnError="Error" Variable="ResponseVar">
+			<Header Name="Content-Type" Value="application/x-www-form-urlencoded" />
+		</RemoteReq>
+		
+		<Label Font="serif" Position="0, -100" Text="Send Request" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -50" AutoHeight="true" OnTapped="Tapped" >
+			<Actions Name="Tapped">
+				<Action Method="RemoteReq" P1="Request1" />
+			</Actions>
+		</Label>
+
+		<Label Name="Response" Font="serif" Position="0, 100" Background="Button1Brush" Size="-100, -50" AutoHeight="true" Binding="[Text]ResponseVar" />
+
+		<Label Font="serif" Text="Demonstration of Remote Request" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

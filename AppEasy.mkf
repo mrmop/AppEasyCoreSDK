@@ -1,0 +1,507 @@
+options
+{
+	module_path="Libs"
+}
+
+packages
+{
+}
+
+defines
+{
+	TARGET_PLATFORM=MARMALADE
+	IW_GXFONT_TTF
+	CZ_REMOVE_DUPLICATES
+	IW_HTTP_SSL
+}
+
+subprojects
+{
+#	libjpeg
+#	libpng
+#	zlib
+	lua-vec
+	iwgx
+	iwgl
+	iw2d
+	iwgxfont
+	iwresmanager
+	iwhttp
+	s3eWebView
+	s3eFacebook
+	s3eIOSAppStoreBilling
+	s3eAndroidMarketBilling
+	SoundEngine
+	box2d
+	sqlite
+	lsqlite3
+	UserAgent
+}
+
+includepath
+{
+	source
+	source\Actions
+	source\Actors
+	source\Actors\UI
+	source\Animation
+	source\Audio
+	source\Comms
+	source\Core
+	source\Core\Debug
+	source\Display
+	source\Display\Render
+	source\Display\Brushes
+	source\Extensions
+	source\Extensions\Ads
+	source\Extensions\Camera
+	source\Extensions\Market
+	source\Extensions\Social
+	source\Extensions\Video
+	source\Extensions\Social\Facebook
+	source\Extensions\Social\Scoreloop
+	source\Loaders
+	source\Maths
+	source\Modifiers
+	source\Physics
+	source\Platforms
+	source\Platforms\Marm
+	source\Programs
+	source\Scenes
+	source\Script
+	source\Script\lua
+	source\XOML
+}
+
+files
+{
+	[Actions]
+	(source/Actions)
+	CzActionsActor.cpp
+	CzActionsActor.h
+	CzActionsAnimation.cpp
+	CzActionsAnimation.h
+	CzActionsComms.cpp
+	CzActionsComms.h
+	CzActionsMarket.cpp
+	CzActionsMarket.h
+	CzActionsMedia.cpp
+	CzActionsMedia.h
+	CzActionsProgram.cpp
+	CzActionsProgram.h
+	CzActionsResource.cpp
+	CzActionsResource.h
+	CzActionsScene.cpp
+	CzActionsScene.h
+	CzActionsScript.cpp
+	CzActionsScript.h
+	CzActionsShared.cpp
+	CzActionsShared.h
+	CzActionsSys.cpp
+	CzActionsSys.h
+	CzActionsTimer.cpp
+	CzActionsTimer.h
+	CzActionsVariables.cpp
+	CzActionsVariables.h
+
+	[Actors]
+	(source/Actors)
+	CzActor.cpp
+	CzActor.h
+	CzActorConnector.cpp
+	CzActorConnector.h
+	CzActorImage.cpp
+	CzActorImage.h
+	CzActorParticles.cpp
+	CzActorParticles.h
+	CzActorText.cpp
+	CzActorText.h
+	CzActorTilemap.cpp
+	CzActorTilemap.h
+
+		[Actors/UI]
+		(source/Actors/UI)
+		CzUIBase.cpp
+		CzUIBase.h
+		CzUIBigImage.cpp
+		CzUIBigImage.h
+		CzUICanvas.cpp
+		CzUICanvas.h
+		CzUIGrid.cpp
+		CzUIGrid.h
+		CzUIIcon.cpp
+		CzUIIcon.h
+		CzUIImageView.cpp
+		CzUIImageView.h
+		CzUILabel.cpp
+		CzUILabel.h
+		CzUIListBox.cpp
+		CzUIListBox.h
+		CzUINavBar.cpp
+		CzUINavBar.h
+		CzUIPanel.cpp
+		CzUIPanel.h
+		CzUIPicker.cpp
+		CzUIPicker.h
+		CzUISlider.cpp
+		CzUISlider.h
+		CzUIStackPanel.cpp
+		CzUIStackPanel.h
+		CzUIStepper.cpp
+		CzUIStepper.h
+		CzUITabBar.cpp
+		CzUITabBar.h
+		CzUITextBox.cpp
+		CzUITextBox.h
+		CzUITextView.cpp
+		CzUITextView.h
+		CzUIToolBar.cpp
+		CzUIToolBar.h
+		CzUIVideoOverlay.cpp
+		CzUIVideoOverlay.h
+		CzUIWebView.cpp
+		CzUIWebView.h
+		CzUIWrapPanel.cpp
+		CzUIWrapPanel.h
+
+	[Animation]
+	(source/Animation)
+	CzAnim.cpp
+	CzAnim.h
+
+	[Audio]
+	(source/Audio)
+	CzAudio.cpp
+	CzAudio.h
+
+	[Comms]
+	(source/Comms)
+	CzHttp.cpp
+	CzHttp.h
+	CzRemoteReq.cpp
+	CzRemoteReq.h
+
+	[Core]
+	(source/Core)
+	CzApp.cpp
+	CzApp.h
+	CzColour.h
+	CzDataIO.cpp
+	CzDataIO.h
+	CzEvents.cpp
+	CzEvents.h
+	CzFile.cpp
+	CzFile.h
+	CzHashes.cpp
+	CzHashes.h
+	CzInput.cpp
+	CzInput.h
+	CzResources.cpp
+	CzResources.h
+	CzSettings.cpp
+	CzSettings.h
+	CzSlotArray.h
+	CzString.cpp
+	CzString.h
+	CzTime.cpp
+	CzTime.h
+	CzTypes.h
+	CzUtil.cpp
+	CzUtil.h
+	CzXml.cpp
+	CzXml.h
+
+		[Core/Debug]
+		(source/Core/Debug)
+		CzDebug.cpp
+		CzDebug.h
+
+	[Display]
+	(source/Display)
+	CzCamera.cpp
+	CzCamera.h
+	CzFont.cpp
+	CzFont.h
+	CzGeometry.cpp
+	CzGeometry.h
+	CzImage.cpp
+	CzImage.h
+
+		[Display/Brushes]
+		(source/Display/Brushes)
+		CzBrush.cpp
+		CzBrush.h
+
+		[Display/Render]
+		(source/Display/Render)
+		CzRender.cpp
+		CzRender.h
+		CzSprite.cpp
+		CzSprite.h
+		CzBitmapSprite.cpp
+		CzBitmapSprite.h
+		CzBitmapSprite9.cpp
+		CzBitmapSprite9.h
+		CzDummySprite.cpp
+		CzDummySprite.h
+		CzTextSprite.cpp
+		CzTextSprite.h
+		CzSpriteManager.cpp
+		CzSpriteManager.h
+
+	[Extensions]
+	(source/Extensions)
+
+		[Extensions/Ads]
+		(source/Extensions/Ads)
+		CzAds.cpp
+		CzAds.h
+		CzAdsMediator.cpp
+		CzAdsMediator.h
+		CzAdsView.cpp
+		CzAdsView.h
+		CzAdsViewAnimator.cpp
+		CzAdsViewAnimator.h
+
+		[Extensions/Camera]
+		(source/Extensions/Camera)
+		CzCam.cpp
+		CzCam.h
+
+		[Extensions/Market]
+		(source/Extensions/Market)
+		CzMarket.cpp
+		CzMarket.h
+
+#		[Extensions/Social]
+#		(source/Extensions/Social)
+
+#			[Extensions/Social/Facebook]
+#			(source/Extensions/Social/Facebook)
+#			CzFacebook.cpp
+#			CzFacebook.h
+
+#			[Extensions/Social/Scoreloop]
+#			(source/Extensions/Social/Scoreloop)
+#			CzScoreloop.cpp
+#			CzScoreloop.h
+
+		[Extensions/Video]
+		(source/Extensions/Video)
+		CzVideo.cpp
+		CzVideo.h
+
+	[Loaders]
+	(source/Loaders)
+	CzLoaders.cpp
+	CzLoaders.h
+	CzLoaderPNG.cpp
+	CzLoaderPNG.h
+	CzLoaderJPEG.cpp
+	CzLoaderJPEG.h
+
+	[Maths]
+	(source/Maths)
+	CzFrustrum.cpp
+	CzFrustrum.h
+	CzMath.cpp
+	CzMath.h
+	CzMatrix3.cpp
+	CzMatrix3.h
+	CzMatrix4.cpp
+	CzMatrix4.h
+	CzRect.cpp
+	CzRect.h
+	CzShapes.cpp
+	CzShapes.h
+	CzIVec2.cpp
+	CzIVec2.h
+	CzSVec2.cpp
+	CzSVec2.h
+	CzVec2.cpp
+	CzVec2.h
+	CzVec3.cpp
+	CzVec3.h
+	CzVec4.cpp
+	CzVec4.h
+
+	[Modifiers]
+	(source/Modifiers)
+	CzModifier.cpp
+	CzModifier.h
+	CzModifierExt.cpp
+	CzModifierExt.h
+
+	[Physics]
+	(source/Physics)
+	CzBox2d.cpp
+	CzBox2d.h
+	CzBox2dFixture.cpp
+	CzBox2dFixture.h
+	CzBox2dJoint.cpp
+	CzBox2dJoint.h
+	CzBox2dMaterial.cpp
+	CzBox2dMaterial.h
+
+	[Platforms]
+	(source/Platforms)
+	CzPlatform.cpp
+	CzPlatform.h
+	IzPlatformAudio.h
+	IzPlatformCam.h
+	IzPlatformComms.h
+	IzPlatformDisplay.h
+	IzPlatformFacebook.h
+	IzPlatformFile.h
+	IzPlatformFont.h
+	IzPlatformMarket.h
+	IzPlatformImaging.h
+	IzPlatformInput.h
+	IzPlatformVideo.h
+	IzPlatformOther.h
+	IzPlatformRender.h
+	IzPlatformSys.h
+	IzPlatformUI.h
+
+		[Platforms/Marm]
+		(source/Platforms/Marm)
+		CzPlatformAudio.cpp
+		CzPlatformAudio.h
+		CzPlatformCam.cpp
+		CzPlatformCam.h
+		CzPlatformComms.cpp
+		CzPlatformComms.h
+		CzPlatformDisplay.cpp
+		CzPlatformDisplay.h
+		CzPlatformFacebook.cpp
+		CzPlatformFacebook.h
+		CzPlatformFile.cpp
+		CzPlatformFile.h
+		CzPlatformFont.cpp
+		CzPlatformFont.h
+		CzPlatformMarket.cpp
+		CzPlatformMarket.h
+		CzPlatformImaging.cpp
+		CzPlatformImaging.h
+		CzPlatformInput.cpp
+		CzPlatformInput.h
+		CzPlatformMain.cpp
+		CzPlatformMain.h
+		CzPlatformVideo.cpp
+		CzPlatformVideo.h
+		CzPlatformOther.cpp
+		CzPlatformOther.h
+		CzPlatformRender.cpp
+		CzPlatformRender.h
+		CzPlatformSys.cpp
+		CzPlatformSys.h
+		CzPlatformUI.cpp
+		CzPlatformUI.h
+
+	[Programs]
+	(source/Programs)
+	CzProgram.cpp
+	CzProgram.h
+	CzCommandsBase.cpp
+	CzCommandsBase.h
+
+	[Scenes]
+	(source/Scenes)
+	CzScene.cpp
+	CzScene.h
+
+	[Script]
+	(source/Script)
+	CzScript.cpp
+	CzScript.h
+
+		[Script/lua]
+		(source/Script/lua)
+		CzLuaAction.cpp
+		CzLuaAction.h
+		CzLuaActor.cpp
+		CzLuaActor.h
+		CzLuaBrush.cpp
+		CzLuaBrush.h
+		CzLuaCamera.cpp
+		CzLuaCamera.h
+		CzLuaDisplay.cpp
+		CzLuaDisplay.h
+		CzLuaFacebook.cpp
+		CzLuaFacebook.h
+		CzLuaFont.cpp
+		CzLuaFont.h
+		CzLuaGen.cpp
+		CzLuaGen.h
+		CzLuaHttp.cpp
+		CzLuaHttp.h
+		CzLuaImage.cpp
+		CzLuaImage.h
+		CzLuaInput.cpp
+		CzLuaInput.h
+		CzLuaMarket.cpp
+		CzLuaMarket.h
+		CzLuaMedia.cpp
+		CzLuaMedia.h
+		CzLuaParticles.cpp
+		CzLuaParticles.h
+		CzLuaPhysics.cpp
+		CzLuaPhysics.h
+		CzLuaProgram.cpp
+		CzLuaProgram.h
+		CzLuaResource.cpp
+		CzLuaResource.h
+		CzLuaScene.cpp
+		CzLuaScene.h
+		CzLuaShape.cpp
+		CzLuaShape.h
+		CzLuaSys.cpp
+		CzLuaSys.h
+		CzLuaTemplate.cpp
+		CzLuaTemplate.h
+		CzLuaTimeline.cpp
+		CzLuaTimeline.h
+		CzLuaTimer.cpp
+		CzLuaTimer.h
+		CzLuaUserProps.cpp
+		CzLuaUserProps.h
+		CzLuaVariable.cpp
+		CzLuaVariable.h
+		CzLuaXml.cpp
+		CzLuaXml.h
+		CzScriptLua.cpp
+		CzScriptLua.h
+
+	[XOML]
+	(source/XOML)
+	CzActions.cpp
+	CzActions.h
+	CzStyles.cpp
+	CzStyles.h
+	CzTemplates.cpp
+	CzTemplates.h
+	CzTimer.cpp
+	CzTimer.h
+	CzUserProperty.cpp
+	CzUserProperty.h
+	CzXoml.cpp
+	CzXoml.h
+	CzXomlActions.cpp
+	CzXomlActions.h
+	CzXomlBindings.cpp
+	CzXomlBindings.h
+	CzXomlLoad.cpp
+	CzXomlLoad.h
+#	CzXomlProperty.cpp
+#	CzXomlProperty.h
+	CzXomlResource.cpp
+	CzXomlResource.h
+	CzXomlResourceManager.cpp
+	CzXomlResourceManager.h
+	CzXomlVariables.cpp
+	CzXomlVariables.h
+
+	[docs]
+	(docs)
+	XOML.xsd
+}

@@ -1,0 +1,105 @@
+# mkf file for building extension UserAgent.
+# NOTE: This file was originally written by the extension builder, but will not
+# be overwritten (unless --force is specified) and is intended to be modified.
+display_name "Extensions/UserAgent"
+
+includepath source/h
+includepath h
+
+defines
+{
+    #Define the verbose channel to be off by default (but controllable by icf)
+    IW_TRACE_CHANNEL_USERAGENT_VERBOSE=2
+
+    #This macro indicates that this extension is being built
+    S3E_EXT_USERAGENT
+}
+
+#This command re-generates the relevant source files from the s4e when
+#the mkb is run
+extension
+{
+    ("$MARMALADE_ROOT/extensions/builder")
+    "make_extension UserAgent.s4e"
+}
+
+#include the extension builder subproject
+subproject "$MARMALADE_ROOT/s3e/edk"
+
+if {{defined I3D_OS_IPHONE}}
+{
+    files
+    {
+        ["source"]
+        (use_first_found, source/iphone, source/generic)
+        UserAgent_platform.mm
+        #Add any iphone-specific files here
+    }
+}
+
+if {{defined I3D_OS_WINDOWS}}
+{
+    files
+    {
+        ["source"]
+        (use_first_found, source/windows, source/generic)
+        UserAgent_platform.cpp
+        #Add any windows-specific files here
+    }
+}
+
+if {{defined S3E_ANDROID}}
+{
+    files
+    {
+        ["source"]
+        (use_first_found, source/android, source/generic)
+        UserAgent_platform.cpp
+        #Add any android-specific files here
+    }
+}
+
+if {{defined I3D_OS_OSX}}
+{
+    files
+    {
+        ["source"]
+        (use_first_found, source/osx, source/generic)
+        UserAgent_platform.mm
+        #Add any osx-specific files here
+    }
+}
+
+if {{defined I3D_OS_LINUX and not defined S3E_ANDROID}}
+{
+    files
+    {
+        ["source"]
+        (use_first_found, source/linux, source/generic)
+        UserAgent_platform.cpp
+        #Add any linux-specific files here
+    }
+}
+
+files
+{
+
+    # Add any platform-independent files here
+    # Note that if the file exists in the platform-specific directory
+    # it will be taken from there instead of 'generic'
+    UserAgent_register.cpp
+    UserAgent.cpp
+
+    ["h"]
+    (source/h)
+    UserAgent_internal.h
+    UserAgent_autodefs.h
+
+    ["docs"]
+    (interface)
+    UserAgent.defines.txt
+
+    []
+    (.)
+    UserAgent.s4e
+}

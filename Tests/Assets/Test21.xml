@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" Extents="-1000, -1000, 2000, 2000">
+
+		<!-- Create Count variable (used by the loop) -->
+		<Variable Name="Count" Type="int" Value="0" />
+		<!-- Create LabelPos variable -->
+		<Variable Name="LabelPos" Type="vec2" Value="0, 0" />
+
+		<!-- Create a short program that demonstratesthe use of IfReturn and Value -->
+		<Program Name="Main" AutoRun="true">
+			<Command Name="Start" Method="set_var" P1="LabelPos" P2="0, 0" />
+			<Command Method="set_var" P1="Count" P2="0" />
+			<Command Name="Loop1" Method="add_var" P1="LabelPos" P2="10, 10" />
+				<Command Method="add_var" P1="Count" P2="1" />
+				<Command Method="wait" P1="0.5" />
+				<Command Name="LoopCheck" Method="if_var" P1="Count" P2="LT" P3="10" />
+				<Command Method="goto" P1="Loop1" IfReturn="LoopCheck" Value="1" />
+			<Command Method="goto" P1="Start" />
+		</Program>
+
+		<!-- Create a label -->
+		<Label Size="100, 100" Font="serif" Background="Button1Brush" Text="Loop" WrapPosition="true" Binding="[Position]LabelPos" />
+
+		<Label Font="serif" Text="Demonstration a slightly complex XOML program using command return values to conditionally execute commands" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+	
+</xml>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create scene 1 on highest layer -->
+	<Scene Name="Scene1" Layer="8" OnDestroy="Destroyed">
+		<Actions Name="Destroyed">
+			<Action Method="KillScene" P1="Scene2" />
+			<Action Method="KillScene" P1="Scene3" />
+		</Actions>
+
+		<!-- Create a label object -->
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Text="Foreground" Size="300, 300" Docking="top" />
+
+		<Label Font="serif" Text="Demonstration of Scene Layers which allow scenes to be depth sorted" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+	<!-- Create scene 2 on middle layer -->
+	<Scene Name="Scene2" Layer="5">
+
+		<!-- Create a label object -->
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="80, 255, 80, 255" Text="Midground" Size="300, 300" Docking="left" />
+
+	</Scene>
+
+	<!-- Create scene 3 on highest layer -->
+	<Scene Name="Scene3" Layer="0">
+
+		<!-- Create a label object -->
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Text="Background" Size="400, 400" Position="0, 100" />
+
+	</Scene>
+
+
+
+</xml>

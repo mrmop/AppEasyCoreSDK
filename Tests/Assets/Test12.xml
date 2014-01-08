@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" >
+
+		<!-- Create a bunch of docked labels -->
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="100, 100" Text="Docked Left" Docking="left" />
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="200, 200" Text="Docked Right" Docking="right" />
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="150, 150" Text="Docked Top" Docking="top" />
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="180, 180" Text="Docked Bottom" Docking="bottom" />
+
+		<Label Font="serif" Text="Demonstration showing how actors can be docked to the edges of the screen or a container for tidy resolution free layouts" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

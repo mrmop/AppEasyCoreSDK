@@ -1,0 +1,8 @@
+include:
+
+#include <s3eTypes.h>
+
+functions:
+
+const char* getUserAgent() NULL
+

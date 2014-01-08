@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene with physics enabled -->
+	<Scene Name="Scene1" Current="true" Physics="true" Gravity="0, 10" Camera="Camera1" DoSleep="false" ScriptEngine="lua">
+
+		<Image Name="Crate" Location="crate.png" />
+		<Image Name="Bob" Location="bob.png" />
+		<Brush Name="Crate" Image="Crate" />
+		<Brush Name="Bob" Image="Bob" />
+
+		<!-- Create touch pan camera -->
+		<Camera Name="Camera1" TouchPanX="true" TouchPanY="true" IgnoreActors="false" />
+
+		<!-- Create Box2D materials -->
+		<Box2dMaterial Name="Bouncey" Type="dynamic" Density="1.0" Friction="0.3" Restitution="0.6" />
+		<Box2dMaterial Name="Heavy" Type="dynamic" Density="2.0" Friction="0.8" Restitution="0.8" />
+		<Box2dMaterial Name="FixedHeavy" Type="static" Density="1.0" Friction="0.8" Restitution="0.8" FixedRotation="true" GravityScale="0.5" />
+
+		<!-- Create Box2D shapes -->
+		<Shape Name="BobShape" Type="circle" Radius="60" />
+		<Shape Name="CrateShape" Type="box" Width="64" Height="64" />
+		<Shape Name="Floor" Type="box" Width="2000" Height="100" />
+		<Shape Name="LeftWall" Type="box" Width="100" Height="600" />
+		<Shape Name="RightWall" Type="box" Width="100" Height="600" />
+
+		<!-- Load script -->
+		<Script Name="Scene1Script" Type="lua" />
+		<File Name="ScriptFile1" Location="Test30.lua" Script="Scene1Script" />
+
+		<!-- Create the floor and walls -->
+		<Label Position="0, 200" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="2000, 100" Text="Floor" Shape="Floor" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+		<Icon Position="-1000, -100" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 600" Shape="LeftWall" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+		<Icon Position="1000, -100" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="100, 600" Shape="RightWall" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1" />
+
+		<Box2dMaterial Name="StaticCrate" Type="static" Density="1.0" Friction="0.8" Restitution="0.8" />
+		
+		<!-- Create two actors joined by a distance joint -->
+		<Icon Name="Crate1" Type="5" Position="-150, 0" Background="Crate" Shape="CrateShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  OnTapped="PushMe1" Draggable="true" >
+			<Actions Name="Pushme1">
+				<Action Method="SetProperty" P1="LinearImpulse" P2="1000, 0, 0, 0" />
+			</Actions>
+		</Icon>
+		<Icon Name="Crate2" Type="5" Position="-200, -200" Background="Crate" Shape="CrateShape" Box2dMaterial="StaticCrate" CollisionFlags="1, 1, 1"  Draggable="true" >
+			<Joints>
+				<Joint Type="distance" ActorB="Crate1" OffsetA="0, 20" OffsetB="0, -20" Frequency="10" Damping="0" SelfCollide="true" />
+			</Joints>
+		</Icon>
+		<ActorConnector Size="100, 18" Background="Crate" OffsetA="0, -20" OffsetB="0, 20" TargetA="Crate1" TargetB="Crate2" />
+
+		<!-- Create two actors joined by a revolute joint with a motor -->
+		<Icon Name="Crate3" Type="5" Position="50, -100" Background="Crate" Shape="CrateShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  Draggable="true" />
+		<Icon Name="Crate4" Type="5" Position="40, -100" Background="Crate" Shape="CrateShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  Draggable="true" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="CallScript" P1="KillJoint" P3="RevJoint1" />
+			</Actions>
+		</Icon>
+		<Template Name="Temp1">
+			<Joints>
+				<Joint Name="RevJoint1" Type="revolute" ActorA="$actor_a$" ActorB="$actor_b$" OffsetA="0, 0" OffsetB="0, -120" SelfCollide="false" MotorEnabled="true" MotorSpeed="10" MaxMotorTorque="100000" />
+			</Joints>
+		</Template>
+		<FromTemplate Template="Temp1" actor_a="Crate4" actor_b="Crate3" />
+
+		<!-- Create two actors joined by a prismatic joint -->
+		<Icon Name="Crate5" Type="5" Position="250, -200" Background="Crate" Shape="CrateShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  Draggable="true" />
+		<Icon Name="Crate6" Type="5" Position="250, -100" Background="Crate" Shape="CrateShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  Draggable="true" >
+			<Joints>
+				<Joint Name="Joint1" Type="prismatic" ActorB="Crate5" OffsetA="0, 0" OffsetB="0, -120" SelfCollide="false" Axis="0, 1" LimitJoint="true" LowerLimit="-50" UpperLimit="50" />
+			</Joints>
+		</Icon>
+
+		<!-- Create two actors joined by a pulley -->
+		<Icon Name="Crate7" Type="5" Position="400, 0" Background="Crate" Shape="CrateShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  Draggable="true" />
+		<Icon Name="Crate8" Type="5" Position="500, 0" Background="Crate" Shape="CrateShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  Draggable="true" >
+			<Joints>
+				<Joint Type="pulley" ActorB="Crate7" OffsetA="0, -25" OffsetB="0, -25" GroundA="0, -100" GroundB="0, -100" SelfCollide="true" Ratio="1" />
+			</Joints>
+		</Icon>
+		<ActorConnector Type="5" Size="100, 20" Background="Crate" TargetA="Crate7" OffsetA="0, -25" OffsetB="400, -200" />
+		<ActorConnector Type="5" Size="100, 20" Background="Crate" TargetA="Crate8" OffsetA="0, -25" OffsetB="500, -200" />
+		
+		<!-- Create an actor that checks for collision -->
+		<Icon Name="Crate20" Type="5" Position="-400, 100" Background="Crate" Shape="CrateShape" Box2dMaterial="FixedHeavy" CollisionFlags="1, 1, 1"  OnTapped="PushMe2" Draggable="true" OnCollisionStart="CollisionStart" OnCollisionEnd="CollisionEnd" >
+			<Modifiers>
+				<Modifier Name="iw_notifycollision" Active="true" P1="0" />
+			</Modifiers>
+			<Actions Name="CollisionStart">
+				<Action Method="SetProperty" P1="Colour" P2="255, 255, 255, 80"/>
+			</Actions>
+			<Actions Name="CollisionEnd">
+				<Action Method="SetProperty" P1="Colour" P2="255, 255, 255, 255"/>
+			</Actions>
+			<Actions Name="Pushme2">
+				<Action Method="SetProperty" P1="LinearImpulse" P2="1000, 0, 0, 50" />
+			</Actions>
+		</Icon>
+
+		<!-- Create a collection of actors connected via limited revolute joints -->
+		<Icon Name="Crate21" Type="5" Position="0, -200" Background="Bob" Shape="BobShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  OnTapped="PushMe2" Draggable="true" />
+		<Icon Name="Crate22" Type="5" Position="0, -200" Background="Bob" Shape="BobShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  OnTapped="PushMe2" Draggable="true" >
+			<Joints>
+				<Joint Type="revolute" ActorB="Crate21" OffsetA="0, 0" OffsetB="0, -120" SelfCollide="true" LimitJoint="true" LowerLimit="-45" UpperLimit="45" />
+			</Joints>
+		</Icon>
+		<Icon Name="Crate23" Type="5" Position="0, -200" Background="Bob" Shape="BobShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  OnTapped="PushMe2" Draggable="true" >
+			<Joints>
+				<Joint Type="revolute" ActorB="Crate22" OffsetA="0, 0" OffsetB="0, -120" SelfCollide="true" LimitJoint="true" LowerLimit="-45" UpperLimit="45" />
+			</Joints>
+		</Icon>
+		<Icon Name="Crate24" Type="5" Position="0, -200" Background="Bob" Shape="BobShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  OnTapped="PushMe2" Draggable="true" >
+			<Joints>
+				<Joint Type="revolute" ActorB="Crate23" OffsetA="0, 0" OffsetB="0, -120" SelfCollide="true" LimitJoint="true" LowerLimit="-45" UpperLimit="45" />
+			</Joints>
+		</Icon>
+		<Icon Name="Crate25" Type="5" Position="0, -200" Background="Bob" Shape="BobShape" Box2dMaterial="Heavy" CollisionFlags="1, 1, 1"  OnTapped="PushMe2" Draggable="true" >
+			<Joints>
+				<Joint Type="revolute" ActorB="Crate24" OffsetA="0, 0" OffsetB="0, -120" SelfCollide="true" LimitJoint="true" LowerLimit="-45" UpperLimit="45" />
+			</Joints>
+		</Icon>
+		<ActorConnector Type="5" Position="0, 0" Size="100, 20" Background="Bob" TargetA="Crate21" TargetB="Crate22" />
+		<ActorConnector Type="5" Position="0, 0" Size="100, 20" Background="Crate" TargetA="Crate22" TargetB="Crate23" />
+		<ActorConnector Type="5" Position="0, 0" Size="100, 20" Background="Crate" TargetA="Crate23" TargetB="Crate24" />
+		<ActorConnector Type="5" Position="0, 0" Size="100, 20" Background="Crate" TargetA="Crate24" TargetB="Crate25" />
+
+		<Label Font="serif" Text="Demonstration of Physics Joints" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

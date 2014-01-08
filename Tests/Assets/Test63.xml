@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" ScriptEngine="lua">
+		<!-- Load script -->
+		<Script Name="Script1" Type="lua" />
+		<File Name="ScriptFile1" Location="Test63.lua" Script="Script1" />
+
+		<Template Name="WebViewTemplate">
+			<WebView Name="AdsWebView" Docking="top" Size="-100, 80" OnPageError="PageError" OnPageLoaded="PageLoaded" OnPageLoading="PageLoading" Visible="true" Transparent="false">
+				<Actions Name="PageLoaded">
+					<Action Method="CallScript" P1="AdLoaded" />
+				</Actions>
+				<Actions Name="PageLoading">
+					<Action Method="CallScript" P1="AdLoading" />
+				</Actions>
+				<Actions Name="PageError">
+					<Action Method="CallScript" P1="AdError" />
+				</Actions>
+			</WebView>
+		</Template>
+
+		<!-- Create test buttons -->
+		<StackPanel Orientation="vertical" Size="-80, -50" SizeToContent="y">
+			<Label Font="serif" Text="Fetch Inner-active Ad" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -25" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="ShowAd" P3="inneractive" P4="banner" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Fetch LeadBolt Ad" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -25" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="ShowAd" P3="leadbolt" P4="banner" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Fetch LeadBolt Wall" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -25" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="ShowAd" P3="leadbolt" P4="wall" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Fetch Admoda Ad" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -25" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="ShowAd" P3="admoda" P4="banner" />
+				</Actions>
+			</Label>
+		</StackPanel>
+
+		<Label Font="serif" Text="Demonstration of ads" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

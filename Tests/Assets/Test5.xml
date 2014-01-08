@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create scene with narrow extents -->
+	<Scene Name="Scene1" Extents="-100, -100, 200, 200" Current="true">
+
+		<!-- Create a label object -->
+		<Label Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Text="Wrapping" WrapPosition="true" OnTick="Update">
+			<Actions Name="Update">
+				<Action Method="AddProperty" P1="Position" P2="2, 2" />
+			</Actions>
+		</Label>
+
+		<Label Font="serif" Text="Demonstration of Scene Extents. Actors that go outside the scenes extents are hidden or wrapped to the opposite side of the scene" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" Batch="false">
+
+		<!-- Create image and brush for the test image -->
+		<Image Name="test_image" Location="test_image.jpg" Preload="true" Format="RGBA_5551" Filter="true" />
+		<Brush Name="test_image" Image="test_image" SrcRect="0, 0, 1024, 768" />
+
+		<!-- Create a variable to ohld the scale value -->
+		<Variable Name="image_scale" Type="float" Value="1" />
+		
+		<!-- Create an Image View that allows pinch zoom / pan of an image with controls -->
+		<ImageView Name="ImageView1" Background="Button2Brush" Size="-100, -100" ImageBrush="test_image" Area="800, 480" Zoom="1.0" MinZoom="0.5" MaxZoom="4">
+			<Label Font="serif" Size="-30, -20" Background="Button1Brush" SelectedBackground="Button2Brush" SelectedColour="80, 80, 255, 255" Tappable="true" Binding="[Text]image_scale" />
+		</ImageView>
+
+		<Label Font="serif" Text="Demonstration of pinch zoom / pan enabled ImageView" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

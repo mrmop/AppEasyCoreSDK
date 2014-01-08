@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<Image Name="WebImage" Location="http://www.appeasymobile.com/images/AppEasy.png"/>
+		<Brush Name="WebBrush" Image="WebImage" Type="image" UV="0, 0, 1, 0, 1, 1, 0, 1" />
+
+		<Label Font="serif" Text="This image was downloaded from http://www.appeasymobile.com/images/AppEasy.png" Background="WebBrush" Size="256, 118" />
+
+		<Label Font="serif" Text="Demonstration of image based resources" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

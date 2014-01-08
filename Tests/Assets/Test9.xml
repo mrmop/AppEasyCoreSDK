@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene with physics enabled -->
+	<Scene Name="Scene1" Current="true" >
+
+		<!-- Create a aebel -->
+		<Label Name="ParentLabel" Position="0, 0" Font="serif" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" Size="100, 100" Text="Parent" AngularVelocity="30" >
+			<!-- Create additional labels that are children of ParentLabel -->
+			<!-- Child actors (a label is a form of actor that displays text with a background) will take on the transform and visibility of their parent actor -->
+			<!-- Actor child hierarchy can be as deep as you like -->
+			<Label Position="-150, 0" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="70, 70" Text="Child1" AngularVelocity="150" />
+			<Label Position="150, 0" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="70, 70" Text="Child2" AngularVelocity="-150" />
+			<Label Position="0, -150" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="70, 70" Text="Child3" AngularVelocity="150" />
+			<Label Name="ParentLabel2" Position="0, 150" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="70, 70" Text="Child4" AngularVelocity="-180">
+				<!-- The Icon is a child of ParentLabel2 -->
+				<Icon Origin="0, 80" Background="Button1Brush" BackgroundColour="80, 255, 80, 255" Size="20, 20" AngularVelocity="7.5" />
+			</Label>
+		</Label>
+		
+		<Label Position="0, 0" Origin="0, -100" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="70, 70" Text="Parent2" AngularVelocity="60" />
+
+
+		<Variable Name="Paused" Type="bool" Value="false" />
+		<Label Position="0, 0" Font="serif" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Size="70, 70" Text="Pause" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="AddVar" P1="Paused" />
+				<Action Method="PauseTime" P1="Paused" />
+			</Actions>
+		</Label>
+
+		<!-- ActorText actors display text without a background -->
+		<ActorText Font="serif" Text="Hello World" Position="300, 20" />
+
+		<Label Font="serif" Text="Demonstration of Actor Children hierarchy. Child actors will utilise the transform of their parents" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" />
+		
+	</Scene>
+
+
+</xml>

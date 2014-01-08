@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<!-- Create templates that is used by the grid -->
+		<Template Name="GridItemTemp">
+			<Label Name="GridItem$index$" Background="SmallPanelBrush" BackgroundColour="200, 200, 200, 255" SelectedColour="200, 255, 200, 255" Font="serif" GridPos="$gridpos$" Tappable="true" SelectType="normal" Selected="false" />
+		</Template>
+
+		<!-- Create data that will be bound to grid columns -->
+		<Variable Name="TestXML" Type="xml" />
+		<File Name="File1" Location="xml_data.xml" FileType="xml" Preload="true" Variable="TestXML" />
+		<Variable Name="GridItems1" Type="arraystring" Size="1" BindXML="TestXML:Chapter:Name" />
+		<Variable Name="GridItems2" Type="arraystring" Size="1" BindXML="TestXML:Chapter:Description" />
+		<Variable Name="GridItems3" Type="arraystring" Size="1" BindXML="TestXML:Chapter:Pages" />
+
+		<!-- Generate the grid -->
+		<Grid Name="ItemsGrid" Size="-100, -100" Background="PanelBrush" BackgroundColour="255, 255, 255, 255" Tappable="true" ClipMargin="10, 10, 10, 10" ItemsTemplate="GridItemTemp" MultiSelect="false" UseParentOpacity="false">
+			<RowDefinition Name="r0" AlignV="middle" Height="100" />
+			<ColumnDefinition Name="c0" AlignH="centre" Width="300" ItemsData="GridItems1" ItemsTargetType="text" />
+			<ColumnDefinition Name="c1" AlignH="centre" Width="300" ItemsData="GridItems2" ItemsTargetType="text" />
+			<ColumnDefinition Name="c2" AlignH="centre" Width="300" ItemsData="GridItems3" ItemsTargetType="text" />
+		</Grid>
+
+		<Label Font="serif" Text="Demonstration of XML Variables. XML variables can be used to store XML. Elements of the variable can then be bound to other variables" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene to hold or game -->
+	<Scene Name="Scene1" Camera="Cam" Extents="-1000, -400, 2000, 800" Current="true" Batch="false" ClipStatic="true" AllowSuspend="false" Physics="false">
+
+		<!-- Create a camera -->
+		<Camera Name="Cam" Position="0, 0" Angle="0" Scale="1.0" />
+
+		<!-- Score / round variables -->
+		<Variable Name="Score" Type="int" Value="0" />
+		<Variable Name="RoundScore" Type="int" Value="0" />
+		<Variable Name="CurrentRound" Type="int" Value="0" />
+		<!-- TargetValue determines the valuue that all 3 user selections hsould add up to gain a correct answer -->
+		<Variable Name="TargetValue" Type="int" Value="10" />
+		<!-- TotalCardsValue is the current value of all selected cards -->
+		<Variable Name="TotalCardsValue" Type="int" Value="0" />
+		<!-- CardValues is an array that holds the value of each card -->
+		<Variable Name="CardValues" Type="arrayint" Size="15" Value="0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0" />
+		<!-- CardsCount is the total number of cards in play  -->
+		<Variable Name="CardsCount" Type="int" Value="15" />
+		<!-- CardsFoundCount is the total number of cards that the user has successfully found  -->
+		<Variable Name="CardsFoundCount" Type="int" Value="0" />
+		<!-- SelectedCardNames is an array that holds the names of the currently selected cards  -->
+		<Variable Name="SelectedCardNames" Type="arraystring" Size="3" Value="none, none, none" />
+		<!-- CardIndex is the current selection index  -->
+		<Variable Name="CardIndex" Type="int" Value="0" />
+
+		<!-- CardIndexIs are conditions used to determine the currently selected index  -->
+		<Variable Name="CardIndexIs0" Type="condition" Value="CardIndex == 0"/>
+		<Variable Name="CardIndexIs1" Type="condition" Value="CardIndex == 1"/>
+		<Variable Name="CardIndexIs2" Type="condition" Value="CardIndex == 2"/>
+		<Variable Name="CardIndexIs3" Type="condition" Value="CardIndex == 3"/>
+		<!-- CardsMatch is a condition used to determine if the total of all currently selected cards add up to the the target value of 10 -->
+		<Variable Name="CardsMatch" Type="condition" Value="TotalCardsValue == TargetValue"/>
+		<!-- NoCardsLeft is a condition used to determine if there are any cards left in play -->
+		<Variable Name="NoCardsLeft" Type="condition" Value="CardsCount == CardsFoundCount"/>
+
+		<!-- IsRound is a condition used to determine the current round -->
+		<Variable Name="IsRound0" Type="condition" Value="CurrentRound == 0"/>
+		<Variable Name="IsRound1" Type="condition" Value="CurrentRound == 1"/>
+		<Variable Name="IsRound2" Type="condition" Value="CurrentRound == 2"/>
+
+		<!-- Load the first set of cards -->
+		<File Name="RoundFile" Location="Round1.txt" FileType="text" Preload="true" Blocking="true" Variable="CardValues" />
+
+		<!-- Animations -->
+		<Animation Name="Flashing" Type="vec2" Duration="1">
+			<Frame Value="0.8, 0.8" Time="0" Easing="quadin" />
+			<Frame Value="1.2, 1.2" Time="0.5" Easing="quadin" />
+			<Frame Value="0.8, 0.8" Time="1" Easing="quadin" />
+		</Animation>
+		<Animation Name="Still" Type="vec2" Duration="2">
+			<Frame Value="1.0, 1.0" Time="0" />
+			<Frame Value="1.0, 1.0" Time="2" />
+		</Animation>
+		<Timeline Name="StillAnim" AutoPlay="true">
+			<Anim Anim="Still" Repeat="0" Target="Scale"/>
+		</Timeline>
+		
+		<!-- Action that resets the round -->
+		<Actions Name="RestartRound">
+			<Action Method="SetVar" P1="RoundScore" P2="0" />
+			<Action Method="SetVar" P1="TotalCardsValue" P2="0" />
+			<Action Method="SetVar" P1="CardsFoundCount" P2="0" />
+			<Action Method="CallActions" P1="ResetSelection" />
+			<Action Method="ShowActor" P1="Card0" />
+			<Action Method="ShowActor" P1="Card1" />
+			<Action Method="ShowActor" P1="Card2" />
+			<Action Method="ShowActor" P1="Card3" />
+			<Action Method="ShowActor" P1="Card4" />
+			<Action Method="ShowActor" P1="Card5" />
+			<Action Method="ShowActor" P1="Card6" />
+			<Action Method="ShowActor" P1="Card7" />
+			<Action Method="ShowActor" P1="Card8" />
+			<Action Method="ShowActor" P1="Card9" />
+			<Action Method="ShowActor" P1="Card10" />
+			<Action Method="ShowActor" P1="Card11" />
+			<Action Method="ShowActor" P1="Card12" />
+			<Action Method="ShowActor" P1="Card13" />
+			<Action Method="ShowActor" P1="Card14" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card0" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card1" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card2" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card3" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card4" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card5" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card6" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card7" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card8" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card9" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card10" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card11" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card12" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card13" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="Card14" />
+		</Actions>
+
+		<!-- Action that moves to the next round -->
+		<Actions Name="NextRound">
+			<Action Method="CallActions" P1="RestartRound" />
+			<Action Method="AddVar" P1="CurrentRound" P2="1" />
+			<Action Method="LoadFile" P1="RoundFile" P2="true" P3="Round1.txt" Condition="IsRound0" />
+			<Action Method="LoadFile" P1="RoundFile" P2="true" P3="Round2.txt" Condition="IsRound1" />
+			<Action Method="LoadFile" P1="RoundFile" P2="true" P3="Round3.txt" Condition="IsRound2" />
+		</Actions>
+
+		<!-- Action that is called when a correct answer is given -->
+		<Actions Name="CorrectAnswer">
+			<Action Method="AddVar" P1="RoundScore" P2="1" />
+			<Action Method="HideActor" P1="SelectedCardNames:0" />
+			<Action Method="HideActor" P1="SelectedCardNames:1" />
+			<Action Method="HideActor" P1="SelectedCardNames:2" />
+			<Action Method="AddVar" P1="CardsFoundCount" P2="3" />
+			<Action Method="SetProperty" P1="Text" P2="Correct, well done" P3="AnswerNotification" />
+			<Action Method="SetTimeline" P1="AnswerNotificationAnim" P2="AnswerNotification" />
+		</Actions>
+
+		<!-- Action that is called when an incorrect answer is given -->
+		<Actions Name="WrongAnswer">
+			<Action Method="SetProperty" P1="Text" P2="Incorrect, try again" P3="AnswerNotification" />
+			<Action Method="SetTimeline" P1="AnswerNotificationAnim" P2="AnswerNotification" />
+		</Actions>
+
+		<!-- Action that is called when the user has finished selecting 3 cards -->
+		<Actions Name="ResetSelection">
+			<Action Method="SetVar" P1="CardIndex" P2="0" />
+			<Action Method="SetVar" P1="TotalCardsValue" P2="0" />
+		</Actions>
+
+		<!-- Action that is used to check the answer -->
+		<Actions Name="CheckAnswer">
+			<Action Method="CallActions" P1="CorrectAnswer" Condition="CardsMatch" />
+			<Action Method="CallActions" P1="WrongAnswer" Condition="!CardsMatch" />
+			<Action Method="CallActions" P1="ResetSelection" />
+			<Action Method="CallActions" P1="RoundComplete" Condition="NoCardsLeft" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="SelectedCardNames:0" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="SelectedCardNames:1" />
+			<Action Method="SetProperty" P1="Timeline" P2="StillAnim" P3="SelectedCardNames:2" />
+		</Actions>
+
+		<!-- Action that is called when the round is complete -->
+		<Actions Name="RoundComplete">
+			<Action Method="AddVar" P1="Score" P2="RoundScore" />
+			<Action Method="CallActions" P1="NextRound" />
+		</Actions>
+		
+		<!-- Create a grid cell actor template to repreent our card -->
+		<Template Name="CardTemplate">
+			<Label Name="Card$index$" Size="-18, -28" Background="Button1Brush" BackgroundColour="255, 255, 200, 255" SelectedColour="200, 255, 200, 255" Font="serif" GridPos="$gridpos$" Tappable="true" SelectType="normal" Selected="false" OnTapped="CardSelected">
+				<Timeline Name="FlashAnim" AutoPlay="true">
+					<Anim Anim="Flashing" Repeat="0" Target="Scale"/>
+				</Timeline>
+				<Actions Name="CardSelected">
+					<Action Method="SetVar" P1="SelectedCardNames:0" P2="Card$index$" Condition="CardIndexIs0" />
+					<Action Method="SetVar" P1="SelectedCardNames:1" P2="Card$index$" Condition="CardIndexIs1" />
+					<Action Method="SetVar" P1="SelectedCardNames:2" P2="Card$index$" Condition="CardIndexIs2" />
+					<Action Method="AddVar" P1="TotalCardsValue" P2="CardValues:$index$" />
+					<Action Method="AddVar" P1="CardIndex" P2="1" />
+					<Action Method="SetTimeline" P1="FlashANim" />
+					<Action Method="CallActions" P1="CheckAnswer" Condition="CardIndexIs3" />
+				</Actions>
+			</Label>
+		</Template>
+
+		<!-- Create a grid that contains out cards -->
+		<Variable Name="SelectedCard" Type="int" Value="-1" />
+		<Grid Name="ItemsGrid" Size="-100, -90" Docking="bottom" Background="PanelBrush" BackgroundColour="150, 200, 255, 255" SelectedColour="150, 200, 255, 255" Tappable="false" ClipMargin="10, 10, 10, 10" MultiSelect="true" UseParentOpacity="false" ItemsData="CardValues" ItemsTemplate="CardTemplate" ItemsTargetType="text" Selection="SelectedCard">
+			<RowDefinition Name="r0" AlignV="middle" Height="-33" />
+			<RowDefinition Name="r1" AlignV="middle" Height="-33" />
+			<RowDefinition Name="r2" AlignV="middle" Height="-33" />
+			<ColumnDefinition Name="c0" AlignH="left" Width="-20" />
+			<ColumnDefinition Name="c1" AlignH="left" Width="-20" />
+			<ColumnDefinition Name="c2" AlignH="left" Width="-20" />
+			<ColumnDefinition Name="c3" AlignH="left" Width="-20" />
+			<ColumnDefinition Name="c5" AlignH="left" Width="-20" />
+		</Grid>
+
+		<!-- Create the menu at the top of the screen -->
+		<StackPanel Size="-100, -10" Tappable="false" Docking="top" Orientation="horizontal">
+			<Label Name="Restart" Background="Button1Brush" SelectedColour="80, 80, 80, 255" Size="-15, -100" Font="serif" Text="Restart" Margin="0, -5, 0, 0" OnTapped="RestartRound" />
+			<Label Background="PanelBrush" Size="-10, -100" Font="serif" Text="Round" />
+			<Label Name="RoundScore" Background="PanelBrush" Size="-10, -100" Font="serif" Binding="[Text]CurrentRound" />
+			<Label Background="PanelBrush" Size="-10, -100" Font="serif" Text="Score" />
+			<Label Name="Score" Background="PanelBrush" Size="-10, -100" Font="serif" Binding="[Text]Score" />
+			<Label Background="PanelBrush" Size="-10, -100" Font="serif" Text="Round Score" />
+			<Label Name="RoundScore" Background="PanelBrush" Size="-10, -100" Font="serif" Binding="[Text]RoundScore" />
+			<Label Name="Test3" Background="PanelBrush" Size="-10, -100" Font="serif" Binding="[Text]TotalCardsValue" />
+		</StackPanel>
+
+		<!-- Create answer notification overlay -->
+		<Animation Name="AnswerNotificationAnim" Duration="2" Type="float">
+			<Frame Value="-2000" Time="0" Easing="quadin" />
+			<Frame Value="0" Time="0.5" />
+			<Frame Value="0" Time="1.5" Easing="quadout" />
+			<Frame Value="2000" Time="2" />
+		</Animation>
+		<Timeline Name="AnswerNotificationAnim" AutoPlay="true">
+			<Anim Anim="AnswerNotificationAnim" Repeat="1" Target="PositionX" />
+		</Timeline>
+		<Label Name="AnswerNotification" Position="-2000, 0" Size="-50, -15" Background="PanelBrush" BackgroundColour="80, 255, 80, 255" Font="serif" Tappable="false" />
+
+
+	</Scene>
+
+</xml>

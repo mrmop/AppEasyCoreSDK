@@ -1,0 +1,19 @@
+[S3E]
+MemSize=60485760
+SysStackSize=100000
+#WinTitle="AppEasy @2012 AppEasy"
+#WinWidth=800
+#WinHeight=480
+AndroidWebViewZoomControlsEnable=0
+AndroidPointMultiEnable=1
+IOSDispScaleFactor=200
+[SOUND]
+MaxChannels=16
+[GX]
+Rasterisation=HW
+DataCacheSize=307200
+VertCacheSize=20480
+UnIndexedStreamMax=10240
+[GXFONT]
+CacheTextureMaxSize=1024
+

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create scene with narrow extents -->
+	<Scene Name="Scene1" Current="true">
+
+		<!-- Create condition variables that check the systems screen size rating  -->
+		<Variable Name="LowResCheck" Type="condition" Value="system:3 LTE 2" />
+		<Variable Name="MedResCheck" Type="condition" Value="system:3 GT 2 AND system:3 LTE 3" />
+		<Variable Name="HighResCheck" Type="condition" Value="system:3 GT 3" />
+
+		<!-- Load image based on screen size rating  -->
+		<Image Name="background" Location="low.png" Condition="LowResCheck" />
+		<Image Name="background" Location="medium.png" Condition="MedResCheck" />
+		<Image Name="background" Location="high.png" Condition="HighResCheck" />
+
+		<!-- Create bacjkground brush -->
+		<Brush Name="background" Image="background" Type="image" SrcRect="0, 0, 512, 512" />
+
+		<!-- Create a label object -->
+		<Icon Background="background" Size="-100, -100" />
+
+		<Label Font="serif" Text="Demonstration showing how different resources can be loaded based on certain conditions. In this example, we load a different resolution background based on screen resolution" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+	
+</xml>

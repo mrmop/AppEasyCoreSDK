@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" Camera="Cam">
+
+		<Camera Name="Cam" />
+
+		<Image Name="bg1" Location="bg1.png" Preload="true" Format="RGBA_5551" Filter="true" />
+		<Brush Name="bg1" Image="bg1" Type="image" />
+
+
+		<!-- Create single triangle -->
+		<Geometry Name="Geoms1" Vertices="-200,-200, 200,200, -200,200" UV="0,0, 1,1, 0,1" Type="TriList" />
+
+		<!-- Create two triangles -->
+		<Geometry Name="Geoms2" Vertices="-200,-200, 200,200, -200,200,   -400,-400, -200,-400, -200,0" Type="TriList" />
+		
+		<!-- Create a house shape -->
+		<!--Geometry Name="Geoms3" Vertices="-200,-200, 0,-300, 200,-200, 200,200, -200,200" Indices="0, 1, 2, 3, 4" Colours="255,0,0,255, 0,255,0,255, 0,0,255,255, 255,255,255,255, 255,255,255,255" Type="Poly" /-->
+		<Geometry Name="Geoms3" Vertices="-479,-385,-395,-370,-199,-232,-419,-172,-506,-286" Type="Poly" />
+		
+		<Icon Name="Sprite1" Position="200, 0" Background="bg1" Geometry="Geoms1" SelectedColour="80, 80, 80, 255" Draggable="true" AngularVelocity="100" />
+		<Icon Name="Sprite2" Position="200, 0" Background="bg1" Geometry="Geoms2" SelectedColour="80, 80, 80, 255" Draggable="true" AngularVelocity="0" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="SetProperty" P1="Geometry" P2="Geoms3" />
+			</Actions>
+		</Icon>
+		<Icon Name="Sprite3" Position="0, 0" Background="bg1" Geometry="Geoms3" SelectedColour="80, 80, 80, 255" Draggable="true" AngularVelocity="0" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="SetProperty" P1="Geometry" P2="Geoms2" />
+			</Actions>
+		</Icon>
+
+		<Icon Name="Crate1" Background="bg1" Position="-398,281" Size="157,142" Angle="48" />
+
+
+		<Label Font="serif" Text="Test Polygon Sprites" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

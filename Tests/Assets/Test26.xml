@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" >
+
+		<!-- Create a variable to load a file into -->
+		<Variable Name="FileContents" Type="string" Persist="true" />
+
+		<!-- Declare a file -->
+		<File Name="File1" Location="file1.txt" FileType="txt" Variable="FileContents" Preload="true" />
+
+		<!-- Create a label to display our files contents -->
+		<Label Font="serif" Size="200, 200" TextColour="255, 255, 128, 255" Background="Button1Brush" BackgroundColour="255, 80, 80, 255" Binding="[Text]FileContents" />
+
+		<!-- Create a group of buttons to load 3 different files -->
+		<Label Font="serif" Size="80, 50" Position="-100, 100" Text="Load File1" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" OnTapped="Load">
+			<Actions Name="Load">
+				<Action Method="LoadFile" P1="File1" P2="true" P3="file1.txt" />
+			</Actions>
+		</Label>
+		<Label Font="serif" Size="80, 50" Position="0, 100" Text="Load File2" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" OnTapped="Load">
+			<Actions Name="Load">
+				<Action Method="LoadFile" P1="File1" P2="true" P3="file2.txt" />
+			</Actions>
+		</Label>
+		<Label Font="serif" Size="80, 50" Position="100, 100" Text="Load File3" Background="Button1Brush" BackgroundColour="80, 80, 255, 255" OnTapped="Load">
+			<Actions Name="Load">
+				<Action Method="LoadFile" P1="File1" P2="true" P3="file3.txt" />
+			</Actions>
+		</Label>
+
+		<Label Font="serif" Text="Demonstration of loading files into variables" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+
+<xml>
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" ScriptEngine="lua" >
+
+		<!-- Load script -->
+		<Script Name="Scene1Script" Type="lua" />
+		<File Name="ScriptFile1" Location="Test25.lua" Script="Scene1Script" />
+
+		<WebView Name="WebView1" Docking="top" Size="-100, -70" OnPageError="PageError" OnPageLoaded="PageLoaded" OnPageLoading="PageLoading" OnJavascript="JSCalled">
+			<Actions Name="JSCalled">
+				<Action Method="CallScript" P1="ShowJavascript" />
+			</Actions>
+			<Actions Name="PageLoaded">
+				<Action Method="SetProperty" P1="Text" P2="Page loaded!" P3="Status" />
+			</Actions>
+			<Actions Name="PageLoading">
+				<Action Method="SetProperty" P1="Text" P2="Page loading...." P3="Status" />
+			</Actions>
+			<Actions Name="PageError">
+				<Action Method="SetProperty" P1="Text" P2="Page error!" P3="Status" />
+			</Actions>
+		</WebView>
+		<StackPanel Orientation="vertical" Docking="bottom" Size="-100, -30">
+			<Label Name="Status" Background="Button1Brush" Size="-100, -20" SelectedColour="128, 255, 128, 255" Text="Status" Font="serif"  />
+			<StackPanel Orientation="horizontal" Size="-100, -40">
+				<Label Background="Button1Brush" Size="-30, -100" SelectedColour="128, 255, 128, 255" Text="Content 1" Font="serif" OnTapped="Tapped">
+					<Actions Name="Tapped">
+						<Action Method="SetProperty" P1="html" P2="&lt;html&gt;&lt;body&gt;&lt;a href='http://www.google.com' target='_blank'&gt;Dynamic content 1&lt;/a&gt; &lt;/body&gt;&lt;/html&gt;" P3="WebView1" />
+					</Actions>
+				</Label>
+				<Label Background="Button1Brush" Size="-30, -100" SelectedColour="128, 255, 128, 255" Text="Content 2" Font="serif" OnTapped="Tapped">
+					<Actions Name="Tapped">
+						<Action Method="SetProperty" P1="html" P2="&lt;html&gt;&lt;body&gt;Dynamic content 2 &lt;/body&gt;&lt;/html&gt;" P3="WebView1" />
+					</Actions>
+				</Label>
+				<Label Background="Button1Brush" Size="-30, -100" SelectedColour="128, 255, 128, 255" Text="Content 3" Font="serif" OnTapped="Tapped">
+					<Actions Name="Tapped">
+						<Action Method="SetProperty" P1="html" P2="&lt;html&gt;&lt;body&gt;Dynamic content 3 &lt;/body&gt;&lt;/html&gt;" P3="WebView1" />
+					</Actions>
+				</Label>
+			</StackPanel>
+			<StackPanel Orientation="horizontal" Size="-100, -40">
+				<Label Background="Button1Brush" Size="-30, -100" SelectedColour="128, 255, 128, 255" Text="Test JScript" Font="serif" OnTapped="Tapped">
+					<Actions Name="Tapped">
+						<Action Method="SetProperty" P1="uri" P2="rom://test_js.html" P3="WebView1" />
+					</Actions>
+				</Label>
+				<Label Background="Button1Brush" Size="-30, -100" SelectedColour="128, 255, 128, 255" Text="Page 1" Font="serif" OnTapped="Tapped">
+					<Actions Name="Tapped">
+						<Action Method="SetProperty" P1="uri" P2="http://www.drmop.com" P3="WebView1" />
+					</Actions>
+				</Label>
+				<Label Background="Button1Brush" Size="-30, -100" SelectedColour="128, 255, 128, 255" Text="Page 2" Font="serif" OnTapped="Tapped">
+					<Actions Name="Tapped">
+						<Action Method="SetProperty" P1="uri" P2="http://www.appeasymobile.com" P3="WebView1" />
+					</Actions>
+				</Label>
+			</StackPanel>
+		</StackPanel>
+
+		<Label Font="serif" Text="Demonstration of changing the content in a WebView dynamically" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

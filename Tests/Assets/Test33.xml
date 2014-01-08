@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<!-- Create a variable that holds some text -->
+		<Variable Name="Var1" Type="string" Value="Hello" Persist="true"  />
+
+		<!-- Create a label to show the entered text -->
+		<Label Font="serif" Background="Button1Brush" Binding="[Text]Var1" />
+
+		<!-- Create a TextBox that allows us to enter text -->
+		<TextBox Name="TextBox1" Font="serif" Variable="Var1" Position="0, 100" Size="200, 80" Background="Button1Brush" Text="Tap to Enter Text" />
+
+		<Label Font="serif" Text="Demonstration of Persistent Variables" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

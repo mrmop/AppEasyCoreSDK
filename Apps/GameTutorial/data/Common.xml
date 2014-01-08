@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:\AppEasy\docs\XOML.xsd">
+
+	<!--Common scene style -->
+	<Style Name="generic_scene_style">
+		<Set Property="CanvasSize" Value="1024, 768" />
+		<Set Property="CanvasFit" Value="width" />
+		<Set Property="AllowSuspend" Value="false" />
+		<Set Property="AllowFocus" Value="true" />
+		<Set Property="Physics" Value="false" />
+	</Style>
+	<Style Name="physics_scene_style">
+		<Set Property="CanvasSize" Value="1024, 768" />
+		<Set Property="CanvasFit" Value="width" />
+		<Set Property="AllowSuspend" Value="false" />
+		<Set Property="AllowFocus" Value="true" />
+		<Set Property="Physics" Value="true" />
+		<Set Property="Gravity" Value="0, 15" />
+		<Set Property="PhysicsTimestep" Value="0.03333" />
+		<Set Property="WorldScale" Value="10, 10" />
+	</Style>
+
+	<!-- Create font -->
+	<Font Name="font1" Location="Orbitron.ttf" PointSize="8" Preload="true" />
+
+	<!-- Create UI image atlas -->
+	<Image Name="ui_image" Location="ui.png" Preload="false" Format="RGBA_5551" Filter="true" />
+
+	<!-- Create UI brushes -->
+	<Brush Name="Button1Brush" Image="ui_image" SrcRect="320, 70, 200, 70" Type="9patch" ScaleArea="7, 8, 186, 54" />
+	<Brush Name="Button2Brush" Image="ui_image" SrcRect="320, 140, 200, 70" Type="9patch" ScaleArea="8, 8, 184, 54" />
+	<Brush Name="CheckBoxOffBrush" Image="ui_image" SrcRect="320, 210, 48, 48" Type="image" />
+	<Brush Name="CheckBoxOnBrush" Image="ui_image" SrcRect="368, 210, 48, 48" Type="image" />
+	<Brush Name="PanelBrush" Image="ui_image" SrcRect="0, 0, 320, 320" Type="9patch" ScaleArea="12, 15, 296, 290" />
+	<Brush Name="SmallPanelBrush" Image="ui_image" SrcRect="320, 0, 200, 70" Type="9patch" ScaleArea="8, 8, 184, 54" />
+	<Brush Name="ButtonBrush2" Image="ui_image" SrcRect="0, 458, 222, 68" Type="9patch" ScaleArea="8, 7, 206, 54" />
+	
+	<!-- Create gem bitmaps and brushes -->
+	<Image Name="gem1" Location="gem1.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Image Name="gem2" Location="gem2.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Image Name="gem3" Location="gem3.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Image Name="gem4" Location="gem4.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Image Name="gem5" Location="gem5.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Brush Name="gem1" Image="gem1" Type="image" />
+	<Brush Name="gem2" Image="gem2" Type="image" />
+	<Brush Name="gem3" Image="gem3" Type="image" />
+	<Brush Name="gem4" Image="gem4" Type="image" />
+	<Brush Name="gem5" Image="gem5" Type="image" />
+
+	<!-- Create menu bytton bitmaps and brushes -->
+	<Image Name="peg" Location="peg.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Brush Name="peg" Image="peg" Type="image" />
+
+	<!-- Create crate bitmaps and brushes -->
+	<Image Name="crate" Location="crate.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Brush Name="crate" Image="crate" Type="image" />
+	
+	<!-- Create ground bitmaps and brushes -->
+	<Image Name="ground" Location="ground.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Brush Name="ground" Image="ground" Type="image" Tiled="true" />
+
+	<!-- Create sky bitmaps and brushes -->
+	<Image Name="sky" Location="sky.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Brush Name="sky" Image="sky" Type="image" />
+
+	<!-- Create score board bitmaps and brushes -->
+	<Image Name="score_board" Location="score_board.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Brush Name="score_board" Image="score_board" Type="image" />
+
+	<!-- Create menu bytton bitmaps and brushes -->
+	<Image Name="menu_button" Location="menu_button.png" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Brush Name="menu_button" Image="menu_button" Type="image" />
+
+	<!-- Create menu backgruond bitmaps and brushes -->
+	<Image Name="menu_background" Location="menu_bg.jpg" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Brush Name="menu_background" Image="menu_background" Type="image" />
+
+	<!-- Gem physics material -->
+	<Box2dMaterial Name="nobounce" Type="dynamic" Density="3.0" Friction="0.9" Restitution="0.1" />
+
+	<!-- Bomb Gem physics material -->
+	<Box2dMaterial Name="bouncey" Type="dynamic" Density="2.0" Friction="0.9" Restitution="0.5" />
+
+	<!-- Ground physics material -->
+	<Box2dMaterial Name="static" Type="static" Density="2.0" Friction="0.8" Restitution="0.5" />
+
+	<!-- Gem physics shapes -->
+	<Shape Name="gem1_shape" Type="circle" Radius="32" />
+	<Shape Name="gem2_shape" Type="box" Width="60" Height="60" />
+	<Shape Name="gem3_shape" Type="circle" Radius="32" />
+	<Shape Name="gem4_shape" Type="circle" Radius="32" />
+	<Shape Name="gem5_shape" Type="circle" Radius="32" />
+
+	<!-- Peg physics shape -->
+	<Shape Name="peg_shape" Type="circle" Radius="14" />
+
+</xml>

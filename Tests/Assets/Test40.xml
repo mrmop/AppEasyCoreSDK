@@ -1,0 +1,500 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:\AppEasy\docs\XOML.xsd">
+
+	<Scene Name="Scene1" Camera="Cam" Extents="-8000, -4000, 16000, 8000" Current="true" Batch="false" ClipStatic="true" Timeline="Scene_FadeIn_Timeline" OnCreate="Created">
+
+		<Actions Name="Created">
+			<Action Method="PauseTime" P1="false" />
+		</Actions>
+
+		<LoadXOML File="frog.xml" />
+
+		<Animation Name="ScrollIn" Type="vec2" Duration="2">
+			<Frame Value="500, 0" Time="0"/>
+			<Frame Value="0, 0" Time="2"/>
+		</Animation>
+		<Timeline Name="ScrollIn" AutoPlay="true">
+			<Anim Anim="ScrollIn" Target="Position" Repeat="1" />
+		</Timeline>
+		<Animation Name="Scene_FadeIn" Type="vec4" Duration="2" >
+			<Frame Value="0, 0, 0, 255"        Time="0.0" Easing="quadin" />
+			<Frame Value="255, 255, 255, 255"  Time="2.0"/>
+		</Animation>
+
+		<Animation Name="Scene_ZoomIn_Scale_Anim" Type="float" Duration="3" >
+			<Frame Value="5.0"  Time="0.0"/>
+			<Frame Value="1.0"  Time="3.0"/>
+		</Animation>
+
+		<Animation Name="Scene_ZoomIn_Position_Anim" Type="vec2" Duration="3" >
+			<Frame Value="500, 500"  Time="0.0"/>
+			<Frame Value="0, 0" Time="3.0"/>
+		</Animation>
+
+		<Timeline Name="Scene_FadeIn_Timeline" AutoPlay="true">
+			<Anim Anim="Scene_FadeIn" Target="Colour" Repeat="1" StartAtTime="0" />
+			<Anim Anim="Scene_ZoomIn_Scale_Anim" Target="Scale" Repeat="1" StartAtTime="0" />
+			<Anim Anim="Scene_ZoomIn_Position_Anim" Target="Position" Repeat="1" StartAtTime="0" />
+		</Timeline>
+
+		<Variable Name="slider_test1" Type="float" Value="15" />
+
+		<!-- Create a camera -->
+		<Camera Name="Cam" Position="0, 0" Angle="0" Scale="1.0" TouchPanX="true" TouchPanY="true" VelocityDamping="0.8, 0.8" IgnoreActors="false" />
+
+		<!-- Create a complex control animation -->
+		<Animation Name="SP_PosAnim" Duration="5.0" Type="vec2" AutoDelete="true">
+			<Frame Value="0, 0" Time="0" Easing="quadout" />
+			<Frame Value="-192, -100" Time="1" Easing="quadout" />
+			<Frame Value="192, -259" Time="2" Easing="quadout" />
+			<Frame Value="600, -100" Time="3" Easing="quadout" />
+			<Frame Value="200, -200" Time="4" Easing="quadout" />
+			<Frame Value="0, 0" Time="5" Easing="quadout" />
+		</Animation>
+		<Animation Name="SP_AngleAnim" Duration="5.0" Type="float" AutoDelete="true">
+			<Frame Value="0" Time="0" Easing="quadin" />
+			<Frame Value="45" Time="1" Easing="quadin" />
+			<Frame Value="90" Time="2" Easing="quadin" />
+			<Frame Value="180" Time="3" Easing="quadin" />
+			<Frame Value="45" Time="4" Easing="quadin" />
+			<Frame Value="0" Time="5" Easing="quadin" />
+		</Animation>
+		<Animation Name="SP_ScaleAnim" Duration="5.0" Type="vec2" AutoDelete="true">
+			<Frame Value="1, 1" Time="0" Easing="quadin" />
+			<Frame Value="1, 1" Time="3" Easing="quadin" />
+			<Frame Value="0.5, 0.5" Time="4" Easing="quadin" />
+			<Frame Value="1, 1" Time="5" Easing="quadin" />
+		</Animation>
+		<Timeline Name="SP_PosAnim" AutoPlay="true" AutoDelete="true">
+			<Anim Anim="SP_PosAnim" Repeat="1" Target="PositionOrg" Delta="true" />
+			<Anim Anim="SP_AngleAnim" Repeat="1" Target="Angle" />
+			<Anim Anim="SP_ScaleAnim" Repeat="1" Target="Scale" />
+		</Timeline>
+
+		<!-- Create a colour animation -->
+		<Animation Name="ButtonFlash" Duration="2.0" Type="vec4">
+			<Frame Value="128, 180, 255, 255" Time="0" Easing="quadin" />
+			<Frame Value="150, 120, 200, 255" Time="1" Easing="quadout" />
+			<Frame Value="128, 180, 255, 255" Time="2" Easing="quadin" />
+		</Animation>
+		<Timeline Name="ButtonFlash" AutoPlay="true">
+			<Anim Anim="ButtonFlash" Repeat="0" Target="BackgroundColour" />
+		</Timeline>
+
+		<!-- Create a button breathing animation -->
+		<Animation Name="ButtonBreath" Duration="2.0" Type="vec2">
+			<Frame Value="1.0, 1.0" Time="0" Easing="quadin" />
+			<Frame Value="1.2, 1.0" Time="0.5" Easing="quadin" />
+			<Frame Value="1.0, 1.0" Time="1.0" Easing="quadin" />
+			<Frame Value="1.0, 1.2" Time="1.5" Easing="quadin" />
+			<Frame Value="1.0, 1.0" Time="2.0" Easing="quadin" />
+		</Animation>
+
+		<!-- Create a timeline top play the button breathing anination -->
+		<Timeline Name="ButtonBreath" AutoPlay="true">
+			<Anim Anim="ButtonBreath" Repeat="0" Target="Scale" />
+		</Timeline>
+
+		<!-- Create a checkbox spin animation -->
+		<Animation Name="CheckBoxSpin" Duration="2.0" Type="float">
+			<Frame Value="0" Time="0" Easing="quadin" />
+			<Frame Value="-20" Time="0.5" />
+			<Frame Value="0" Time="1.0" Easing="quadin" />
+			<Frame Value="20" Time="1.5" />
+			<Frame Value="0" Time="2.0" Easing="quadin" />
+		</Animation>
+
+		<!-- Create a timeline to play the checkbox spin anination -->
+		<Timeline Name="CheckBoxSpin1" AutoPlay="true">
+			<Anim Anim="CheckBoxSpin" Repeat="0" Target="Angle" />
+		</Timeline>
+		<Timeline Name="CheckBoxSpin2" AutoPlay="true">
+			<Anim Anim="CheckBoxSpin" Repeat="0" Target="Angle" StartAtTime="1" />
+		</Timeline>
+
+		<!-- Create a grid label animation -->
+		<Animation Name="GridButtonBreath" Duration="1.0" Type="vec2">
+			<Frame Value="1.1, 1.1" Time="0" Easing="quadin" />
+			<Frame Value="0.5, 0.5" Time="0.5" Easing="quadin" />
+			<Frame Value="1.1, 1.1" Time="1.0" Easing="quadin" />
+		</Animation>
+
+		<!-- Create a spin animation -->
+		<Animation Name="SpinAnim" Duration="4.0" Type="float">
+			<Frame Value="0" Time="0" Easing="quadin" />
+			<Frame Value="180" Time="2" Easing="quadin" />
+			<Frame Value="360" Time="4" Easing="quadin" />
+		</Animation>
+		<Timeline Name="SpinAnim" AutoPlay="true">
+			<Anim Anim="SpinAnim" Repeat="1" Target="Angle" />
+		</Timeline>
+
+		<Animation Name="grid_grow" Type="vec2" Duration="3" >
+			<Frame Value="300, 300"    Time="0.0" Easing="quadin" />
+			<Frame Value="800, 480"   Time="1.5" Easing="quadout" />
+			<Frame Value="300, 300"    Time="3" Easing="quadin" />
+		</Animation>
+		<Timeline Name="grid_grow" AutoPlay="true">
+			<Anim Anim="grid_grow" Repeat="0" Target="Size" />
+		</Timeline>
+
+		<!--               -->
+		<!-- Create a grid -->
+		<!--               -->
+		<!-- GridItems - Define a list of itemss that will be bound to the grid  -->
+		<Variable Name="GridItems" Type="arraystring" Size="28" Value="Item 1, Item 2, Item 3, Item 4, Item 5, Item 6, Item 7, Item 8, Item 9, Item 10, Item 11, Item 12, Item 13, Item 14, Item 15, Item 16, Item 17, Item 18, Item 19, Item 20, Item21, Item22, Item23, Item24, Item25, Item26, Item27, Item28" />
+		<!-- Create variable to accept the current grid cell selection -->
+		<Variable Name="grid_selection" Type="string" Value="0"/>
+		<!-- Create a template that will be used to generate the animating label grid cell actors -->
+		<Template Name="GridItemTemp">
+			<Label Name="GridItem$index$" Background="SmallPanelBrush" BackgroundColour="200, 200, 200, 255" SelectedColour="200, 255, 200, 255" Font="serif" Text="Hello" GridPos="$gridpos$" Tappable="true" OnTapped="GridOnTapped$index$"  SelectType="normal" Selected="false">
+				<Timeline Name="GridItemAnim" AutoPlay="true">
+					<Anim Anim="GridButtonBreath" Repeat="0" Target="Scale" />
+				</Timeline>
+				<Actions Name="GridOnTapped$index$">
+					<Action Method="SetTimeline" P1="GridItemAnim" />
+				</Actions>
+			</Label>
+		</Template>
+		<!-- Create a template that will be used to generate the toggle button grid cell actors -->
+		<Template Name="GridItemTemp2">
+			<Label Name="Grid2Item$index$" Background="Button1Brush" BackgroundColour="200, 200, 200, 255" SelectedColour="200, 255, 200, 255" Font="serif" Text="Hello" GridPos="$gridpos$" Tappable="true" SelectType="toggle" Selected="false" Binding="[Text]grid_selection" />
+		</Template>
+
+		<!-- Create data that will be bound to grid columns -->
+		<Variable Name="ListBoxItemsXML" Type="xml" />
+		<File Name="File3" Location="test_data.xml" FileType="xml" Preload="true" Variable="ListBoxItemsXML" />
+		<Variable Name="GridItems1" Type="arraystring" Size="1" Value="Button1Brush" />
+		<Variable Name="GridItems2" Type="arraystring" Size="1" BindXML="ListBoxItemsXML:Chapter:Name" />
+		<Variable Name="GridItems3" Type="arraystring" Size="1" Value="C1" BindXML="ListBoxItemsXML:Chapter:Description" />
+		<Variable Name="GridItems4" Type="arraystring" Size="1" Value="D1" BindXML="ListBoxItemsXML:Chapter:Pages" />
+		<Label Position="-192, 75" Text="Grid Control - Each column is bound to separate XOML arrays" Size="640, 50" Font="serif" Background="Button2Brush" SelectedColour="255, 255, 255, 200" SelectedTextColour="255, 255, 128, 200" AlignH="centre" Tappable="true" Draggable="true" >
+			<!-- Generate the grid -->
+			<Grid Name="ItemsGrid" Position="0, 215" Size="-100, 380" Background="PanelBrush" BackgroundColour="255, 255, 255, 255" Tappable="true" ClipMargin="10, 10, 10, 10" ItemsTemplate="GridItemTemp" MultiSelect="false" Selection="grid_selection" SelectedIndex="5" UseParentOpacity="false">
+				<RowDefinition Name="r0" AlignV="middle" Height="100" />
+				<RowDefinition Name="r1" AlignV="middle" Height="100" />
+				<RowDefinition Name="r2" AlignV="middle" Height="100" />
+				<RowDefinition Name="r3" AlignV="middle" Height="100" />
+				<RowDefinition Name="r4" AlignV="middle" Height="100" />
+				<RowDefinition Name="r5" AlignV="middle" Height="100" />
+				<RowDefinition Name="r6" AlignV="middle" Height="100" />
+				<RowDefinition Name="r7" AlignV="middle" Height="100" />
+				<RowDefinition Name="r8" AlignV="middle" Height="100" />
+				<RowDefinition Name="r9" AlignV="middle" Height="100" />
+				<ColumnDefinition Name="c0" AlignH="centre" Width="300" ItemsData="GridItems1" ItemsTemplate="GridItemTemp2" ItemsTargetType="background" />
+				<ColumnDefinition Name="c1" AlignH="centre" Width="300" ItemsData="GridItems2" ItemsTemplate="GridItemTemp" ItemsTargetType="text" />
+				<ColumnDefinition Name="c2" AlignH="centre" Width="300" ItemsData="GridItems3" ItemsTemplate="GridItemTemp" ItemsTargetType="text" />
+				<ColumnDefinition Name="c3" AlignH="centre" Width="300" ItemsData="GridItems4" ItemsTemplate="GridItemTemp" ItemsTargetType="text" />
+			</Grid>
+		</Label>
+
+		<!--                  -->
+		<!-- Create a listbox -->
+		<!--                  -->
+		<!-- ListBoxItems - Defines a list of items that will be bound to the list box -->
+		<Variable Name="ListBoxItems" Type="arraystring" Size="10" Value="Item 1, Item 2, Item 3, Item 4, Item 5, Item 6, Item 7, Item 8, Item 9, Item 10" BindXML="ListBoxItemsXML:Chapter:Name" />
+		<!--File Name="File2" Location="test1.txt" FileType="txt" Preload="true" Variable="ListBoxItems" Converter="html" /-->
+		<!-- Create a template that will be used to generate the list box actors -->
+		<Template Name="ListBoxItemTemp">
+			<Label Name="ListItemA$index$" Size="-25, 70" Background="SmallPanelBrush" BackgroundColour="210, 210, 210, 255" SelectedColour="80, 80, 255, 255" Font="serif" TextColour="255, 255, 255, 255" SelectedTextColour="255, 255, 255, 255" Margin="20, 20, 20, 20" SelectType="toggle" Selected="false" />
+		</Template>
+		<Label Position="435, -550" Text="Horizontal List Box bound to a XOML array" Size="600, 50" Font="serif" Background="Button2Brush" SelectedColour="255, 255, 255, 200" SelectedTextColour="255, 255, 128, 200" AlignH="centre" Tappable="true" Draggable="true">
+			<ListBox Name="ListBox" Position="0, 100" Size="600, 150" Background="PanelBrush" MultiSelect="true" ItemsData="ListBoxItems" ItemsTargetType="text" ItemsTemplate="ListBoxItemTemp" Tappable="true" Draggable="false" Orientation="horizontal" ClipMargin="10, 10, 10, 10" UseParentOpacity="false" />
+		</Label>
+
+		<!--                      -->
+		<!-- Create a 2nd listbox -->
+		<!--                      -->
+		<!-- ListBoxItems - Defines a list of items that will be bound to the list box -->
+		<Variable Name="ListBoxItems2" Type="arraystring" Size="4" Value="Item 1, Item 2, Item 3, Item 4" />
+		<!-- Create a template that will be used to generate the list box actors -->
+		<Template Name="ListBoxItemTemp2">
+			<StackPanel Size="-90, 60" Orientation="horizontal" Background="SmallPanelBrush" BackgroundColour="200, 200, 200, 255" SelectedColour="255, 80, 80, 255" SelectType="toggle" Selected="false" AlignV="top" AlignH="left" Margin="0, 0, $top$, 10">
+				<Label Text="$text$" Size="120, 50" BackgroundColour="200, 200, 200, 255" SelectedColour="255, 80, 80, 255" Font="serif" TextColour="255, 255, 255, 255" SelectedTextColour="255, 255, 255, 255" Margin="0, 0, 10, 0" SelectType="toggle" Selected="false" Tappable="false" />
+				<Label Name="ListItemB$index$" Text="$text$" Size="-50, -90" Background="Button1Brush" BackgroundColour="200, 200, 200, 255" SelectedColour="255, 80, 255, 255" Font="serif" TextColour="255, 255, 255, 255" SelectedTextColour="255, 255, 255, 255" Margin="0, 0, 0, 0" />
+			</StackPanel>
+		</Template>
+		<Label Name="ListBox2Header" Position="285, -350" Text="Vertical Custom List Box" Size="300, 50" Font="serif" Background="Button2Brush" SelectedColour="255, 255, 255, 200" SelectedTextColour="255, 255, 128, 200" AlignH="centre" Tappable="true" Draggable="true" UseParentOpacity="false">
+			<ListBox Name="ListBox2" Position="0, 225" Size="300, 400" Background="PanelBrush" MultiSelect="false" ItemsTargetType="text" Tappable="true" Draggable="false" AlignH="centre" ClipMargin="10, 10, 10, 10" UseParentOpacity="false">
+				<FromTemplate Template="ListBoxItemTemp2" index="1" text="Item 1" top="10" />
+				<FromTemplate Template="ListBoxItemTemp2" index="2" text="Item 2" top="10" />
+				<FromTemplate Template="FrogTemp" base="0" delay="0" colour="Green" />
+				<FromTemplate Template="FrogTemp" base="1" delay="2" colour="Blue" />
+				<FromTemplate Template="ListBoxItemTemp2" index="3" text="Item 3" top="10" />
+				<FromTemplate Template="ListBoxItemTemp2" index="4" text="Item 4" top="10" />
+				<FromTemplate Template="FrogTemp" base="2" delay="1" colour="Red" />
+				<FromTemplate Template="FrogTemp" base="3" delay="3" colour="Yellow" />
+				<FromTemplate Template="ListBoxItemTemp2" index="5" text="Item 5" top="10" />
+				<FromTemplate Template="ListBoxItemTemp2" index="6" text="Item 6" top="10" />
+				<FromTemplate Template="ListBoxItemTemp2" index="7" text="Item 7" top="20" />
+				<FromTemplate Template="ListBoxItemTemp2" index="8" text="Item 8" top="50" />
+				<FromTemplate Template="ListBoxItemTemp2" index="9" text="Item 9" top="20" />
+				<FromTemplate Template="ListBoxItemTemp2" index="10" text="Item 10" top="10" />
+				<FromTemplate Template="ListBoxItemTemp2" index="11" text="Item 11" top="10" />
+				<FromTemplate Template="ListBoxItemTemp2" index="12" text="Item 12" top="10" />
+			</ListBox>
+		</Label>
+
+
+		<!--                      -->
+		<!-- Create a stack panel -->
+		<!--                      -->
+		<Label Name="ComplexControl" Position="-192, -550" Text="Complex Form Style Control Example" Size="640, 50" Font="serif" Background="Button2Brush" SelectedColour="255, 255, 255, 200" SelectedTextColour="255, 255, 128, 200" AlignH="centre" Tappable="true" Draggable="true" AlphaMode="half">
+			<StackPanel Name="StackPanel" Position="0, 215" Size="-100, 380" Background="PanelBrush" Orientation="vertical" Draggable="false" ScrollRange="-3000, -3000, 6000, 6000" UseParentOpacity="false">
+				<StackPanel Background="SmallPanelBrush" Orientation="horizontal" Size="-95, 100" BackgroundColour="255, 255, 255, 128" SelectedColour="255, 255, 200, 255" AlignH="left" AlignV="middle" Margin="0, 0, 20, 10" Draggable="true">
+					<Label Name="Name" Text="Name:" Size="80, 68" Font="serif" AlignH="centre" Margin="20, 10, 0, 0" UseParentOpacity="false" />
+					<TextBox Name="EnterName" Size="260, 60" Text="I am Mr TextBox" Background="SmallPanelBrush" Font="serif" AlignH="left" TextMargin="20, 20, 0, 0" Margin="10, 10, 0, 0" UseParentOpacity="false" />
+					<Label Text="Expert:" Size="80, 68" Font="serif" AlignH="centre" Margin="20, 10, 0, 0" UseParentOpacity="false" />
+					<Icon Name="CheckBox1" Background="CheckBoxOffBrush" SelectedBackground="CheckBoxOnBrush" SelectType="toggle" Selected="false" Margin="10, 10, 0, 0" OnTapped="TappedAction" UseParentOpacity="false">
+						<Actions Name="TappedAction">
+							<Action Method="SetTimeline" P1="SP_PosAnim" P2="ComplexControl" />
+						</Actions>
+					</Icon>
+				</StackPanel>
+				<StackPanel Background="SmallPanelBrush" Orientation="horizontal" Size="-95, 100" BackgroundColour="255, 255, 255, 128" AlignH="left" AlignV="middle" Margin="0, 0, 10, 10" Tappable="false">
+					<Label Name="Position" Text="Position:" Size="80, 68" Font="serif" AlignH="centre" Margin="20, 20, 0, 0" UseParentOpacity="false" />
+					<TextBox Name="EnterName" Size="260, 60" Text="Code Monkey In the Back!" Background="SmallPanelBrush" Font="serif" AlignH="left" TextMargin="20, 20, 0, 0" UseParentOpacity="false" />
+					<StackPanel Name="StackPanel" Size="100, -100" Orientation="vertical" AlignV="middle" Tappable="false" UseParentOpacity="false" >
+						<StackPanel Orientation="horizontal" Size="-100, -50" AlignH="left" AlignV="middle" Margin="0, 0, 0, 0" Tappable="false">
+							<Label Text="Beer?:" Size="80, 68" Font="serif" AlignH="centre" Margin="10, 10, 0, 0" />
+							<Icon Name="CheckBox1" Background="CheckBoxOffBrush" SelectedBackground="CheckBoxOnBrush" SelectType="toggle" Selected="true" Margin="10, 10, 0, 0" Timeline="CheckBoxSpin1" />
+						</StackPanel>
+						<StackPanel Orientation="horizontal" Size="-100, -50" AlignH="left" AlignV="middle" Margin="0, 0, 0, 0" Tappable="false">
+							<Label Text="Pizza?:" Size="80, 68" Font="serif" AlignH="centre" Margin="10, 10, 0, 0" Tappable="false" />
+							<Icon Name="CheckBox2" Background="CheckBoxOffBrush" SelectedBackground="CheckBoxOnBrush" SelectType="toggle" Selected="false" Margin="10, 10, 0, 0" Timeline="CheckBoxSpin2" />
+						</StackPanel>
+					</StackPanel>
+				</StackPanel>
+				<StackPanel Background="SmallPanelBrush" Orientation="horizontal" Size="-95, 100" BackgroundColour="255, 255, 255, 128" AlignH="left" AlignV="middle" Margin="0, 0, 10, 10" Tappable="false">
+					<Label Name="CLickMeButton1" Size="150, 60" Background="Button1Brush" BackgroundColour="128, 180, 255, 255" SelectedColour="200, 220, 255, 255" Text="Click Me" Font="serif" Margin="20, 10, 0, 0"  Timeline="ButtonBreath" UseParentOpacity="false" />
+					<Label Name="CLickMeButton2" Size="300, 60" Background="Button2Brush" BackgroundColour="128, 180, 255, 255" SelectedColour="200, 220, 255, 255" Rect="0, 0, 0, 0" Text="This is a very long toggle button label" SelectedText="Not so long" Font="serif" Margin="10, 10, 0, 0" SelectType="toggle" Selected="false" TextSkew="0, 0, 1, -1"  OnToggledOn="ToggleViewOn2" OnToggledOff="ToggleViewOff2" UseParentOpacity="false">
+						<Actions Name="ToggleViewOn2">
+							<Action Method="SetTimeline" P1="grid_grow" P2="WrapPanel1" />
+						</Actions>
+						<Actions Name="ToggleViewOff2">
+							<Action Method="StopTimeline" P2="ItemsGrid" />
+						</Actions>
+					</Label>
+					<Label Name="CLickMeButton3" Size="80, 60" Background="Button1Brush" BackgroundColour="128, 180, 255, 255" SelectedColour="200, 220, 255, 255" Text="Short" SelectedText="Text" Font="serif" Margin="10, 10, 0, 0" SelectType="toggle" Selected="true" TextSkew="0, 0, 1, -1" Timeline="ButtonFlash" OnToggledOn="ToggleViewOn" OnToggledOff="ToggleViewOff" UseParentOpacity="false">
+						<Actions Name="ToggleViewOn">
+							<Action Method="SetProperty" P1="Visible" P2="true" P3="ListBox2Header" />
+							<Action Method="LoadFile" P1="File3" />
+						</Actions>
+						<Actions Name="ToggleViewOff">
+							<Action Method="SetProperty" P1="Visible" P2="false" P3="ListBox2Header" />
+						</Actions>
+					</Label>
+				</StackPanel>
+			</StackPanel>
+		</Label>
+
+		<Label Name="WrapPanel1Anchor" Position="950, -550" Text="Wrap Panel Example" Size="400, 50" Font="serif" Background="Button2Brush" SelectedColour="255, 255, 255, 200" SelectedTextColour="255, 255, 128, 200" AlignH="centre" Tappable="true" Draggable="true">
+			<WrapPanel Name="WrapPanel1" Position="0, 225" Size="-100, 400" Background="PanelBrush" Orientation="vertical" UseParentOpacity="false" Bubbling="true" >
+				<Label Name="Position" Text="Hello1" Size="120, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello2" Size="120, 120" Font="serif" Margin="20, 20, 30, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello3" Size="120, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello4" Size="120, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello5" Size="120, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello6" Size="120, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello7" Size="120, 120" Font="serif" Margin="20, 20, 40, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello8" Size="120, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello9" Size="120, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello10" Size="120, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello11" Size="120, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" />
+			</WrapPanel>
+		</Label>
+
+		<Label Name="TextView1" Position="-640, 0" Text="Wrap Panel Example" Size="400, 50" Font="serif" Background="Button2Brush" SelectedColour="255, 255, 255, 200" SelectedTextColour="255, 255, 128, 200" AlignH="centre" Tappable="true" Draggable="true">
+			<WrapPanel Name="WrapPanel2" Position="0, 225" Size="-100, 400" Background="PanelBrush" Orientation="horizontal" UseParentOpacity="false" Bubbling="true">
+				<Label Name="Position" Text="IwGame Engine UI" Size="-70, 50" Font="serif" Margin="20, 20, 0, 0" Background="SmallPanelBrush" TextColour="255, 255, 100, 255" />
+				<Label Name="Position" Text="I would like to introduce you all to the iwGame engine's new user interface system." Size="-70, 400" Font="serif" Margin="20, 20, 0, 0" Background="SmallPanelBrush" AlignH="left" AlignV="top" TextMargin="20, 20, 20, 20"/>
+				<Label Name="Position" Text="Hello2" Size="-90, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" BackgroundColour="200, 200, 200, 200" Binding="[Text]system:0" />
+				<Label Name="Position" Text="Hello3" Size="-90, 120" Font="serif" Margin="20, 20, 20, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello4" Size="-90, 120" Font="serif" Margin="0, 0, 20, 20" Background="SmallPanelBrush" BackgroundColour="200, 200, 200, 200" />
+				<Label Name="Position" Text="Hello5" Size="-90, 120" Font="serif" Margin="0, 0, 20, 20" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello6" Size="-90, 120" Font="serif" Margin="0, 0, 20, 20" Background="SmallPanelBrush" BackgroundColour="200, 200, 200, 200" />
+				<Label Name="Position" Text="Hello7" Size="-90, 120" Font="serif" Margin="0, 0, 0, 0" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello8" Size="-90, 120" Font="serif" Margin="0, 0, 0, 0" Background="SmallPanelBrush" BackgroundColour="200, 200, 200, 200" />
+				<Label Name="Position" Text="Hello9" Size="-90, 120" Font="serif" Margin="0, 0, 0, 0" Background="SmallPanelBrush" />
+				<Label Name="Position" Text="Hello10" Size="-90, 120" Font="serif" Margin="20, 20, 0, 0" Background="SmallPanelBrush" BackgroundColour="200, 200, 200, 200" />
+				<Label Name="Position" Text="Hello11" Size="-90, 120" Font="serif" Margin="20, 20, 0, 0" Background="SmallPanelBrush" />
+			</WrapPanel>
+		</Label>
+
+		<Variable Name="image_scale" Type="float" Value="1" />
+		<Icon Background="Button2Brush" Size="320, 0" Position="-1000, -600">
+			<Label Text="0" Font="serif" Rect="0, 0, -100, -100" Binding="[Text]image_scale" />
+		</Icon>
+		<!--ImageView Name="ImageView1" Position="-800, 0" Background="Button2Brush" Size="800, 500" ImageBrush="test_image" ImageSize="512, 400" ImageScale="2.0" MinScale="0.5" MaxScale="4" ClipMargin="20, 20, 20, 20" Binding="[ImageScale]image_scale" Draggable="true" /-->
+		<ImageView Name="ImageView1" Position="-1000, -310" Background="Button2Brush" Size="800, 500" ImageBrush="test_image" Area="-100, -100" Zoom="1.0" MinZoom="0.5" MaxZoom="4" ClipMargin="20, 20, 20, 20" Binding="[Zoom]image_scale" Scale="1.0" OnTapped="TestTap" OnBeginTouch="TestTap">
+			<Actions Name="TestTap">
+				<Action Method="DebugText" P1="Test1"/>
+			</Actions>
+			<Label Text="Test Text" Font="serif" Size="-30, -20" Background="Button1Brush" SelectedBackground="Button2Brush" OnTapped="TestTap" Tappable="true" />
+		</ImageView>
+
+		<!--WebView Name="WebView1" Size="320, 240" Position="800, -200" URI="http://www.google.com" Modal="false" Transparent="false" /-->
+
+		<Variable Name="text_scale" Type="float" Value="1" />
+		<Icon Background="Button2Brush" Size="80, 320" Position="-1350, 200">
+			<Label Text="0" Font="serif" Rect="0, 0, -100, -100" Binding="[Text]text_scale" />
+			<Slider Name="Slider3" Value="0" ValueRange="0, 10" SliderSize="-80" Background="Button1Brush" Size="48, 48" SliderType="vertical" Binding="[Value]text_scale" />
+		</Icon>
+		<TextView Name="TextView2" Position="-1100, 300" Font="serif" Rect="0, 0, -90, 900" AlignH="left" AlignV="top" Text="I can tell you one thing, testing in-app purchasing from scratch is NOT an easy task, in fact its a pain in the a** to be quite honest. However, like anything that's cool its worth doing. Its been a while coming but we finally put together a unified API for in-app purchasing on the Android and iOS platforms. To see the end product in action check out https://play.google.com/store/apps/details?id=com.pocketeers.puzzlefriends - Puzzle Friends on Android (the new name for the free version of cOnnecticOns (I must have been off my head when I invented the name cOnnecticOns :)). The iOS version is currently with the great Apple reviewers in the sky.\n\nI can tell you one thing, testing in-app purchasing from scratch is NOT an easy task, in fact its a pain in the a** to be quite honest. However, like anything that's cool its worth doing. Its been a while coming but we finally put together a unified API for in-app purchasing on the Android and iOS platforms. To see the end product in action check out https://play.google.com/store/apps/details?id=com.pocketeers.puzzlefriends - Puzzle Friends on Android (the new name for the free version of cOnnecticOns (I must have been off my head when I invented the name cOnnecticOns :)). The iOS version is currently with the great Apple reviewers in the sky.\n\nI can tell you one thing, testing in-app purchasing from scratch is NOT an easy task, in fact its a pain in the a** to be quite honest. However, like anything that's cool its worth doing. Its been a while coming but we finally put together a unified API for in-app purchasing on the Android and iOS platforms. To see the end product in action check out https://play.google.com/store/apps/details?id=com.pocketeers.puzzlefriends - Puzzle Friends on Android (the new name for the free version of cOnnecticOns (I must have been off my head when I invented the name cOnnecticOns :)). The iOS version is currently with the great Apple reviewers in the sky.\n\n" Background="Button2Brush" Size="400, 500" Zoom="1.0" MinZoom="0.5" MaxZoom="4" ClipMargin="20, 20, 20, 20" Binding="[Zoom]text_scale" >
+			<Label Text="Test Text" Font="serif" Size="-50, -20" Background="Button2Brush" Position="150, 150" SelectedColour="200, 255, 200, 255" />
+		</TextView>
+
+
+		<ListBox Name="Menu" Position="1340, -370" Size="300, 400" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10" SelectedIndex="1">
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 1" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 2" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 3" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 4" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 5" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 6" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 7" Font="serif" />
+		</ListBox>
+
+		<ListBox Name="Menu2" Position="5340, -370" Size="300, 400" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10" SelectedIndex="1">
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 1" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 2" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 3" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 4" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 5" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 6" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 7" Font="serif" />
+		</ListBox>
+
+		<ListBox Name="Menu2" Position="7340, -370" Size="300, 400" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10" SelectedIndex="1">
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 1" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 2" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 3" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 4" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 5" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 6" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 7" Font="serif" />
+		</ListBox>
+
+		<ListBox Name="Menu3" Position="9340, -370" Size="300, 400" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10" SelectedIndex="1">
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 1" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 2" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 3" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 4" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 5" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 6" Font="serif" />
+			<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 7" Font="serif" />
+		</ListBox>
+
+
+		<TabBar Name="TabBar1" Position="1000, 250" Size="-80, -80" Background="PanelBrush" AutoHide="true" Draggable="true">
+			<Tabs Background="SmallPanelBrush" Size="-95, -10" Margin="0, 0, -2, -2" Orientation="horizontal">
+				<Tab Name="Tab1" Text="Tab 1" Font="serif" Background="Button2Brush" Size="-22, -90" Margin="-2, -2, 0, 0" SelectedColour="200, 200, 200, 255" SelectType="sticky" Selected="true" />
+				<Tab Name="Tab2" Text="Tab 2" Font="serif" Background="Button2Brush" Size="-22, -90" Margin="-2, -2, 0, 0" SelectedColour="200, 200, 200, 255" SelectType="sticky" />
+				<Tab Name="Tab3" Text="Tab 3" Font="serif" Background="Button2Brush" Size="-22, -90" Margin="-2, -2, 0, 0" SelectedColour="200, 200, 200, 255" SelectType="sticky" />
+				<Tab Name="Tab4" Text="Tab 4" Font="serif" Background="Button2Brush" Size="-22, -90" Margin="-2, -2, 0, 0" SelectedColour="200, 200, 200, 255" SelectType="sticky" />
+			</Tabs>
+			<ImageView Name="View1" Size="-95, -84" Background="Button2Brush" ImageBrush="test_image" Area="800, 400" Zoom="1.0" MinZoom="0.5" MaxZoom="4" ClipMargin="20, 20, 20, 20" Binding="[Zoom]image_scale" Draggable="true" Scale="1.0" ShowTimeline="PA_FadeOn" HideTimeline="PA_FadeOff">
+				<Label Text="View 1" Font="serif" Rect="-50, -25, 100, 50" SelectedColour="180, 220, 250, 255" Background="Button1Brush" />
+			</ImageView>
+			<Canvas Name="View2" Size="-95, -84" Background="PanelBrush" BackgroundColour="255, 200, 200, 255" ShowTimeline="PA_ScrollOnFromLeft" HideTimeline="PA_ScrollOffToRight">
+				<Label Name="ComplexControl2" Position="0, 0" Text="Complex Form Style Control Example" Size="640, 50" Font="serif" Background="Button2Brush" SelectedColour="255, 255, 255, 200" SelectedTextColour="255, 255, 128, 200" AlignH="centre" Tappable="true" Draggable="true">
+					<StackPanel Name="StackPanel" Position="0, 215" Size="-100, 380" Background="PanelBrush" Orientation="vertical" Draggable="false" ScrollRange="-3000, -3000, 6000, 6000" UseParentOpacity="false">
+						<StackPanel Background="SmallPanelBrush" Orientation="horizontal" Size="-95, 100" BackgroundColour="255, 255, 255, 128" SelectedColour="255, 255, 200, 255" AlignH="left" AlignV="middle" Margin="0, 0, 20, 10" Draggable="true">
+							<Label Name="Name" Text="Name:" Size="80, 68" Font="serif" AlignH="centre" Margin="20, 10, 0, 0" UseParentOpacity="false" />
+							<TextBox Name="EnterName" Size="260, 60" Text="I am Mr TextBox" Background="SmallPanelBrush" Font="serif" AlignH="left" Margin="10, 10, 0, 0" TextMargin="20, 20, 0, 0" UseParentOpacity="false" />
+							<Label Text="Expert:" Size="80, 68" Font="serif" AlignH="centre" Margin="20, 10, 0, 0" UseParentOpacity="false" />
+							<Icon Name="CheckBox1" Background="CheckBoxOffBrush" SelectedBackground="CheckBoxOnBrush" SelectType="toggle" Selected="false" Margin="10, 10, 0, 0" OnTapped="TappedAction2" UseParentOpacity="false">
+								<Actions Name="TappedAction2">
+									<Action Method="SetTimeline" P1="SP_PosAnim" P2="ComplexControl2" />
+								</Actions>
+							</Icon>
+						</StackPanel>
+						<StackPanel Background="SmallPanelBrush" Orientation="horizontal" Size="-95, 100" BackgroundColour="255, 255, 255, 128" AlignH="left" AlignV="middle" Margin="0, 0, 10, 10" Tappable="false">
+							<Label Name="Position" Text="Position:" Size="80, 68" Font="serif" AlignH="centre" Margin="20, 20, 0, 0" UseParentOpacity="false" />
+							<TextBox Name="EnterName" Size="260, 60" Text="Code Monkey In the Back!" Background="SmallPanelBrush" Font="serif" AlignH="left" TextMargin="20, 20, 0, 0" UseParentOpacity="false" />
+							<StackPanel Name="StackPanel" Size="100, -100" Orientation="vertical" AlignV="middle" Tappable="false" UseParentOpacity="false" >
+								<StackPanel Orientation="horizontal" Size="-100, -50" AlignH="left" AlignV="middle" Margin="0, 0, 0, 0" Tappable="false">
+									<Label Text="Beer?:" Size="80, 68" Font="serif" AlignH="centre" Margin="10, 10, 0, 0" />
+									<Icon Name="CheckBox1" Background="CheckBoxOffBrush" SelectedBackground="CheckBoxOnBrush" SelectType="toggle" Selected="true" Margin="10, 10, 0, 0" Timeline="CheckBoxSpin1" />
+								</StackPanel>
+								<StackPanel Orientation="horizontal" Size="-100, -50" AlignH="left" AlignV="middle" Margin="0, 0, 0, 0" Tappable="false">
+									<Label Text="Pizza?:" Size="80, 68" Font="serif" AlignH="centre" Margin="10, 10, 0, 0" Tappable="false" />
+									<Icon Name="CheckBox1" Background="CheckBoxOffBrush" SelectedBackground="CheckBoxOnBrush" SelectType="toggle" Selected="false" Margin="10, 10, 0, 0" Timeline="CheckBoxSpin2" />
+								</StackPanel>
+							</StackPanel>
+						</StackPanel>
+						<StackPanel Background="SmallPanelBrush" Orientation="horizontal" Size="-95, 100" BackgroundColour="255, 255, 255, 128" AlignH="left" AlignV="middle" Margin="0, 0, 10, 10" Tappable="false">
+							<Label Name="CLickMeButton1" Size="150, 60" Background="Button1Brush" BackgroundColour="128, 180, 255, 255" SelectedColour="200, 220, 255, 255" Text="Click Me" Font="serif" Margin="20, 10, 0, 0"  Timeline="ButtonBreath" UseParentOpacity="false" />
+							<Label Name="CLickMeButton2" Size="300, 60" Background="Button2Brush" BackgroundColour="128, 180, 255, 255" SelectedColour="200, 220, 255, 255" Rect="0, 0, 0, 0" Text="This is a very long toggle button label" SelectedText="Not so long" Font="serif" Margin="10, 10, 0, 0" SelectType="toggle" Selected="false" TextSkew="0, 0, 1, -1"  OnToggledOn="ToggleViewOn3" OnToggledOff="ToggleViewOff3" UseParentOpacity="false">
+								<Actions Name="ToggleViewOn3">
+									<Action Method="SetTimeline" P1="grid_grow" P2="WrapPanel1" />
+								</Actions>
+								<Actions Name="ToggleViewOff3">
+									<Action Method="StopTimeline" P2="ItemsGrid" />
+								</Actions>
+							</Label>
+							<Label Name="CLickMeButton3" Size="80, 60" Background="Button1Brush" BackgroundColour="128, 180, 255, 255" SelectedColour="200, 220, 255, 255" Text="Short" SelectedText="Text" Font="serif" Margin="10, 10, 0, 0" SelectType="toggle" Selected="true" TextSkew="0, 0, 1, -1" Timeline="ButtonFlash" OnToggledOn="ToggleViewOn4" OnToggledOff="ToggleViewOff4" UseParentOpacity="false">
+								<Actions Name="ToggleViewOn4">
+									<Action Method="SetProperty" P1="Visible" P2="true" P3="ListBox2Header" />
+								</Actions>
+								<Actions Name="ToggleViewOff4">
+									<Action Method="SetProperty" P1="Visible" P2="false" P3="ListBox2Header" />
+								</Actions>
+							</Label>
+						</StackPanel>
+					</StackPanel>
+				</Label>
+			</Canvas>
+			<Canvas Name="View3" Size="-95, -84" Background="PanelBrush" BackgroundColour="200, 255, 200, 255" ShowTimeline="PA_ScrollOnFromBottom" HideTimeline="PA_ScrollOffToRight">
+				<Label Text="View 3" Font="serif" Rect="-50, -25, 100, 50" Background="Button1Brush" />
+			</Canvas>
+			<Canvas Name="View4" Size="-95, -84" Background="PanelBrush" BackgroundColour="200, 255, 255, 255" ShowTimeline="PA_FadeOn" HideTimeline="PA_FadeOff">
+				<ListBox Name="Menu" Size="-90, -90" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10" SelectedIndex="1">
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 1" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 2" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 3" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 4" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 5" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 6" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 7" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 8" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 9" Font="serif" />
+					<Label Background="Button2Brush" Size="-90, 0" SelectedColour="128, 255, 200, 255" Text="Option 10" Font="serif" />
+				</ListBox>
+			</Canvas>
+		</TabBar>
+
+		<Variable Name="Option1" Type="string" Value="Hello" />
+		<File Name="File1" Location="http://www.drmop.com/test1.txt" FileType="txt" Preload="true" Variable="Option1" />
+
+		<StackPanel Name="SP1" Position="2000, -200" Size="300, -100" Background="PanelBrush" Orientation="vertical" AlignH="centre" AlignV="top" SizeToContent="y" >
+			<Label Background="Button2Brush" Size="-90, 100" SelectedColour="128, 255, 200, 128" Text="Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1" Font="serif" Binding="[Text]Option1" AutoHeight="true" />
+			<Label Background="Button2Brush" Size="-90, 100" SelectedColour="128, 255, 200, 128" Text="Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1" Font="serif" AutoHeight="true" />
+			<Label Background="Button2Brush" Size="-90, 100" SelectedColour="128, 255, 200, 128" Text="Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1" Font="serif" AutoHeight="true" />
+			<Label Background="Button2Brush" Size="-90, 100" SelectedColour="128, 255, 200, 128" Text="Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1 Option 1" Font="serif" AutoHeight="true" />
+			<VideoOverlay Name="Vid1" Background="Button2Brush" SelectedColour="128, 255, 200, 128" Video="Video1" Size="-90, 100" AutoPlay="false" Volume="0.3" Repeat="1" AspectLock="x" OnEnd="VideoEnd" OnTapped="Play">
+				<Actions Name="VideoEnd">
+					<Action Method="HideActor" P1="SP1" />
+				</Actions>
+				<Actions Name="Play">
+					<Action Method="SetProperty" P1="Command" P2="play" P3="Vid1" />
+				</Actions>
+			</VideoOverlay>
+			<Icon Background="Button1Brush" />
+		</StackPanel>
+
+		<Animation Name="PTest_Anim1" Duration="5" Type="vec2">
+			<Frame Value="0, 0" Time="0" />
+			<Frame Value="50, 50" Time="2.5" />
+			<Frame Value="0, 0" Time="5" />
+		</Animation>
+		<Timeline Name="PTest_Anim1" AutoPlay="true">
+			<Anim Anim="PTest_Anim1" Repeat="0" Target="Position" />
+		</Timeline>
+
+		<Icon Name="PTest1" Brush="PanelBrush" Position="50, 50" PercPos="true" Size="-25, -25" Timeline="PTest_Anim1" Skew="10, 10, 20, 20" />
+		<Icon Brush="CheckBoxOnBrush" Position="0, 0" Size="-10, -10" Skew="10, 10, 20, 20" Draggable="true" />
+
+	</Scene>
+
+</xml>

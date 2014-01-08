@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Main menu scene -->
+	<Scene Name="menu" Style="generic_scene_style" Camera="cam" Visible="true" Layer="9">
+		<Camera Name="cam" />
+		<!-- Scene scroll out animation -->
+		<Animation Name="scroll_out" Duration="1" Type="float">
+			<Frame Time="0" Value="0" Easing="quadout" />
+			<Frame Time="1" Value="2000" />
+		</Animation>
+		<Timeline Name="scroll_out" AutoPlay="false">
+			<Animation Anim="scroll_out" Target="PositionX" Repeat="1" />
+		</Timeline>
+		
+		<!-- Scene scroll in animation -->
+		<Animation Name="scroll_in" Duration="1" Type="float">
+			<Frame Time="0" Value="2000" Easing="quadout" />
+			<Frame Time="1" Value="0" />
+		</Animation>
+		<Timeline Name="scroll_in" AutoPlay="false">
+			<Animation Anim="scroll_in" Target="PositionX" Repeat="1" />
+		</Timeline>
+		
+		<!-- Continue game actions, called when the user taps the continue button -->
+		<Actions Name="continue_tapped">
+			<Action Method="SetTimeline" P1="scroll_out" P2="menu" />
+			<Action Method="CallGlobalScript" P1="continueGame" />
+		</Actions>
+		
+		<!-- New game actions, called when the user taos the new game button -->
+		<Actions Name="new_game_tapped">
+			<Action Method="SetTimeline" P1="scroll_out" P2="menu" />
+			<Action Method="CallGlobalScript" P1="newGame" />
+		</Actions>
+		
+		<!-- Create menu background -->
+		<Icon Background="menu_background" Scale="1.5,1.5" Timeline="menu_bg_anim">
+			<Animation Name="menu_bg_anim" Duration="5" Type="float">
+				<Frame Time="0" Value="-15" Easing="quadout" />
+				<Frame Time="2.5" Value="15" Easing="quadout" />
+				<Frame Time="5" Value="-15" />
+			</Animation>
+			<Timeline Name="menu_bg_anim" AutoPlay="true">
+				<Animation Anim="menu_bg_anim" Target="Angle" />
+			</Timeline>
+		</Icon>
+		
+		<!-- Game menu -->
+		<StackPanel Orientation="vertical" Size="-100,-100">
+			<Label Name="continue_button" Font="font1" Text="Continue" TextColour="0, 0, 0, 255" SelectedColour="128, 128, 255, 255" Background="Button1Brush" Margin="0,0,20,20" OnTapped="continue_tapped" />
+			<Label Name="new_game_button" Font="font1" Text="New Game" TextColour="0, 0, 0, 255" SelectedColour="128, 128, 255, 255" Background="Button1Brush" Margin="0,0,20,20" OnTapped="new_game_tapped" />
+			<Label Name="credits_button" Font="font1" Text="Credits" TextColour="0, 0, 0, 255" SelectedColour="128, 128, 255, 255" Background="Button1Brush" Margin="0,0,20,20"  />
+		</StackPanel>
+	</Scene>
+
+</xml>

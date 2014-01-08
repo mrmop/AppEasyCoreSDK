@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Load common global stuff -->
+	<LoadXOML File="Common.xml" />
+	
+	<!-- Load object templates -->
+	<LoadXOML File="Objects.xml" />
+
+	<!-- Define and load game script -->
+	<Script Name="game_script" Type="lua" />
+	<File Name="game_script" Location="game.lua" FileType="lua" Preload="true" Script="game_script" />
+
+	<!-- Load main menu -->
+	<LoadXOML File="Menu.xml" />
+
+	<!-- Load game -->
+	<LoadXOML File="Game.xml" />
+
+	<!-- Load round over dialog -->
+	<LoadXOML File="RoundOver.xml" />
+
+</xml>

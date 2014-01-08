@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!--
+	bomb_gem_temp - A bomb gem template
+	Params:
+	- pos - Position (x. y)
+	- bakcground - Background brush (brush name)
+	- shape - Physics shape (shape name)
+	-->
+	<Template Name="bomb_gem_temp">
+		<Icon Position="$pos$" Type="$type$" Layer="0" Background="$background$" Shape="$shape$" Box2dMaterial="Bouncey" CollisionFlags="1, 1, 0" Collidable="true" Tappable="false" OnTick="Tick" OnCollisionStart="collision_start" Tag="game">
+			<UserProperties>
+				<Property Name="HitTime" Type="float" Value="0" />
+			</UserProperties>
+			<Actions Name="Tick">
+				<Action Method="CallGlobalScript" P1="updateBombGem" />
+			</Actions>
+			<Actions Name="collision_start">
+				<Action Method="CallGlobalScript" Param1="bombGemCollisionStarted" />
+			</Actions>
+			<Modifiers>
+				<Modifier Name="iw_notifycollision" Active="true"  />
+			</Modifiers>
+			<Icon Origin="120,0" Scale="0.3,0.4" Type="0" Background="$background$" Tappable="false" AngularVelocity="500" />
+		</Icon>
+	</Template>
+
+	<!--
+	explosion_temp - A template that defines an explosion
+	Params:
+	- name - Name of actor
+	- pos - Position of explosion
+	- scale - Scale of explosion
+	- depth - Depth at which to display explosion
+	-->
+	<Template Name="explosion_temp">
+		<ActorParticles Image="$image$" Position="$pos$" Scale="$scale$" Depth="$depth$" Layer="1" AngularVelocity="0" VelMode="random" AngMode="random" AngVelMode="random" ScaleMode="random"
+						PositionRange="100, 100" AngleRange="0, 360" ScaleRange="0.2, 0.7" DepthRange="1.0, 1.0" VelRange="-450, 450, -450, 450" AngVelRange="-450, 450" ScaleVelRange="0, 3.0" DepthVelRange="0, 0"
+					T	Tappable="false" Tag="game">
+			<Particle Count="10" Position="0, 0" VelocityDamping="1.0, 1.0" SrcRect="0, 0, 73, 73" ColourVelocity="0, 0, 0, -350" Duration="1" Repeat="1" SpawnDelay="0" Gravity="0, 0"/>
+		</ActorParticles>
+	</Template>
+
+	<!--
+	score_floater_temp - A template that defines a score floater
+	Params:
+	- score - Score to show
+	- pos - Position to spawn
+	- depth - Depth at which to display bomb
+	-->
+	<Animation Name="float_up" Type="float" Duration="1">
+		<Frame Value="-4"    Time="0" Easing="quarticin" />
+		<Frame Value="-10"   Time="2" />
+	</Animation>
+	<Template Name="score_floater_temp">
+		<Label Type="6" Position="$pos$" Depth="$depth$" Scale="2" Layer="1" Font="font1" Tappable="false" Text="$score$" Timeline="float_up" Tag="game">
+			<Timeline Name="float_up" AutoPlay="true">
+				<Animation Anim="float_up" Repeat="1" Delta="true" Target="PositionY" OnEnd="destroy" />
+			</Timeline>
+			<Actions Name="destroy">
+				<Action Method="KillActor" />
+			</Actions>
+		</Label>
+	</Template>
+
+</xml>

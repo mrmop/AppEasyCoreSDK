@@ -1,0 +1,1 @@
+Not currently used, for future abstraction of image loaders

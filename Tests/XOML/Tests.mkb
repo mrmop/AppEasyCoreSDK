@@ -1,0 +1,270 @@
+#!/usr/bin/env mkb
+options
+{
+	module_path="../../;../../Libs"
+	arm-fpu=vfp
+	s3e-data-dir = "../Assets/"
+}
+
+defines
+{
+	IW_GXFONT_TTF
+	IW_REMOVE_DUPLICATES
+}
+
+subprojects
+{
+	AppEasy
+}
+
+
+includepath
+{
+	source
+}
+
+files
+{
+	[Source]
+	(source)
+	# App
+	App.cpp
+	App.h
+	Main.cpp
+	Main.h
+
+	[Data]
+	(..\Assets)
+	UIStyle.xml
+	Start.xml
+	Test0.xml
+	Test1.xml
+	Test2.xml
+	Test3.xml
+	Test4.xml
+	Test5.xml
+	Test6.xml
+	Test7.xml
+	Test8.xml
+	Test9.xml
+	Test10.xml
+	Test11.xml
+	Test12.xml
+	Test13.xml
+	Test14.xml
+	Test15.xml
+	Test16.xml
+	Test17.xml
+	Test18.xml
+	Test19.xml
+	Test20.xml
+	Test21.xml
+	Test22.xml
+	Test23.xml
+	Test24.xml
+	Test25.xml
+	Test26.xml
+	Test27.xml
+	Test28.xml
+	Test29.xml
+	Test30.xml
+	Test31.xml
+	Test32.xml
+	Test33.xml
+	Test34.xml
+	Test35.xml
+	Test36.xml
+	Test37.xml
+	Test38.xml
+	Test39.xml
+	Test40.xml
+	Test41.xml
+	Test42.xml
+	Test43.xml
+	Test44.xml
+	Test45.xml
+	Test46.xml
+	Test47.xml
+	Test48.xml
+	Test49.xml
+	Test50.xml
+	Test51.xml
+	Test52.xml
+	Test53.xml
+	Test54.xml
+	Test55.xml
+	Test56.xml
+	Test57.xml
+	Test58.xml
+	Test58.lua
+	Test59.xml
+	Test60.xml
+	Test61.xml
+	Test62.xml
+	Test63.xml
+	Test64.xml
+	Test65.xml
+	Test66.xml
+	Test67.xml
+	Test68.xml
+	Test69.xml
+	Test70.xml
+
+	Test17.lua
+	Test25.lua
+	Test28.lua
+	Test30.lua
+	Test32.lua
+	Test60.lua
+	Test61.lua
+	Test62.lua
+	Test63.lua
+	Test65.lua
+	Test66.lua
+	Test67.lua
+	Test69.lua
+	Test70.lua
+
+	test_js.html
+}
+
+assets
+{
+	(..\Assets)
+
+	# Settings
+	AppEasy.xml
+
+	# Images
+	background.jpg
+	bg1.png
+	bob.png
+	crate.png
+	land.png
+	faceanim.png
+	high.png
+	low.png
+	medium.png
+	particle.png
+	sprites.png
+	test_image.jpg
+	ui.png
+
+	# Fonts
+	Serif.ttf
+
+	# Audio / Video
+	explosion.wav
+	music.mp3
+	video1.mp4
+
+	# Scripts
+	Test17.lua
+	Test25.lua
+	Test28.lua
+	Test30.lua
+	Test32.lua
+	Test60.lua
+	Test61.lua
+	Test62.lua
+	Test63.lua
+	Test65.lua
+	Test66.lua
+	Test67.lua
+	Test69.lua
+	Test70.lua
+	json.lua
+
+	# Other
+	file1.txt
+	file2.txt
+	file3.txt
+	Round1.txt
+	Round2.txt
+	Round3.txt
+	DataGridData.xml
+	xml_data.xml
+
+	# XOML
+	frog.xml
+	UIStyle.xml
+	Start.xml
+	Test0.xml
+	Test1.xml
+	Test2.xml
+	Test3.xml
+	Test4.xml
+	Test5.xml
+	Test6.xml
+	Test7.xml
+	Test8.xml
+	Test9.xml
+	Test10.xml
+	Test11.xml
+	Test12.xml
+	Test13.xml
+	Test14.xml
+	Test15.xml
+	Test16.xml
+	Test17.xml
+	Test18.xml
+	Test19.xml
+	Test20.xml
+	Test21.xml
+	Test22.xml
+	Test23.xml
+	Test24.xml
+	Test25.xml
+	Test26.xml
+	Test27.xml
+	Test28.xml
+	Test29.xml
+	Test30.xml
+	Test31.xml
+	Test32.xml
+	Test33.xml
+	Test34.xml
+	Test35.xml
+	Test36.xml
+	Test37.xml
+	Test38.xml
+	Test39.xml
+	Test40.xml
+	Test41.xml
+	Test42.xml
+	Test43.xml
+	Test44.xml
+	Test45.xml
+	Test46.xml
+	Test47.xml
+	Test48.xml
+	Test49.xml
+	Test50.xml
+	Test51.xml
+	Test52.xml
+	Test53.xml
+	Test54.xml
+	Test55.xml
+	Test56.xml
+	Test57.xml
+	Test58.xml
+	Test58.lua
+	Test59.xml
+	Test60.xml
+	Test61.xml
+	Test62.xml
+	Test63.xml
+	Test64.xml
+	Test65.xml
+	Test66.xml
+	Test67.xml
+	Test68.xml
+	Test69.xml
+	Test70.xml
+
+	# html files
+	test_js.html
+
+	(data-ram/data-gles1, data)
+}
+

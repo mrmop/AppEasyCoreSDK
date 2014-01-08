@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<xml>
+    <Contents>
+        <Chapter Name="Chapter1" Description="This is chapter 1" Pages="10" Brush="Button1Brush" />
+        <Chapter Name="Chapter2" Description="This is chapter 2" Pages="12" Brush="Button2Brush" />
+        <Chapter Name="Chapter3" Description="This is chapter 3" Pages="11" Brush="Button1Brush" />
+        <Chapter Name="Chapter4" Description="This is chapter 4" Pages="5" Brush="Button2Brush" />
+        <Chapter Name="Chapter5" Description="This is chapter 5" Pages="7" Brush="Button2Brush" />
+        <Chapter Name="Chapter6" Description="This is chapter 6" Pages="9" Brush="Button1Brush" />
+        <Chapter Name="Chapter7" Description="This is chapter 7" Pages="2" Brush="Button2Brush" />
+        <Chapter Name="Chapter8" Description="This is chapter 8" Pages="4" Brush="Button2Brush" />
+        <Chapter Name="Chapter9" Description="This is chapter 9" Pages="6" Brush="Button1Brush" />
+        <Chapter Name="Chapter10" Description="This is chapter 10" Pages="16" Brush="Button1Brush" />
+        <Chapter Name="Chapter11" Description="This is chapter 11" Pages="16" Brush="Button2Brush" />
+        <Chapter Name="Chapter12" Description="This is chapter 12" Pages="16" Brush="Button2Brush" />
+        <Chapter Name="Chapter13" Description="This is chapter 13" Pages="16" Brush="Button1Brush" />
+        <Chapter Name="Chapter14" Description="This is chapter 14" Pages="16" Brush="Button1Brush" />
+    </Contents>
+</xml>

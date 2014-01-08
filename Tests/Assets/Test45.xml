@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+    <!-- Create a scene -->
+    <Scene Name="Scene1" Current="true" >
+
+        <!-- Create a basic list box -->
+        <ListBox Name="Menu" Size="-100, -100" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10" SelectedIndex="1" SizeToContent="y">
+            <Label Background="Button1Brush" Size="-80, -20" SelectedColour="128, 255, 128, 255" Text="Option 1" Font="serif" />
+            <Label Background="Button2Brush" Size="-90, -20" SelectedColour="128, 255, 200, 255" Text="Option 2" Font="serif" />
+            <Label Background="Button1Brush" Size="-90, -20" SelectedColour="128, 255, 200, 255" Text="Option 3" Font="serif" />
+            <Label Background="Button2Brush" Size="-90, -20" SelectedColour="128, 128, 200, 255" Text="Option 4" Font="serif" />
+            <Label Background="Button1Brush" Size="-90, -20" SelectedColour="128, 255, 200, 255" Text="Option 5" Font="serif" />
+            <Label Background="Button2Brush" Size="-90, -20" SelectedColour="128, 255, 128, 255" Text="Option 6" Font="serif" />
+            <Label Background="Button1Brush" Size="-90, -20" SelectedColour="128, 128, 200, 255" Text="Option 7" Font="serif" />
+        </ListBox>
+
+		<Label Name="add_label1" Font="serif" Text="New 1" Background="Button1Brush" BackgroundColour="255, 120, 255, 255" Depth="0" />
+
+		<StackPanel Orientation="vertical" Size="-10, -100" Docking="right" >
+			<Label Font="serif" Text="Horizontal" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="Orientation" P2="horizontal" P3="Menu" />
+					<Action Method="SetProperty" P1="ScrollPos" P2="0, 0" P3="Menu" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Vertical" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="Orientation" P2="vertical" P3="Menu" />
+					<Action Method="SetProperty" P1="ScrollPos" P2="0, 0" P3="Menu" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Add" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="LinkedTo" P2="Menu" P3="add_label1" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Remove" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="LinkedTo" P2="" P3="add_label1" />
+				</Actions>
+			</Label>
+		</StackPanel>
+
+		<Label Font="serif" Text="Demonstration of manually created UI ListBox" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

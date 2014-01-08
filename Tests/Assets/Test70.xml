@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" ScriptEngine="lua" Camera="Cam">
+
+		<Camera Name="Cam" />
+
+		<!-- Load script -->
+		<Script Name="Script1" Type="lua" />
+		<File Name="ScriptFile1" Location="Test70.lua" Script="Script1" />
+
+		<StackPanel Name="Menu" Orientation="horizontal" Size="-100, -10" Docking="top" Margin="0, 0, -8, 0">
+			<!-- Create log in button -->
+			<Label Name="LoginButton" Font="serif" Text="Login" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-20, -100" Margin="-1,-1,0,0" OnTapped="Tapped">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="FacebookLogin" />			
+				</Actions>
+			</Label>
+
+			<!-- Create wall post button -->
+			<Label Name="PostButton" Font="serif" Text="Post Update" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-20, -100" Visible="false" Margin="-1,-1,0,0" OnTapped="Tapped">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="FacebookPostToWall" />
+				</Actions>
+			</Label>
+
+			<Label Name="AboutMeButton" Font="serif" Text="Get Me" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-20, -100" Visible="false" Margin="-1,-1,0,0" OnTapped="Tapped">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="FacebookAboutMe" />
+				</Actions>
+			</Label>
+
+			<Label Name="FriendsButton" Font="serif" Text="Friends" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-20, -100" Visible="false" Margin="-1,-1,0,0" OnTapped="Tapped">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="FacebookFriends" />
+				</Actions>
+			</Label>
+		</StackPanel>
+
+		<!-- Create about me panel -->
+		<Image Name="MyImage" Location="http://www.appeasymobile.com/images/AppEasy.png" />
+		<Brush Name="MyImage" Image="MyImage" Type="image" UV="0, 0, 1, 0, 1, 1, 0, 1" />
+		<StackPanel Name="AboutMePanel" Size="-60,-80" Background="Button1Brush" Orientation="vertical" Docking="bottom" AlignV="top" Visible="false">
+			<Label Name="AboutMeBack" Size="-100,-10" Background="Button1Brush" Font="serif" Text="Dismiss" OnTapped="Tapped">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="Visible" P2="false" P3="AboutMePanel" />
+				</Actions>
+			</Label>
+			<Label Name="MyName" Font="serif" Text="----------" Size="-100, -10" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10" />
+			<Label Name="MyID" Font="serif" Text="----------" Size="-100, -10" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10" />
+			<Icon Name="MyImage" Size="100, 100" Background="MyImage" ClipMargin="10, 10, 10, 10" />
+		</StackPanel>
+		
+		<!-- Create friends list panel -->
+		<StackPanel Name="FriendsListPanel" Size="-60,-80" Orientation="vertical" Docking="bottom" Visible="false">
+			<Label Name="FriendsBack" Size="-100,-10" Background="Button1Brush" Font="serif" Text="Dismiss" OnTapped="Tapped">
+				<Actions Name="Tapped">
+					<Action Method="SetProperty" P1="Visible" P2="false" P3="FriendsListPanel" />
+				</Actions>
+			</Label>
+			<ListBox Name="FriendsList" Size="-100, -90" Background="PanelBrush" AlignH="centre" ClipMargin="10, 10, 10, 10" SizeToContent="y" />
+		</StackPanel>
+
+
+		<Label Font="serif" Text="Test Facebook" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

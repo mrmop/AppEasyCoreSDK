@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="c:\AppEasy\docs\XOML.xsd">
+	
+	<!-- Create UI font -->
+	<Font Name="serif" Location="Serif.ttf" PointSize="8" Preload="true" />
+	<!--Font Name="serif" Location="http://www.drmop.com/Serif.ttf" PointSize="8" Preload="true" /-->
+
+	<!-- Load UI image atlas -->
+	<Image Name="ui_image" Location="ui.png" Preload="false" Format="RGBA_5551" Filter="true" />
+
+	<!-- Create UI brushes -->
+	<Brush Name="Button1Brush" Image="ui_image" SrcRect="320, 70, 200, 70" Type="9patch" ScaleArea="7, 8, 186, 54" />
+	<Brush Name="Button2Brush" Image="ui_image" SrcRect="320, 140, 200, 70" Type="9patch" ScaleArea="8, 8, 184, 54" />
+	<Brush Name="CheckBoxOffBrush" Image="ui_image" SrcRect="320, 210, 48, 48" Type="image" />
+	<Brush Name="CheckBoxOnBrush" Image="ui_image" SrcRect="368, 210, 48, 48" Type="image" />
+	<Brush Name="PanelBrush" Image="ui_image" SrcRect="0, 0, 320, 320" Type="9patch" ScaleArea="12, 15, 296, 290" />
+	<Brush Name="SmallPanelBrush" Image="ui_image" SrcRect="320, 0, 200, 70" Type="9patch" ScaleArea="8, 8, 184, 54" />
+
+	<Brush Name="ButtonBrush2" Image="ui_image" SrcRect="0, 458, 222, 68" Type="9patch" ScaleArea="8, 7, 206, 54" />
+
+	<Image Name="test_image" Location="test_image.jpg" Preload="true" Format="RGBA_5551" Filter="true" />
+	<Brush Name="test_image" Image="test_image" Type="image" SrcRect="0, 0, 1024, 768" />
+
+</xml>

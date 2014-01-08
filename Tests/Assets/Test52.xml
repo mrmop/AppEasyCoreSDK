@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" >
+
+		<!-- Create a blank image to hold the camera feed -->
+		<Image Name="Image1" />
+
+		<!-- Create a brush that refers to the camera image -->
+		<Brush Name="Brush1" Image="Image1" Type="image" UV="0,0, 1,0, 1,1, 0, 1" />
+
+		<!-- create a video camera stream that targets Image1 image -->
+		<VideoCam Name="Cam1" Target="Image1" Quality="low" Resolution="medium" Start="true" Direction="rear" />
+
+		<!-- Create a basic list box -->
+		<ListBox Name="Menu" Size="-100, -100" Background="Button1Brush" AlignH="centre" ClipMargin="10, 10, 10, 10" SelectedIndex="1">
+			<Label Background="Brush1" Size="200, 150" SelectedColour="128, 255, 128, 255" Text="Option 1" Font="serif" />
+			<Label Background="Brush1" Size="200, 150" SelectedColour="128, 255, 200, 255" Text="Option 2" Font="serif" AngularVelocity="30" />
+			<Label Background="Brush1" Size="200, 150" SelectedColour="128, 255, 200, 255" Text="Option 3" Font="serif" AngularVelocity="-30" />
+			<Label Background="Brush1" Size="200, 150" SelectedColour="128, 128, 200, 255" Text="Option 4" Font="serif" />
+			<Label Background="Brush1" Size="200, 150" SelectedColour="128, 255, 200, 255" Text="Option 5" Font="serif" />
+			<Label Background="Brush1" Size="200, 150" SelectedColour="128, 255, 128, 255" Text="Option 6" Font="serif" />
+			<Label Background="Brush1" Size="200, 150" SelectedColour="128, 128, 200, 255" Text="Option 7" Font="serif" />
+		</ListBox>
+
+		<Label Font="serif" Text="Demonstration of Video Cam Streaming to an Image" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

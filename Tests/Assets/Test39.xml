@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene with physics enabled -->
+	<Scene Name="Scene1" Current="true" Camera="Camera1" Batch="false">
+
+		<!-- Load particle image -->
+		<Image Name="Particle" Location="particle.png" Preload="true" />
+		<Brush Name="Particle" Image="Particle" Type="image" UV="0, 0, 8, 0, 8, 8, 0, 8" />
+
+		<Camera Name="Camera1" TouchPanX="true" TouchPanY="true" IgnoreActors="true" />
+
+		<Icon Size="-200, -200" Brush="Particle" AngularVelocity="30" Depth="1" AspectLock="x" Tiled="true" />
+		<Icon Size="-200, -200" Brush="Particle" AngularVelocity="33" Depth="2" AspectLock="x" Tiled="true" />
+		<Icon Size="-200, -200" Brush="Particle" AngularVelocity="36" Depth="4" AspectLock="x" Tiled="true" />
+		<Icon Size="-200, -200" Brush="Particle" AngularVelocity="39" Depth="6" AspectLock="x" Tiled="true" />
+		<Icon Size="-200, -200" Brush="Particle" AngularVelocity="42" Depth="8" AspectLock="x" Tiled="true" />
+		<Icon Size="-200, -200" Brush="Particle" AngularVelocity="45" Depth="10" AspectLock="x" Tiled="true" />
+
+		<Label Font="Serif" Brush="Button1Brush" Text="Drag The Screen" Docking="top" IgnoreCamera="true" />
+
+		<Label Font="serif" Text="Demonstration of Using Tiled Textures" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+		
+	</Scene>
+
+
+</xml>

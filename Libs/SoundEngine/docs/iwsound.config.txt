@@ -1,0 +1,9 @@
+[SOUND]
+
+MaxChannels    <Integer>			Number of channels available.(default is 8)
+
+[Trace]
+SOUND		<0 or 1>			Enable SoundEngine trace channel
+
+[Assert]
+SOUND		<0 or 1>			Enable SoundEngine assert channel

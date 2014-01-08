@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true">
+
+		<!-- Create a variable that holds a the loop counters -->
+		<Variable Name="Loop1" Type="int" Value="0" />
+		<Variable Name="Loop2" Type="int" Value="0" />
+
+		<!-- Create a simple program that demonstrates loops -->
+		<Program Name="Program1" AutoRun="true">
+			<!-- Reset the variable Loop1 to 0 -->
+			<Command Name="Start" Method="set_var" P1="Loop1" P2="0" />
+			<!-- Marks the loop start, waits for 1 second -->
+			<Command Name="Loop" Method="wait" P1="1" />
+			<!-- Adds 1 onto the variable Loop 1 -->
+			<Command Method="add_var" P1="Loop1" P2="1" />
+			<!-- Checks to see if the variable Loop1 is greater than or equal to 10, this command will return 1 if it is otherwise it will return 0 -->
+			<Command Name="Loop1Test" Method="if_var" P1="Loop1" P2="gte" P3="10" /> 
+			<!-- The next command will only be excuted if the command Loop1Test returns 0, that is if the variable Loop1 is less than 10 -->
+			<Command Method="goto" P1="Loop" IfReturn="Loop1Test" Value="0" />  
+			<!-- Go back to the statr of the program -->
+			<Command Method="goto" P1="Start" />
+		</Program>
+
+		<!-- This proghram runs faster - same as Program1 just Loop1 has changed to Loop2 -->
+		<Program Name="Program2" AutoRun="true">
+			<Command Name="Start" Method="set_var" P1="Loop2" P2="0" />
+			<Command Name="Loop" Method="wait" P1="0.1" />
+			<Command Method="add_var" P1="Loop2" P2="1" />
+			<Command Name="Loop1Test" Method="if_var" P1="Loop2" P2="gte" P3="10" />
+			<Command Method="goto" P1="Loop" IfReturn="Loop1Test" Value="0" />
+			<Command Method="goto" P1="Start" />
+		</Program>
+		
+		<!-- Create buttons with the loop counters bound to the text property - This displays the current loop counter values -->
+		<Label Font="serif" Position="-150, 0" Background="Button1Brush" Binding="[Text]Loop1" />
+		<Label Font="serif" Position="150, 0" Background="Button1Brush" Binding="[Text]Loop2" />
+
+		<Label Font="serif" Text="Demonstration of XOML Program Loops" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>

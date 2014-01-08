@@ -1,0 +1,170 @@
+#!/usr/bin/env mkb
+options
+{
+	module_path="../../;../../Libs"
+	arm-fpu=vfp
+	s3e-data-dir = "../Assets/"
+}
+
+defines
+{
+	IW_GXFONT_TTF
+	IW_REMOVE_DUPLICATES
+}
+
+subprojects
+{
+	AppEasy
+	lua-vec
+	iw2d
+	iwgl
+	iwgxfont
+	iwresmanager
+	iwhttp
+	s3eWebView
+	SoundEngine
+	libpng
+	zlib
+	box2d
+	s3eFacebook
+	s3eIOSAppStoreBilling
+	s3eAndroidMarketBilling
+	UserAgent
+}
+
+
+includepath
+{
+	source
+}
+
+files
+{
+	[Source]
+	(source)
+	# App
+	App.cpp
+	App.h
+	Main.cpp
+	Main.h
+	Start.cpp
+	Test1.cpp
+	Test2.cpp
+	Test3.cpp
+	Test4.cpp
+	Test5.cpp
+	Test6.cpp
+	Test7.cpp
+	Test8.cpp
+	Test9.cpp
+	Test10.cpp
+	Test11.cpp
+	Test12.cpp
+	Test13.cpp
+	Test14.cpp
+	Test15.cpp
+	Test16.cpp
+	Test17.cpp
+	Test18.cpp
+	Test19.cpp
+	Test20.cpp
+	Test21.cpp
+	Test22.cpp
+	Test23.cpp
+	Test24.cpp
+	Test25.cpp
+	Test26.cpp
+	Test27.cpp
+	Test28.cpp
+	Test29.cpp
+	Test30.cpp
+	Test31.cpp
+	Test32.cpp
+	Test33.cpp
+	Test34.cpp
+	Test35.cpp
+	Test36.cpp
+	Test37.cpp
+	Test38.cpp
+	Test39.cpp
+	Test40.cpp
+	Test41.cpp
+	Test42.cpp
+	Test43.cpp
+	Test44.cpp
+	Test45.cpp
+	Test46.cpp
+	Test47.cpp
+	Test48.cpp
+	Test49.cpp
+	Test50.cpp
+	Test51.cpp
+	Test52.cpp
+	Test53.cpp
+	Test54.cpp
+	Test55.cpp
+	Test56.cpp
+	Test57.cpp
+	Test58.cpp
+	Test59.cpp
+	
+	[Data]
+	(..\Assets)
+	Test17.lua
+	Test28.lua
+	Test30.lua
+	Test32.lua
+}
+
+assets
+{
+	(..\Assets)
+
+	# Settings
+	AppEasy.xml
+
+	# Images
+	background.jpg
+	bg1.png
+	bob.png
+	crate.png
+	faceanim.png
+	high.png
+	low.png
+	medium.png
+	particle.png
+	sprites.png
+	test_image.jpg
+	ui.png
+
+	# Fonts
+	Serif.ttf
+
+	# Audio / Video
+	explosion.wav
+	music.mp3
+	video1.mp4
+
+	# Scripts
+	Test17.lua
+	Test28.lua
+	Test30.lua
+	Test32.lua
+
+	# Other
+	file1.txt
+	file2.txt
+	file3.txt
+	Round1.txt
+	Round2.txt
+	Round3.txt
+	DataGridData.xml
+	xml_data.xml
+
+	# XOML
+	frog.xml
+	UIStyle.xml
+
+	(data-ram/data-gles1, data)
+}
+
