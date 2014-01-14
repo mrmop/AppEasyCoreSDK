@@ -32,8 +32,8 @@ class CzActions;
 
  <h1>Introduction</h1>
 
- An action consists of a method and a number of parameters (eiter variabls or values) that can be passed to that method. Note that actions will cache any variables that are passed 
- as parameters osthey do not have to be constantly searched for in the resuorce manager.
+ An action consists of a method and a number of parameters (either variables or values) that can be passed to that method. Note that actions will cache any variables that are passed 
+ as parameters so they do not have to be constantly searched for in the resource manager.
 
  An action also carries a conditions variable which defines a conditions variable that can be used to conditionally execute the action.
 
@@ -123,7 +123,7 @@ class CzActions;
  - CzXomlActions_Sys - System specific actions
  - CzXomlActions_Variable - Variable specific actions
 
- <h1>Actions Scope<h1>
+ <h1>Actions Scope</h1>
  The scope of an actions list depends on where it was declared. You can declare actions in the following places:
  - Inside actor tags - The actions list will be assigned to the actors actions manager and will be local to the actor and timelines that are local to the actor
  - Inside scene tags - The actions list will be assigned to the scenes actions manager and will be local to the scene and any actors / timelines within that scene
@@ -195,7 +195,7 @@ class CzActions;
 
  <h1>Creating Custom Actions</h1>
 
- Actions are a great way of passiong information between XOML and code, but the actions system wouldn't be as useful if it was limited to just the standard set of actions. Lets take 
+ Actions are a great way of passing information between XOML and code, but the actions system wouldn't be as useful if it was limited to just the standard set of actions. Lets take 
  a look at how to create our own custom actions that can be called from XOML. 
 
  To create our own action we follow the following process:
@@ -297,7 +297,7 @@ public:
  @endcode
 
  In the above example the Condition attribute contains the PlayerScoreTooHigh variable. This variable is evaluated when the action is ran. if it returns true then the action will be executed. 
- Note that if the condition variable is prefixed with an exlamation mark then the result of the condition will be inverted. In this case the action will only be executed if the result of evaluating 
+ Note that if the condition variable is prefixed with an exclamation mark then the result of the condition will be inverted. In this case the action will only be executed if the result of evaluating 
  the action is false. Conditions can also be applied to the actions list itself. Conditional actions offer a quick and easy way of applying simple logic to your apps directly in XOML without having 
  to resort to code.
 
@@ -343,7 +343,7 @@ public:
  @endcode
 
  @code
-<Action Method="CallActions" Param1="NextRound" /> - Call anoter actions list
+<Action Method="CallActions" Param1="NextRound" /> - Call another actions list
 @endcode
 
  */
