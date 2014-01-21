@@ -98,6 +98,7 @@ CzTexture CzPlatformImaging::CreateTexture(void* memory_file, int memory_file_si
 		image->ReadFile((s3eFile*)file.getFileHandle());
 
 		CIwTexture* texture = new CIwTexture();
+		texture->_SetFlags( CIwTexture::NO_CHROMA_KEY_F );
 		texture->CopyFromImage(image);
 
 		delete image;
@@ -118,6 +119,7 @@ CzTexture CzPlatformImaging::CreateTexture(void* pixels, int width, int height, 
 		return NULL;
 
 	CIwTexture* texture = new CIwTexture();
+	texture->_SetFlags( CIwTexture::NO_CHROMA_KEY_F );
 	texture->SetMipMapping(false);
 	texture->SetModifiable(modifiable);
 	texture->CopyFromBuffer(width, height, f, pitch, (uint8*)pixels, NULL);
@@ -149,6 +151,7 @@ CzTexture CzPlatformImaging::CreateTexture(CzTexture source, CzImage::eFormat fo
 	t->GetImage().ConvertToImage(image);
 
 	CIwTexture* texture = new CIwTexture();
+	texture->_SetFlags( CIwTexture::NO_CHROMA_KEY_F );
 	texture->SetMipMapping(t->GetMipMapping());
 	texture->SetFiltering(t->GetFiltering());
 	texture->SetModifiable(t->GetModifiable());
