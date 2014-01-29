@@ -82,7 +82,9 @@ The AppEasy Core SDK comes complete with:
 - An example game
 - XML schema for XOML
 
-API documentation can be found at http://www.appeasymobile.com/appeasy-api/index.html
+C++ API documentation can be found at http://www.appeasymobile.com/appeasy-api/index.html
+Lua API documentation can be found at http://www.appeasymobile.com/resources/lua-api-reference
+XOML API documentation can be found at http://www.appeasymobile.com/resources/xoml-reference
 
 Whilst free support is not provided, a community support forum is available at http://www.appeasymobile.com/forum/iwgame-engine-appeasy-core
 
