@@ -32,7 +32,7 @@ CzXomlClassDef* CzActor::ActorClassDef = NULL;
  @fn	void CzActor::InitClass()
 
  @brief	Initialises the class.
-    
+	
  Sets up the classes avaiiable properties. Used by the XOML system to find, set amd get class properties.
 
  */
@@ -40,47 +40,41 @@ void CzActor::InitClass()
 {
 	// Create class properties
 	ActorClassDef = new CzXomlClassDef();
-	ActorClassDef->addProperty(new CzXomlClassProperty("Name",					PT_String,		CzActor::_setName,						CzActor::_getName));
-	ActorClassDef->addProperty(new CzXomlClassProperty("Type",					PT_Int,			CzActor::_setType,						CzActor::_getType));
-	ActorClassDef->addProperty(new CzXomlClassProperty("Tag",					PT_String,		CzActor::_setTag,						NULL));
-	ActorClassDef->addProperty(new CzXomlClassProperty("UserData",				PT_Int,			CzActor::_setUserData,					CzActor::_getUserData));
-	ActorClassDef->addProperty(new CzXomlClassProperty("UserProperties",		PT_String,		NULL,									CzActor::_getUserProperties));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Position",				PT_Vec2,		CzActor::_setPosition,					CzActor::_getPosition));
-	ActorClassDef->addProperty(new CzXomlClassProperty("PositionX",				PT_Float,		CzActor::_setPositionX,					CzActor::_getPositionX));
-	ActorClassDef->addProperty(new CzXomlClassProperty("PositionY",				PT_Float,		CzActor::_setPositionY,					CzActor::_getPositionY));
-	ActorClassDef->addProperty(new CzXomlClassProperty("PositionOrg",			PT_Vec2,		CzActor::_setPositionOrg,				NULL));
-	ActorClassDef->addProperty(new CzXomlClassProperty("PositionOrgX",			PT_Float,		CzActor::_setPositionOrgX,				NULL));
-	ActorClassDef->addProperty(new CzXomlClassProperty("PositionOrgY",			PT_Float,		CzActor::_setPositionOrgY,				NULL));
-	ActorClassDef->addProperty(new CzXomlClassProperty("Docking",				PT_String,		CzActor::_setDocking,					CzActor::_getDocking));
-	ActorClassDef->addProperty(new CzXomlClassProperty("Margin",				PT_Vec4,		CzActor::_setMargin,					CzActor::_getMargin));
-	ActorClassDef->addProperty(new CzXomlClassProperty("Depth",					PT_Float,		CzActor::_setDepth,						CzActor::_getDepth));
-	ActorClassDef->addProperty(new CzXomlClassProperty("Origin",				PT_Vec2,		CzActor::_setOrigin,					CzActor::_getOrigin));
+	ActorClassDef->addProperty(new CzXomlClassProperty("X",						PT_Float,		CzActor::_setPositionX,					CzActor::_getPositionX));
+	ActorClassDef->addProperty(new CzXomlClassProperty("Y",						PT_Float,		CzActor::_setPositionY,					CzActor::_getPositionY));
+	ActorClassDef->addProperty(new CzXomlClassProperty("UserProperties",		PT_String,		NULL,									CzActor::_getUserProperties));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Velocity",				PT_Vec2,		CzActor::_setVelocity,					CzActor::_getVelocity));
-	ActorClassDef->addProperty(new CzXomlClassProperty("VelocityDamping",		PT_Vec2,		CzActor::_setVelocityDamping,			CzActor::_getVelocityDamping));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Angle",					PT_Float,		CzActor::_setAngle,						CzActor::_getAngle));
 	ActorClassDef->addProperty(new CzXomlClassProperty("AngularVelocity",		PT_Float,		CzActor::_setAngularVelocity,			CzActor::_getAngularVelocity));
-	ActorClassDef->addProperty(new CzXomlClassProperty("AngularVelocityDamping",PT_Float,		CzActor::_setAngularVelocityDamping,	CzActor::_getAngularVelocityDamping));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Scale",					PT_Vec2,		CzActor::_setScale,						CzActor::_getScale));
 	ActorClassDef->addProperty(new CzXomlClassProperty("ScaleX",				PT_Float,		CzActor::_setScaleX,					CzActor::_getScaleX));
 	ActorClassDef->addProperty(new CzXomlClassProperty("ScaleY",				PT_Float,		CzActor::_setScaleY,					CzActor::_getScaleY));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Colour",				PT_Vec4,		CzActor::_setColour,					CzActor::_getColour));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Opacity",				PT_Float,		CzActor::_setOpacity,					CzActor::_getOpacity));
+	ActorClassDef->addProperty(new CzXomlClassProperty("PositionOrg",			PT_Vec2,		CzActor::_setPositionOrg,				NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("PositionOrgX",			PT_Float,		CzActor::_setPositionOrgX,				NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("PositionOrgY",			PT_Float,		CzActor::_setPositionOrgY,				NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("OnCollisionStart",		PT_String,		CzActor::_setOnCollisionStart,			NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("OnCollisionEnd",		PT_String,		CzActor::_setOnCollisionEnd,			NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("OnTick",				PT_String,		CzActor::_setOnTick,					NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("OnTapped",				PT_String,		CzActor::_setOnTapped,					NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("OnBeginTouch",			PT_String,		CzActor::_setOnBeginTouch,				NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("OnEndTouch",			PT_String,		CzActor::_setOnEndTouch,				NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("Docking",				PT_String,		CzActor::_setDocking,					CzActor::_getDocking));
+	ActorClassDef->addProperty(new CzXomlClassProperty("Margin",				PT_Vec4,		CzActor::_setMargin,					CzActor::_getMargin));
+	ActorClassDef->addProperty(new CzXomlClassProperty("Depth",					PT_Float,		CzActor::_setDepth,						CzActor::_getDepth));
+	ActorClassDef->addProperty(new CzXomlClassProperty("Origin",				PT_Vec2,		CzActor::_setOrigin,					CzActor::_getOrigin));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Layer",					PT_Float,		CzActor::_setLayer,						CzActor::_getLayer));
-	ActorClassDef->addProperty(new CzXomlClassProperty("Orphan",				PT_Bool,		CzActor::_setOrphan,					CzActor::_getOrphan));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Active",				PT_Bool,		CzActor::_setActive,					CzActor::_getActive));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Visible",				PT_Bool,		CzActor::_setVisible,					CzActor::_getVisible));
+	ActorClassDef->addProperty(new CzXomlClassProperty("UserData",				PT_Int,			CzActor::_setUserData,					CzActor::_getUserData));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Scene",					PT_String,		NULL,									CzActor::_getScene));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Collidable",			PT_Bool,		CzActor::_setCollidable,				CzActor::_getCollidable));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Tappable",				PT_Bool,		CzActor::_setTappable,					CzActor::_getTappable));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Draggable",				PT_Bool,		CzActor::_setDraggable,					CzActor::_getDraggable));
-	ActorClassDef->addProperty(new CzXomlClassProperty("Bubbling",				PT_Bool,		CzActor::_setBubbling,					CzActor::_getBubbling));		// ReceiveEventFromChild
-	ActorClassDef->addProperty(new CzXomlClassProperty("Destroyed",				PT_Bool,		NULL,									CzActor::_getDestroyed));
 	ActorClassDef->addProperty(new CzXomlClassProperty("WrapPosition",			PT_Bool,		CzActor::_setWrapPosition,				CzActor::_getWrapPosition));
 	ActorClassDef->addProperty(new CzXomlClassProperty("ScreenDocking",			PT_Bool,		CzActor::_setScreenDocking,				CzActor::_getScreenDocking));
-	ActorClassDef->addProperty(new CzXomlClassProperty("HoldFocus",				PT_Bool,		CzActor::_setHoldFocus,					CzActor::_getHoldFocus));
-	ActorClassDef->addProperty(new CzXomlClassProperty("UseParentOpacity",		PT_Bool,		CzActor::_setUseParentOpacity,			CzActor::_getUseParentOpacity));
-	ActorClassDef->addProperty(new CzXomlClassProperty("PercPos",				PT_Bool,		CzActor::_setPercPos,					CzActor::_getPercPos));			// PercentagePosition
-	ActorClassDef->addProperty(new CzXomlClassProperty("IgnoreCamera",			PT_Bool,		CzActor::_setIgnoreCamera,				CzActor::_getIgnoreCamera));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Timeline",				PT_Resource,	CzActor::_setTimeline,					CzActor::_getTimeline));
 	ActorClassDef->addProperty(new CzXomlClassProperty("TimeScale",				PT_Float,		CzActor::_setTimeScale,					CzActor::_getTimeScale));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Bindings",				PT_Resource,	CzActor::_setBindings,					CzActor::_getBindings));
@@ -92,21 +86,27 @@ void CzActor::InitClass()
 	ActorClassDef->addProperty(new CzXomlClassProperty("AngularImpulse",		PT_Float,		CzActor::_setAngularImpulse,			NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Force",					PT_Vec4,		CzActor::_setForce,						NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Torque",				PT_Float,		CzActor::_setTorque,					NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("VelocityDamping",		PT_Vec2,		CzActor::_setVelocityDamping,			CzActor::_getVelocityDamping));
+	ActorClassDef->addProperty(new CzXomlClassProperty("AngularVelocityDamping",PT_Float,		CzActor::_setAngularVelocityDamping,	CzActor::_getAngularVelocityDamping));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Box2dMaterial",			PT_Resource,	CzActor::_setBox2dMaterial,				CzActor::_getBox2dMaterial));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Shape",					PT_Resource,	CzActor::_setShape,						NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Sensor",				PT_Bool,		CzActor::_setSensor,					CzActor::_getSensor));
 	ActorClassDef->addProperty(new CzXomlClassProperty("CollisionFlags",		PT_Vec3,		CzActor::_setCollisionFlags,			CzActor::_getCollisionFlags));
-	ActorClassDef->addProperty(new CzXomlClassProperty("OnTapped",				PT_String,		CzActor::_setOnTapped,					NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("Bubbling",				PT_Bool,		CzActor::_setBubbling,					CzActor::_getBubbling));		// ReceiveEventFromChild
+	ActorClassDef->addProperty(new CzXomlClassProperty("Orphan",				PT_Bool,		CzActor::_setOrphan,					CzActor::_getOrphan));
+	ActorClassDef->addProperty(new CzXomlClassProperty("HoldFocus",				PT_Bool,		CzActor::_setHoldFocus,					CzActor::_getHoldFocus));
+	ActorClassDef->addProperty(new CzXomlClassProperty("UseParentOpacity",		PT_Bool,		CzActor::_setUseParentOpacity,			CzActor::_getUseParentOpacity));
+	ActorClassDef->addProperty(new CzXomlClassProperty("PercPos",				PT_Bool,		CzActor::_setPercPos,					CzActor::_getPercPos));			// PercentagePosition
+	ActorClassDef->addProperty(new CzXomlClassProperty("IgnoreCamera",			PT_Bool,		CzActor::_setIgnoreCamera,				CzActor::_getIgnoreCamera));
+	ActorClassDef->addProperty(new CzXomlClassProperty("Destroyed",				PT_Bool,		NULL,									CzActor::_getDestroyed));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnTapped2",				PT_String,		CzActor::_setOnTapped2,					NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnTapped3",				PT_String,		CzActor::_setOnTapped3,					NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnTapped4",				PT_String,		CzActor::_setOnTapped4,					NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnTapped5",				PT_String,		CzActor::_setOnTapped5,					NULL));
-	ActorClassDef->addProperty(new CzXomlClassProperty("OnBeginTouch",			PT_String,		CzActor::_setOnBeginTouch,				NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnBeginTouch2",			PT_String,		CzActor::_setOnBeginTouch2,				NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnBeginTouch3",			PT_String,		CzActor::_setOnBeginTouch3,				NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnBeginTouch4",			PT_String,		CzActor::_setOnBeginTouch4,				NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnBeginTouch5",			PT_String,		CzActor::_setOnBeginTouch5,				NULL));
-	ActorClassDef->addProperty(new CzXomlClassProperty("OnEndTouch",			PT_String,		CzActor::_setOnEndTouch,				NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnEndTouch2",			PT_String,		CzActor::_setOnEndTouch2,				NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnEndTouch3",			PT_String,		CzActor::_setOnEndTouch3,				NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnEndTouch4",			PT_String,		CzActor::_setOnEndTouch4,				NULL));
@@ -114,10 +114,12 @@ void CzActor::InitClass()
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnCreate",				PT_String,		CzActor::_setOnCreate,					NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnDestroy",				PT_String,		CzActor::_setOnDestroy,					NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("OnOrientationChange",	PT_String,		CzActor::_setOnOrientationChange,		NULL));
-	ActorClassDef->addProperty(new CzXomlClassProperty("OnCollisionStart",		PT_String,		CzActor::_setOnCollisionStart,			NULL));
-	ActorClassDef->addProperty(new CzXomlClassProperty("OnCollisionEnd",		PT_String,		CzActor::_setOnCollisionEnd,			NULL));
-	ActorClassDef->addProperty(new CzXomlClassProperty("OnTick",				PT_String,		CzActor::_setOnTick,					NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("BodyAwake",				PT_Bool,		CzActor::_setBodyAwake,					CzActor::_getBodyAwake));
+	ActorClassDef->addProperty(new CzXomlClassProperty("Name",					PT_String,		CzActor::_setName,						CzActor::_getName));
+	ActorClassDef->addProperty(new CzXomlClassProperty("Type",					PT_Int,			CzActor::_setType,						CzActor::_getType));
+	ActorClassDef->addProperty(new CzXomlClassProperty("Tag",					PT_String,		CzActor::_setTag,						NULL));
+	ActorClassDef->addProperty(new CzXomlClassProperty("PositionX",				PT_Float,		CzActor::_setPositionX,					CzActor::_getPositionX));
+	ActorClassDef->addProperty(new CzXomlClassProperty("PositionY",				PT_Float,		CzActor::_setPositionY,					CzActor::_getPositionY));
 }
 void CzActor::ReleaseClass()
 {
@@ -1733,6 +1735,8 @@ void CzActor::setDocking(CzScene::eDocking docking, int width, int height)
 	CzIVec2 size = Scene->getScreenSize();
 	CzVec2 pos = CzVec2(0, 0);
 	CzSprite::eAnchor anchor = Visual->getAnchor();
+	float w = width * Scale.x;
+	float h = height * Scale.y;
 
 	switch (docking)
 	{
@@ -1742,30 +1746,30 @@ void CzActor::setDocking(CzScene::eDocking docking, int width, int height)
 		if (anchor == CzSprite::TopLeft)
 			pos.y += Margin.w;
 		else
-			pos.y += (height + 1) / 2 + Margin.w;
+			pos.y += (h + 1) / 2 + Margin.w;
 		break;
 	case CzScene::Dock_Bottom:
 		pos = Scene->ScreenToVirtual(0, (float)size.y);
 		pos.x = Position.x;
 		if (anchor == CzSprite::TopLeft)
-			pos.y -= height + Margin.h;
+			pos.y -= h + Margin.h;
 		else
-			pos.y -= (height + 1) / 2 + Margin.h;
+			pos.y -= (h + 1) / 2 + Margin.h;
 		break;
 	case CzScene::Dock_Left:
 		pos = Scene->ScreenToVirtual(0, 0);
 		if (anchor == CzSprite::TopLeft)
 			pos.x += Margin.x;
 		else
-			pos.x += (width + 1) / 2 + Margin.x;
+			pos.x += (w + 1) / 2 + Margin.x;
 		pos.y = Position.y;
 		break;
 	case CzScene::Dock_Right:
 		pos = Scene->ScreenToVirtual((float)size.x, 0);
 		if (anchor == CzSprite::TopLeft)
-			pos.x -= width + Margin.y;
+			pos.x -= w + Margin.y;
 		else
-			pos.x -= (width + 1) / 2 + Margin.y;
+			pos.x -= (w + 1) / 2 + Margin.y;
 		pos.y = Position.y;
 		break;
 	case CzScene::Dock_TopLeft:
@@ -1777,21 +1781,21 @@ void CzActor::setDocking(CzScene::eDocking docking, int width, int height)
 		}
 		else
 		{
-			pos.x += (width + 1) / 2 + Margin.x;
-			pos.y += (height + 1) / 2 + Margin.w;
+			pos.x += (w + 1) / 2 + Margin.x;
+			pos.y += (h + 1) / 2 + Margin.w;
 		}
 		break;
 	case CzScene::Dock_TopRight:
 		pos = Scene->ScreenToVirtual((float)size.x, 0);
 		if (anchor == CzSprite::TopLeft)
 		{
-			pos.x -= width + Margin.y;
+			pos.x -= w + Margin.y;
 			pos.y += Margin.w;
 		}
 		else
 		{
-			pos.x -= (width + 1) / 2 + Margin.y;
-			pos.y += (height + 1) / 2 + Margin.w;
+			pos.x -= (w + 1) / 2 + Margin.y;
+			pos.y += (h + 1) / 2 + Margin.w;
 		}
 		break;
 	case CzScene::Dock_BottomLeft:
@@ -1799,25 +1803,25 @@ void CzActor::setDocking(CzScene::eDocking docking, int width, int height)
 		if (anchor == CzSprite::TopLeft)
 		{
 			pos.x += Margin.x;
-			pos.y -= height + Margin.h;
+			pos.y -= h + Margin.h;
 		}
 		else
 		{
-			pos.x += (width + 1) / 2 + Margin.x;
-			pos.y -= (height + 1) / 2 + Margin.h;
+			pos.x += (w + 1) / 2 + Margin.x;
+			pos.y -= (h + 1) / 2 + Margin.h;
 		}
 		break;
 	case CzScene::Dock_BottomRight:
 		pos = Scene->ScreenToVirtual((float)size.x, (float)size.y);
 		if (anchor == CzSprite::TopLeft)
 		{
-			pos.x -= width + Margin.y;
-			pos.y -= height + Margin.h;
+			pos.x -= w + Margin.y;
+			pos.y -= h + Margin.h;
 		}
 		else
 		{
-			pos.x -= (width + 1) / 2 + Margin.y;
-			pos.y -= (height + 1) / 2 + Margin.h;
+			pos.x -= (w + 1) / 2 + Margin.y;
+			pos.y -= (h + 1) / 2 + Margin.h;
 		}
 		break;
 	}
@@ -3063,7 +3067,7 @@ bool CzActor::getProperty(unsigned int property_name, CzXomlProperty& prop)
  @fn	bool CzActor::setProperty(unsigned int property_name, const CzXomlProperty& data, bool delta)
 
  @brief	Sets the named property of the actor.
-    
+	
  Sets the named property of this Actor. The properties value supplied will be converted. If delta is set to true then the existing value of the property will 
  be added to instead of replaced.
 
@@ -3112,7 +3116,7 @@ bool CzActor::setProperty(const char* property_name, const CzString& data, bool 
  @fn	bool CzActor::setProperty(unsigned int property_name, const CzString& data, bool delta)
 
  @brief	Sets the named property of the actor.
-    
+	
  Sets the named property of this actor. The properties value (data) is supplied as a string and will be converted. If delta is set to true then the existing value of the property will 
  be added to instead of replaced.
 
@@ -3148,7 +3152,7 @@ bool CzActor::setProperty(unsigned int property_name, const CzString& data, bool
 
  @par
  <blockquote><pre>
- 	<Timeline Name="Anim1" AutoPlay="true">
+	<Timeline Name="Anim1" AutoPlay="true">
 		<Animation Anim="PosAnim" Target="Position" />
 	</Timeline>
  </pre></blockquote>
@@ -3312,7 +3316,7 @@ void CzActor::UpdateBindings(bool force_modified)
 
 int CzActor::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode* node)
 {
-	if (parent->getClassTypeHash() != CzHashes::Scene_Hash && parent->getClassTypeHash() != CzHashes::Actor_Hash)
+	if (parent == NULL || (parent->getClassTypeHash() != CzHashes::Scene_Hash && parent->getClassTypeHash() != CzHashes::Actor_Hash))
 	{
 		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Actor - Needs to be declared inside a scene or an actor - ", DebugInfo.c_str());
 		return 0;
@@ -3552,6 +3556,9 @@ int CzActor::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 			Depth = (*it)->getValueAsFloat();
 			depth_set = true;
 		}
+		else
+		if (name_hash == CzHashes::HoldFocus_Hash)
+			HoldFocus = (*it)->getValueAsBool();
 		else
 		if (name_hash == CzHashes::OnTapped_Hash)
 			EventsManager->addEvent("OnTapped", (*it)->getValue().c_str());

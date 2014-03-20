@@ -29,6 +29,444 @@
 #include "CzXomlResourceManager.h"
 
 //
+// LUA_SetVertexActor actor (object), index (number), (x (number), y (number)) or array of vecs
+//
+static int LUA_SetVertexActor(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+	if (count < 3)
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setVertex() not enough parameters, expected actor (object), index (number), (x (number), y (number)) or array of vec)");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get the target object
+	IzXomlResource* object = NULL;
+	if (lua_isuserdata(lua, 1))
+		object = (IzXomlResource*)lua_touserdata(lua, 1);
+	if (object == NULL || object->getClassTypeHash() != CzHashes::Actor_Hash)
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setVertex() Invalid target object for Param0, expected actor");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	int index = 0;
+	if (lua_isnumber(lua, 2))
+		index = (int)lua_tonumber(lua, 2);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setVertex() index must be a number (Param1) - object - ", object->getName().c_str());
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	CzSprite* visual = ((CzActor*)object)->getVisual();
+	if (visual == NULL)
+	{
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+	CzGeometry* prim = visual->getGemoetry();
+	if (prim == NULL)
+	{
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (lua_istable(lua, 3))
+	{
+		lua_pushnil(lua);  // First key
+		while (lua_next(lua, 3) != 0)
+		{
+			const float* v = lua_tovec(lua, -1);
+			(prim->Verts + index)->x = v[0];
+			(prim->Verts + index)->y = v[1];
+			index++;
+			lua_pop(lua, 1);
+		}
+
+/*		int size = luaL_getn(lua, 3);
+		for (int t = 1; t < size + 1; t++)
+		{
+			lua_rawgeti(lua, 3, t);
+			const float* v = lua_tovec(lua, -1);
+			(prim->Verts + index)->x = v[0];
+			(prim->Verts + index)->y = v[1];
+			index++;
+		}*/
+
+	}
+	else
+	{
+		float x;
+		if (lua_isnumber(lua, 3))
+			x = (float)lua_tonumber(lua, 3);
+		else
+		{
+			CzScriptEngineLua::DisplayError(lua, "actor.setVertex() x must be a number (Param2) - object - ", object->getName().c_str());
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+
+		float y;
+		if (lua_isnumber(lua, 4))
+			y = (float)lua_tonumber(lua, 4);
+		else
+		{
+			CzScriptEngineLua::DisplayError(lua, "actor.setVertex() y must be a number (Param3) - object - ", object->getName().c_str());
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+
+		if (index < 0 || index > prim->VertCount)
+		{
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+		(prim->Verts + index)->x = x;
+		(prim->Verts + index)->y = y;
+	}
+	visual->forceTransformDirty();
+
+	lua_pushboolean(lua, true);
+ 
+	return 1;
+}
+
+//
+// LUA_SetVertexIndexActor actor (object), index (number), vert_index (number) or array of number
+//
+static int LUA_SetVertexIndexActor(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+	if (count < 3)
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setVertexIndex() not enough parameters, expected actor (object), index (number), (vert_index (number) or array of number)");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get the target object
+	IzXomlResource* object = NULL;
+	if (lua_isuserdata(lua, 1))
+		object = (IzXomlResource*)lua_touserdata(lua, 1);
+	if (object == NULL || object->getClassTypeHash() != CzHashes::Actor_Hash)
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setVertexIndex() Invalid target object for Param0, expected actor");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	int index = 0;
+	if (lua_isnumber(lua, 2))
+		index = (int)lua_tonumber(lua, 2);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setVertexIndex() index must be a number (Param1) - object - ", object->getName().c_str());
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	CzSprite* visual = ((CzActor*)object)->getVisual();
+	if (visual == NULL)
+	{
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+	CzGeometry* prim = visual->getGemoetry();
+	if (prim == NULL)
+	{
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (lua_istable(lua, 3))
+	{
+		lua_pushnil(lua);  // First key
+		while (lua_next(lua, 3) != 0)
+		{
+			int idx = (int)lua_tonumber(lua, -1);
+			*(prim->Indices + index) = idx;
+			index++;
+			lua_pop(lua, 1);
+		}
+/*		int size = luaL_getn(lua, 3);
+		for (int t = 1; t < size + 1; t++)
+		{
+			lua_rawgeti(lua, 3, t);
+			int idx = (int)lua_tonumber(lua, -1);
+			*(prim->Indices + index) = idx;
+			index++;
+		}*/
+	}
+	else
+	{
+		int idx;
+		if (lua_isnumber(lua, 3))
+			idx = (int)lua_tonumber(lua, 3);
+		else
+		{
+			CzScriptEngineLua::DisplayError(lua, "actor.setVertexIndex() vert_index must be a number (Param2) - object - ", object->getName().c_str());
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+
+		if (index < 0 || index > prim->VertCount)
+		{
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+		*(prim->Indices + index) = idx;
+	}
+	visual->forceTransformDirty();
+
+	lua_pushboolean(lua, true);
+ 
+	return 1;
+}
+
+//
+// LUA_SetUVActor actor (object), index (number), (u (number), v (number)) or array of vecs
+//
+static int LUA_SetUVActor(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+	if (count < 3)
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setUV() not enough parameters, expected actor (object), index (number), (u (number), v (number)) or array of vecs");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get the target object
+	IzXomlResource* object = NULL;
+	if (lua_isuserdata(lua, 1))
+		object = (IzXomlResource*)lua_touserdata(lua, 1);
+	if (object == NULL || object->getClassTypeHash() != CzHashes::Actor_Hash)
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setUV() Invalid target object for Param0, expected actor");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	int index = 0;
+	if (lua_isnumber(lua, 2))
+		index = (int)lua_tonumber(lua, 2);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setUV() index must be a number (Param1) - object - ", object->getName().c_str());
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	CzBitmapSprite* visual = (CzBitmapSprite*)((CzActor*)object)->getVisual();
+	if (visual == NULL)
+	{
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+	CzRenderPrim* prim = visual->getPrim();
+	if (prim == NULL || prim->UVs == NULL)
+	{
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (lua_istable(lua, 3))
+	{
+		lua_pushnil(lua);  // First key
+		while (lua_next(lua, 3) != 0)
+		{
+			const float* v = lua_tovec(lua, -1);
+			(prim->UVs + index)->x = v[0];
+			(prim->UVs + index)->y = v[1];
+			index++;
+			lua_pop(lua, 1);
+		}
+
+/*		int size = luaL_getn(lua, 3);
+		for (int t = 1; t < size + 1; t++)
+		{
+			lua_rawgeti(lua, 3, t);
+			const float* v = lua_tovec(lua, -1);
+			(prim->UVs + index)->x = v[0];
+			(prim->UVs + index)->y = v[1];
+			index++;
+		}*/
+	}
+	else
+	{
+		float x;
+		if (lua_isnumber(lua, 3))
+			x = (float)lua_tonumber(lua, 3);
+		else
+		{
+			CzScriptEngineLua::DisplayError(lua, "actor.setUV() u must be a number (Param2) - object - ", object->getName().c_str());
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+
+		float y;
+		if (lua_isnumber(lua, 4))
+			y = (float)lua_tonumber(lua, 4);
+		else
+		{
+			CzScriptEngineLua::DisplayError(lua, "actor.setUV() v must be a number (Param3) - object - ", object->getName().c_str());
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+
+		if (index < 0 || index > prim->VertCount)
+		{
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+		(prim->UVs + index)->x = x;
+		(prim->UVs + index)->y = y;
+	}
+	visual->setUVsDirty(true);
+
+	lua_pushboolean(lua, true);
+ 
+	return 1;
+}
+
+//
+// LUA_SetRGBAActor actor (object), index (number), (r (number), g (number), b (number), a (number)) or array of vecs
+//
+static int LUA_SetRGBAActor(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+	if (count < 3)
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setRGBA() not enough parameters, expected actor (object), index (number), (r (number), g (number), b (number), a (number)) or array of vecs");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get the target object
+	IzXomlResource* object = NULL;
+	if (lua_isuserdata(lua, 1))
+		object = (IzXomlResource*)lua_touserdata(lua, 1);
+	if (object == NULL || object->getClassTypeHash() != CzHashes::Actor_Hash)
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setRGBA() Invalid target object for Param0, expected actor");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	int index = 0;
+	if (lua_isnumber(lua, 2))
+		index = (int)lua_tonumber(lua, 2);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setRGBA() index must be a number (Param1) - object - ", object->getName().c_str());
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	CzBitmapSprite* visual = (CzBitmapSprite*)((CzActor*)object)->getVisual();
+	if (visual == NULL)
+	{
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+	CzGeometry* geom = visual->getGemoetry();
+	if (geom == NULL || geom->Colours == NULL)
+	{
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+	CzRenderPrim* prim = visual->getPrim();
+
+	if (lua_istable(lua, 3))
+	{
+		lua_pushnil(lua);  // First key
+		while (lua_next(lua, 3) != 0)
+		{
+			const float* v = lua_tovec(lua, -1);
+			(geom->Colours + index)->r = (uint8)v[0];
+			(geom->Colours + index)->g = (uint8)v[1];
+			(geom->Colours + index)->b = (uint8)v[2];
+			(prim->Colours + index)->a = (uint8)v[3];
+			index++;
+			lua_pop(lua, 1);
+		}
+/*		int size = luaL_getn(lua, 3);
+		for (int t = 1; t < size + 1; t++)
+		{
+			lua_rawgeti(lua, 3, t);
+			const float* v = lua_tovec(lua, -1);
+			(geom->Colours + index)->r = (uint8)v[0];
+			(geom->Colours + index)->g = (uint8)v[1];
+			(geom->Colours + index)->b = (uint8)v[2];
+			(prim->Colours + index)->a = (uint8)v[3];
+			index++;
+		}*/
+	}
+	else
+	{
+		float r;
+		if (lua_isnumber(lua, 3))
+			r = (float)lua_tonumber(lua, 3);
+		else
+		{
+			CzScriptEngineLua::DisplayError(lua, "actor.setRGBA() r must be a number (Param2) - object - ", object->getName().c_str());
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+
+		float g;
+		if (lua_isnumber(lua, 4))
+			g = (float)lua_tonumber(lua, 4);
+		else
+		{
+			CzScriptEngineLua::DisplayError(lua, "actor.setRGBA() g must be a number (Param3) - object - ", object->getName().c_str());
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+
+		float b;
+		if (lua_isnumber(lua, 5))
+			b = (float)lua_tonumber(lua, 5);
+		else
+		{
+			CzScriptEngineLua::DisplayError(lua, "actor.setRGBA() b must be a number (Param4) - object - ", object->getName().c_str());
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+
+		float a;
+		if (lua_isnumber(lua, 6))
+			a = (float)lua_tonumber(lua, 6);
+		else
+		{
+			CzScriptEngineLua::DisplayError(lua, "actor.setRGBA() alpha must be a number (Param5) - object - ", object->getName().c_str());
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+
+		if (index < 0 || index > prim->VertCount)
+		{
+			lua_pushboolean(lua, false);
+			return 1;
+		}
+		(geom->Colours + index)->r = (uint8)r;
+		(geom->Colours + index)->g = (uint8)g;
+		(geom->Colours + index)->b = (uint8)b;
+		(prim->Colours + index)->a = (uint8)a;
+	}
+
+	lua_pushboolean(lua, true);
+ 
+	return 1;
+}
+
+
+
+//
 // LUA_SetProperty actor (object), property (string), value (any), use-user-property (bool, optional)
 //
 static int LUA_SetPropertyActor(lua_State *lua)
@@ -1435,6 +1873,10 @@ static int LUA_FindFurthestActor(lua_State *lua)
 //
 static const luaL_Reg g_actorlib[] =
 {
+	{"setVertex",			LUA_SetVertexActor}, 
+	{"setVertexIndex",		LUA_SetVertexIndexActor}, 
+	{"setUV",				LUA_SetUVActor}, 
+	{"setRGBA",				LUA_SetRGBAActor}, 
 	{"set",					LUA_SetPropertyActor}, 
 	{"add",					LUA_AddPropertyActor}, 
 	{"get",					LUA_GetPropertyActor}, 

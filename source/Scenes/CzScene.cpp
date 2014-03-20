@@ -43,8 +43,8 @@ void CzScene::InitClass()
 	// Create class properties
 	ClassDef = new CzXomlClassDef();
 	ClassDef->addProperty(new CzXomlClassProperty("Position",				PT_Vec2,		CzScene::_setPosition,					CzScene::_getPosition));
-	ClassDef->addProperty(new CzXomlClassProperty("PositionX",				PT_Float,		CzScene::_setPositionX,					CzScene::_getPositionX));
-	ClassDef->addProperty(new CzXomlClassProperty("PositionY",				PT_Float,		CzScene::_setPositionY,					CzScene::_getPositionY));
+	ClassDef->addProperty(new CzXomlClassProperty("X",						PT_Float,		CzScene::_setPositionX,					CzScene::_getPositionX));
+	ClassDef->addProperty(new CzXomlClassProperty("Y",						PT_Float,		CzScene::_setPositionY,					CzScene::_getPositionY));
 	ClassDef->addProperty(new CzXomlClassProperty("Angle",					PT_Float,		CzScene::_setAngle,						CzScene::_getAngle));
 	ClassDef->addProperty(new CzXomlClassProperty("Scale",					PT_Float,		CzScene::_setScale,						CzScene::_getScale));
 	ClassDef->addProperty(new CzXomlClassProperty("Colour",					PT_Vec4,		CzScene::_setColour,					CzScene::_getColour));
@@ -94,6 +94,8 @@ void CzScene::InitClass()
 	ClassDef->addProperty(new CzXomlClassProperty("Physics",				PT_Bool,		CzScene::_setPhysics,					CzScene::_getPhysics));
 	ClassDef->addProperty(new CzXomlClassProperty("Gravity",				PT_Vec2,		CzScene::_setGravity,					CzScene::_getGravity));
 	ClassDef->addProperty(new CzXomlClassProperty("PhysicsTimeStep",		PT_Float,		CzScene::_setPhysicsTimeStep,			CzScene::_getPhysicsTimeStep));
+	ClassDef->addProperty(new CzXomlClassProperty("PositionX",				PT_Float,		CzScene::_setPositionX,					CzScene::_getPositionX));
+	ClassDef->addProperty(new CzXomlClassProperty("PositionY",				PT_Float,		CzScene::_setPositionY,					CzScene::_getPositionY));
 }
 void CzScene::ReleaseClass()
 {
@@ -1018,7 +1020,7 @@ CzScene::~CzScene()
 
 /**
  @fn	void CzScene::setVirtualTransform(int required_width, int required_height, float angle,
-    eCanvasFit fit, eCanvasOrigin canvas_origin)
+	eCanvasFit fit, eCanvasOrigin canvas_origin)
 
  @brief	Sets the scenes virtual transform.
 
@@ -1146,7 +1148,7 @@ void CzScene::setVirtualTransform(int required_width, int required_height, float
 
 /**
  @fn	void CzScene::setVirtualTransform(int required_width, int required_height, float angle,
-    bool fix_aspect, bool lock_width, eCanvasOrigin canvas_origin)
+	bool fix_aspect, bool lock_width, eCanvasOrigin canvas_origin)
 
  @brief	Sets virtual transform.
 
@@ -1350,10 +1352,10 @@ void CzScene::removeActor(CzActor* actor, bool instant_delete)
  @fn	void CzScene::removeActor(unsigned int name_hash, bool instant_delete)
 
  @brief	Removes the actor from the scene.
-    
+	
  If instant_delete is false (as by default) then the specified actor will be marked as destroyed and added to the scenes actor removal list, which is cleaned 
  up at the end of the scene. If instant_delete is true then the actor will instead of removed from the scene and instantly deleted.
-    
+	
  Note that when an actor is removed from the scene, all actors that link to the actor will also be removed.
 
  @param	name_hash	  	Actor name as a string hash.
@@ -2964,7 +2966,7 @@ bool CzScene::setProperty(const char* property_name, const CzString& data, bool 
  @fn	bool CzScene::setProperty(unsigned int property_name, const CzString& data, bool delta)
 
  @brief	Sets the named property of the scene.
-    
+	
  Sets the named property of this scene. The properties value (data) is supplied as a string and will be converted. If delta is set to true then the existing value of the property will 
  be added to instead of replaced.
 
@@ -2994,7 +2996,7 @@ bool CzScene::setProperty(unsigned int property_name, const CzString& data, bool
  @fn	bool CzScene::setProperty(unsigned int property_name, const CzXomlProperty& data, bool delta)
 
  @brief	Sets the named property of the scene.
-    
+	
  Sets the named property of this scene to the supplied property data. If delta is set to true then the existing value of the property will be added to instead of replaced.
 
  @param	property_name	Name of the property as a string hash (faster searching).
@@ -3029,7 +3031,7 @@ bool CzScene::setProperty(unsigned int property_name, const CzXomlProperty& data
 
  @par
  <blockquote><pre>
- 	<Timeline Name="Anim1" AutoPlay="true">
+	<Timeline Name="Anim1" AutoPlay="true">
 		<Animation Anim="PosAnim" Target="Position" />
 	</Timeline>
  </pre></blockquote>

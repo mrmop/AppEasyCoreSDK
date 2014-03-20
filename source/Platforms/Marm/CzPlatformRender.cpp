@@ -131,7 +131,8 @@ void CzPlatformRender::DrawPrimitives(CzRenderPrim* prims, CzRenderMaterial* mat
 			mat->SetClamping(!materials->Tiled);
 			mat->SetFiltering(filter);
 			mat->SetAlphaMode(am);
-			mat->SetCullMode(CIwMaterial::CULL_NONE);
+			mat->SetCullMode(CIwMaterial::CULL_BACK);
+//			mat->SetCullMode(CIwMaterial::CULL_NONE);
 			IwGxSetMaterial(mat);
 			CurrentTexture = texture;
 			CurrentAlphaMode = materials->AlphaMode;
@@ -189,7 +190,8 @@ void CzPlatformRender::DrawPrimitives(CzRenderPrim3* prims, CzRenderMaterial* ma
 			mat->SetClamping(!materials->Tiled);
 			mat->SetFiltering(filter);
 			mat->SetAlphaMode(am);
-			mat->SetCullMode(CIwMaterial::CULL_NONE);
+			mat->SetCullMode(CIwMaterial::CULL_BACK);
+//			mat->SetCullMode(CIwMaterial::CULL_NONE);
 			IwGxSetMaterial(mat);
 			CurrentTexture = texture;
 			CurrentAlphaMode = materials->AlphaMode;
@@ -319,7 +321,8 @@ void CzPlatformRender::DrawText(CzFontPreparedText prepared_text, CzFont* font, 
 			mat->SetClamping(true);
 			mat->SetFiltering(filter);
 			mat->SetAlphaMode(am);
-			mat->SetCullMode(CIwMaterial::CULL_NONE);
+			mat->SetCullMode(CIwMaterial::CULL_BACK);
+//			mat->SetCullMode(CIwMaterial::CULL_NONE);
 			IwGxSetMaterial(mat);
 
 			// Finally draw the glyphs
@@ -445,7 +448,8 @@ void CzPlatformRender::BatchDrawPrims(bool filter)
 		mat->SetClamping(false);
 		mat->SetFiltering(filter);
 		mat->SetAlphaMode(CIwMaterial::ALPHA_BLEND);
-		mat->SetCullMode(CIwMaterial::CULL_NONE);
+		mat->SetCullMode(CIwMaterial::CULL_BACK);
+//		mat->SetCullMode(CIwMaterial::CULL_NONE);
 		IwGxSetMaterial(mat);
 		IwGxDrawPrims(IW_GX_QUAD_LIST, BatchIndices[t], count);
 		mats++;

@@ -71,6 +71,7 @@
 #include "CzXomlLoad.h"
 #include "CzUserProperty.h"
 #include "CzGeometry.h"
+#include "CzDecrypt.h"
 
 
 const char* CzXoml::DockingNames[] = 
@@ -993,7 +994,7 @@ bool CzXoml::Process(IzXomlResource* parent, const char* filename, bool reset_xm
 	CzXmlParser*	xml = new CzXmlParser();
 
 	// Load and parse the xml file
-	if (xml->Parse(filename) == XmlErrorNone)
+	if (xml->Parse(filename, CzDecrypt::Enabled) == XmlErrorNone)
 	{
 		// Process the XOML data
 		bool error = Process(parent, xml->getRoot()->getFirstNode());

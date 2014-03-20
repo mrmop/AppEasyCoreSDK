@@ -31,7 +31,7 @@ static int LUA_CreateFromTemplate(lua_State *lua)
 	int count = lua_gettop(lua);
 	if (lua_gettop(lua) < 2)
 	{
-        CzScriptEngineLua::DisplayError(lua, "template.from() not enough parameters, expected template (object), scene (object), templates parameters (table, optional)");
+		CzScriptEngineLua::DisplayError(lua, "template.from() not enough parameters, expected template (object), scene (object), templates parameters (table, optional)");
 		lua_pushboolean(lua, false);
 		return 1;
 	}
@@ -42,7 +42,7 @@ static int LUA_CreateFromTemplate(lua_State *lua)
 		temp = (CzTemplate*)lua_touserdata(lua, 1);
 	if (temp == NULL || (temp != NULL && temp->getClassTypeHash() != CzHashes::Template_Hash))
 	{
-        CzScriptEngineLua::DisplayError(lua, "template.from() Invalid template for Param0");
+		CzScriptEngineLua::DisplayError(lua, "template.from() Invalid template for Param0");
 		lua_pushboolean(lua, false);
 		return 1;
 	}
@@ -51,12 +51,12 @@ static int LUA_CreateFromTemplate(lua_State *lua)
 	IzXomlResource* container = NULL;
 	if (lua_isuserdata(lua, 2))
 		container = (CzScene*)lua_touserdata(lua, 2);
-	if (container == NULL)
+/*	if (container)
 	{
-        CzScriptEngineLua::DisplayError(lua, "template.from() Invalid container for Param1");
+		CzScriptEngineLua::DisplayError(lua, "template.from() Invalid container for Param1");
 		lua_pushboolean(lua, false);
 		return 1;
-	}
+	}*/
 
 	// Create a set of XML attributes that will replace the template parameters
 	CzXmlNode* replacements = NULL;
@@ -111,7 +111,7 @@ static int LUA_CreateFromTemplate(lua_State *lua)
 	SAFE_DELETE(replacements)
 	lua_pushboolean(lua, true);
 
-    return 1;
+	return 1;
 }
 
 //
@@ -122,7 +122,7 @@ static int LUA_DestroyTemplate(lua_State *lua)
 	int count = lua_gettop(lua);
 	if (lua_gettop(lua) < 1)
 	{
-        CzScriptEngineLua::DisplayError(lua, "template.destroy() not enough parameters, expected template (object)");
+		CzScriptEngineLua::DisplayError(lua, "template.destroy() not enough parameters, expected template (object)");
 		lua_pushboolean(lua, false);
 		return 1;
 	}
@@ -153,7 +153,7 @@ static int LUA_FindTemplate(lua_State *lua)
 
 	if (count < 1)
 	{
-        CzScriptEngineLua::DisplayError(lua, "template.find() not enough parameters, expected template-name (string), container scene (object, optional)");
+		CzScriptEngineLua::DisplayError(lua, "template.find() not enough parameters, expected template-name (string), container scene (object, optional)");
 		lua_pushnil(lua);
 		return 1;
 	}
@@ -166,7 +166,7 @@ static int LUA_FindTemplate(lua_State *lua)
 		name = lua_tostring(lua, 1);
 	if (name == NULL)
 	{
-        CzScriptEngineLua::DisplayError(lua, "template.find() Invalid name for Param0");
+		CzScriptEngineLua::DisplayError(lua, "template.find() Invalid name for Param0");
 		lua_pushnil(lua);
 		return 1;
 	}
@@ -190,7 +190,7 @@ static int LUA_FindTemplate(lua_State *lua)
 	IzXomlResource* resource = CzXomlResourceManager::FindResource(name, CzHashes::Template_Hash, scene);
 	if (resource == NULL)
 	{
-        CzScriptEngineLua::DisplayError(lua, "template.find() template not found - ", name);
+		CzScriptEngineLua::DisplayError(lua, "template.find() template not found - ", name);
 		lua_pushnil(lua);
 		return 1;
 	}
@@ -198,7 +198,7 @@ static int LUA_FindTemplate(lua_State *lua)
 	// Return the resource
 	lua_pushlightuserdata(lua, resource);
 
-    return 1;
+	return 1;
 }
 
 

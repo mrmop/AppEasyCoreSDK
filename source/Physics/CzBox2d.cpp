@@ -204,15 +204,20 @@ b2Fixture* CzBox2dBody::addFixture(CzShape* body_shape, CzBox2dMaterial* body_ma
 			fixture1.shape = &poly_shape;
 			poly_shape.m_vertexCount = shp->NumVertices;
 			CzVec2* points = shp->Vertices;
-
+			int count = shp->NumVertices;
+			if (count > 8)
+			{
+				CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Fixture shape has more than 8 vertices - ", body_shape->getName().c_str());
+				count = 8;
+			}
 			b2Vec2 verts[8];
-			for (int t = 0; t < shp->NumVertices; t++)
+			for (int t = 0; t < count; t++)
 			{
 				verts[t].x = World->PixelToWorldX(points->x) + cm.x;
 				verts[t].y = World->PixelToWorldY(points->y) + cm.y;
 				points++;
 			}
-			poly_shape.Set(verts, shp->NumVertices);
+			poly_shape.Set(verts, count);
 		}
 		break;
 	}
@@ -274,7 +279,7 @@ void CzBox2dBody::setCollisionFlags(int category_flags, int mask_flags, int coll
 IzBox2dJoint* CzBox2dBody::getJoint(int index)
 {
 	if (index < 0 || index > (int)Joints.size())
-		return false;
+		return NULL;
 
 	return Joints[index];
 }

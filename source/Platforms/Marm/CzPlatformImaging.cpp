@@ -111,7 +111,7 @@ CzTexture CzPlatformImaging::CreateTexture(void* memory_file, int memory_file_si
 CzTexture CzPlatformImaging::CreateTexture(void* pixels, int width, int height, int pitch, CzImage::eFormat format, bool modifiable)
 {
 	if (pixels == NULL || width <= 0 || height <= 0)
-		return false;
+		return NULL;
 
 	CIwImage::Format f = toMarmImageFormat(format);
 	if (f == CIwImage::FORMAT_UNDEFINED)

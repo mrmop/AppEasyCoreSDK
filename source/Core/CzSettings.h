@@ -42,6 +42,7 @@ public:
 protected:
 	// Properties
 	bool		PreventPowerSaving;				///< Enable / disable power saving
+	bool		DencryptSource;					///< Enable / disable source decryption
 	CzString	FacebookAppID;					///< Facebook App ID
 
 public:
@@ -49,6 +50,7 @@ public:
 	void			setPreventPowerSaving(bool enable)			{ PreventPowerSaving = enable; }
 	const CzString&	getFacebookAppID() const					{ return FacebookAppID; }
 	void			setFacebookAppID(const char* facebook_id)	{ FacebookAppID = facebook_id; }
+	bool			getDencryptSource() const					{ return DencryptSource; }
 	// Properties end
 
 protected:

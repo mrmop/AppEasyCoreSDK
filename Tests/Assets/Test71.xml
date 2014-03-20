@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="file:///C:/AppEasy/docs/XOML.xsd">
+
+	<!-- Create a scene with physics enabled -->
+	<Scene Name="Scene1" Current="true" Camera="Camera1" DoSleep="false" ScriptEngine="lua" OnTick="TickActions">
+
+		<Image Name="Crate" Location="crate.png" />
+		<Brush Name="Crate" Image="Crate" />
+
+		<!-- Define and load a Lua script -->
+		<Script Name="Scene1Script" Type="lua" />
+		<File Name="File1" Location="Test71.lua" FileType="lua" Preload="true" Script="Scene1Script" />
+		
+		<!-- Create a geometry with 10,000 vertices -->
+		<Geometry Name="geom1" Type="QuadList" Vertices="0,0" COlours="255,255,255,255" Count="10000" IndexCount="10000" />
+
+		<!-- Create scene OnTick handler that calls a script function each scene update -->
+		<Actions Name="TickActions">
+			<Action Method="CallScript" P1="Scene_OnTick" />
+		</Actions>
+		
+		<!-- Create touch pan camera -->
+		<Camera Name="Camera1" TouchPanX="true" TouchPanY="true" IgnoreActors="false" />
+
+		<Icon Name="crate1" Background="Crate" Geometry="geom1" Tappable="false" IgnoreCamera="true" />
+		
+		<!-- Create a label to display number of collisions -->
+		<Label Font="serif" Background="Button1Brush" Docking="topleft" Binding="[Text]num_collisions" />
+
+		<Label Font="serif" Text="Demonstration of responding to collisions using Lua" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+
+	</Scene>
+
+
+</xml>

@@ -109,6 +109,7 @@ files
 	Test68.xml
 	Test69.xml
 	Test70.xml
+	Test71.xml
 
 	Test17.lua
 	Test25.lua
@@ -124,6 +125,7 @@ files
 	Test67.lua
 	Test69.lua
 	Test70.lua
+	Test71.lua
 
 	test_js.html
 }
@@ -173,6 +175,7 @@ assets
 	Test67.lua
 	Test69.lua
 	Test70.lua
+	Test71.lua
 	json.lua
 
 	# Other
@@ -261,6 +264,7 @@ assets
 	Test68.xml
 	Test69.xml
 	Test70.xml
+	Test71.xml
 
 	# html files
 	test_js.html

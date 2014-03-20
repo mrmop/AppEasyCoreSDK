@@ -17,6 +17,7 @@
 #include "CzTypes.h"
 #include "CzUtil.h"
 
+class IzPlatformAds;
 class IzPlatformAudio;
 class IzPlatformCam;
 class IzPlatformComms;
@@ -41,6 +42,7 @@ class IzPlatformUI;
 //
 // NOTES: The platform system will eventually abstract all Marmalade specific platform code into its own class / classes
 //
+// IzPlatformAds -		Abstract interface to ads system
 // IzPlatformAudio -	Abstract interface to audio system
 // IzPlatformCam -		Abstract interface to Camera API
 // IzPlatformComms -	Abstract interface to communications system
@@ -76,7 +78,7 @@ class CzPlatform
 private:
 	static CzPlatform* _instance;
 	CzPlatform() :	Initialised(false), Sys(NULL), Display(NULL), Input(NULL), Audio(NULL), Comms(NULL), File(NULL), Font(NULL), Imaging(NULL), Video(NULL), Other(NULL), 
-					Render(NULL), UI(NULL), Platform(NULL), Cam(NULL), Market(NULL), Facebook(NULL)  {}
+					Render(NULL), UI(NULL), Platform(NULL), Cam(NULL), Market(NULL), Facebook(NULL), Ads(NULL)  {}
 	virtual ~CzPlatform() {}
 	CzPlatform(const CzPlatform &);
 	CzPlatform& operator=(const CzPlatform &);
@@ -107,6 +109,7 @@ public:
 	IzPlatformMarket*		getMarket()			{ return Market; }
 	IzPlatformCam*			getCam()			{ return Cam; }
 	IzPlatformFacebook*		getFacebook()		{ return Facebook; }
+	IzPlatformAds*			getAds()			{ return Ads; }
 	void setSys(IzPlatformSys* p)				{ Sys = p; }
 	void setDisplay(IzPlatformDisplay* p)		{ Display = p; }
 	void setInput(IzPlatformInput* p)			{ Input = p; }
@@ -122,6 +125,7 @@ public:
 	void setMarket(IzPlatformMarket* p)			{ Market = p; }
 	void setCam(IzPlatformCam* p)				{ Cam = p; }
 	void setFacebook(IzPlatformFacebook* p)		{ Facebook = p; }
+	void setAds(IzPlatformAds* p)				{ Ads = p; }
 	// Properties end
 
 protected:
@@ -140,6 +144,7 @@ protected:
 	IzPlatformCam*		Cam;
 	IzPlatformMarket*	Market;
 	IzPlatformFacebook*	Facebook;
+	IzPlatformAds*		Ads;
 
 public:
 	virtual int		Init(IzPlatform* platform, bool comms, bool use_gl);

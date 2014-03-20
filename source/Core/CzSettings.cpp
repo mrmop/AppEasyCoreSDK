@@ -14,6 +14,7 @@
 #include "CzUtil.h"
 #include "CzSettings.h"
 #include "CzXml.h"
+#include "CzDecrypt.h"
 
 CDECLARE_SINGLETON(CzSettings)
 
@@ -54,6 +55,17 @@ int CzSettings::Init()
 				{
 					FacebookAppID = attrib->getValue();
 					CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "Got Facebook App ID");
+				}
+			}
+			// Get source decryption
+			node = root->getFirstNamedNode(CZ_HASH("decrypt"));
+			if (node != NULL)
+			{
+				CzXmlAttribute* attrib = node->getAttribute(CZ_HASH("enable"));
+				if (attrib != NULL)
+				{
+					CzDecrypt::Enabled = attrib->getValueAsBool();
+					CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "Decrypt source set to ", CzString(CzDecrypt::Enabled).c_str());
 				}
 			}
 		}

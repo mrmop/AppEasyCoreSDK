@@ -215,7 +215,7 @@ CzFacebookRequest CzPlatformFacebook::InitRequest(const char* method_name, const
 	if (request == NULL)
 	{
 		PLATFORM_FACEBOOK->NotifyResponseError((CzFacebookRequest)request);
-		return false;
+		return NULL;
 	}
 
 	return (CzFacebookRequest)request;
@@ -227,7 +227,7 @@ CzFacebookRequest CzPlatformFacebook::InitGraphRequest(const char* graph_path, c
 	if (request == NULL)
 	{
 		PLATFORM_FACEBOOK->NotifyResponseError((CzFacebookRequest)request);
-		return false;
+		return NULL;
 	}
 
 	return (CzFacebookRequest)request;

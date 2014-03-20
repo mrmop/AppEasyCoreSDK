@@ -192,13 +192,9 @@ void CzMatrix4::UVN(CzVec3* u, CzVec3* v, CzVec3* n)
 void CzMatrix4::Translate(float x, float y, float z)
 {
 	Clear();
-	m[CZA0][CZB0] = 1.0f;
-	m[CZA5][CZB5] = 1.0f;
-	m[CZA10][CZB10] = 1.0f;
 	m[CZA3][CZB3] = x;
 	m[CZA7][CZB7] = y;
 	m[CZA11][CZB11] = z;
-	m[CZA15][CZB15] = 1.0f;
 }
 
 void CzMatrix4::Translate(CzVec3* v)
@@ -432,6 +428,25 @@ void CzMatrix4::Transform(float x, float y, float z, CzVec3* ov)
 	ov->z = ((x * m[CZA8][CZB8]) + (y * m[CZA9][CZB9]) + (z * m[CZA10][CZB10])) + m[CZA11][CZB11];
 }
 
+CzVec3 CzMatrix4::TransformProject(float x, float y, float z, float d)
+{
+	CzVec3 ov;
+	ov.z = ((x * m[CZA8][CZB8]) + (y * m[CZA9][CZB9]) + (z * m[CZA10][CZB10])) + m[CZA11][CZB11];
+	float oz = d / (d + ov.z);
+	ov.x = (((x * m[CZA0][CZB0]) + (y * m[CZA1][CZB1]) + (z * m[CZA2][CZB2])) + m[CZA3][CZB3]) * oz;
+	ov.y = (((x * m[CZA4][CZB4]) + (y * m[CZA5][CZB5]) + (z * m[CZA6][CZB6])) + m[CZA7][CZB7]) * oz;
+
+	return ov;
+}
+
+void CzMatrix4::Project(float x, float y, float z, CzVec3* ov, float d)
+{
+	ov->z = z;
+	float oz = d / (d + z);
+	ov->x = x * oz;
+	ov->y = y * oz;
+}
+
 void CzMatrix4::Transform(CzVec3* iv, CzVec3* ov)
 {
 	Transform(iv->x, iv->y, iv->z, ov);
@@ -441,6 +456,13 @@ CzVec3 CzMatrix4::Transform(float x, float y, float z)
 {
 	CzVec3 ov;
 	Transform(x, y, z, &ov);
+	return ov;
+}
+
+CzVec3 CzMatrix4::Project(float x, float y, float z, float d)
+{
+	CzVec3 ov;
+	Project(x, y, z, &ov, d);
 	return ov;
 }
 
@@ -490,6 +512,37 @@ void CzMatrix4::TransformN(CzVec3* iv, CzVec3* ov, int nCount)
 		ov->x = ((x * m00) + (y * m01) + (z * m02)) + tx;
 		ov->y = ((x * m10) + (y * m11) + (z * m12)) + ty;
 		ov->z = ((x * m20) + (y * m21) + (z * m22)) + tz;
+		
+		iv++;
+		ov++;
+	}
+}
+
+void CzMatrix4::TransformProjectN(CzVec3* iv, CzVec3* ov, int nCount, float d)
+{
+	float	m00 = m[CZA0][CZB0];
+	float	m01 = m[CZA1][CZB1];
+	float	m02 = m[CZA2][CZB2];
+	float	m10 = m[CZA4][CZB4];
+	float	m11 = m[CZA5][CZB5];
+	float	m12 = m[CZA6][CZB6];
+	float	m20 = m[CZA8][CZB8];
+	float	m21 = m[CZA9][CZB9];
+	float	m22 = m[CZA10][CZB10];
+	float	tx = m[CZA3][CZB3];
+	float	ty = m[CZA7][CZB7];
+	float	tz = m[CZA11][CZB11];
+
+	while (nCount-- != 0)
+	{
+		float x = iv->x;
+		float y = iv->y;
+		float z = iv->z;
+
+		ov->z = ((x * m20) + (y * m21) + (z * m22)) + tz;
+		float oz = d / (d + ov->z);
+		ov->x = (((x * m00) + (y * m01) + (z * m02)) + tx) * oz;
+		ov->y = (((x * m10) + (y * m11) + (z * m12)) + ty) * oz;
 		
 		iv++;
 		ov++;
@@ -552,7 +605,23 @@ void CzMatrix4::TransformNPreTranslate(CzVec3* iv, CzVec3* ov, int nCount)
 		ov++;
 	}
 }
+void CzMatrix4::ProjectN(CzVec3* iv, CzVec3* ov, int nCount, float d)
+{
+	while (nCount-- != 0)
+	{
+		float x = iv->x;
+		float y = iv->y;
+		float z = iv->z;
 
+		float oz = d / (d + iv->z);
+		ov->z = iv->z;
+		ov->x = iv->x * oz;
+		ov->y = iv->y * oz;
+		
+		iv++;
+		ov++;
+	}
+}
 CzVec3 CzMatrix4::getTranslation()
 {
 	return CzVec3(m[CZA3][CZB3], m[CZA7][CZB7], m[CZA11][CZB11]);

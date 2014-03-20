@@ -273,7 +273,7 @@ bool CzMarket::QueryProduct(const char* product_id)
 		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
 		return false;
 	}
-	if (PLATFORM_MARKET->isInitialised())
+	if (!PLATFORM_MARKET->isInitialised())
 	{
 		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not initialised", DebugInfo.c_str());
 		return false;
@@ -317,7 +317,7 @@ bool CzMarket::RestoreProducts()
 		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
 		return false;
 	}
-	if (PLATFORM_MARKET->isInitialised())
+	if (!PLATFORM_MARKET->isInitialised())
 	{
 		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not initialised", DebugInfo.c_str());
 		return false;

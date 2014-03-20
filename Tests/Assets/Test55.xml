@@ -55,6 +55,19 @@
 		<!-- Join the wheels with an actor connector-->
 		<ActorConnector TargetA="BackWheel" TargetB="FrontWheel" Background="Crate" Size="100, 10" />
 
+		<!-- Create pause button -->
+		<Label Font="serif" Text="Pause" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Position="-50,0" Size="50, 20" Docking="top" Margin="0,0,50,0" AutoHeight="true" IgnoreCamera="true" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="Inline" P1="scene.set(scene.find('Scene1'), 'Physics', false)" />
+			</Actions>
+		</Label>
+		<Label Font="serif" Text="Resume" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Position="50,0" Size="50, 20" Docking="top" Margin="0,0,50,0" AutoHeight="true" IgnoreCamera="true" OnTapped="Tapped">
+			<Actions Name="Tapped">
+				<Action Method="Inline" P1="scene.set(scene.find('Scene1'), 'Physics', true)" />
+			</Actions>
+		</Label>
+
+
 		<Label Font="serif" Text="Demonstration of simple car physics" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
 
 	</Scene>

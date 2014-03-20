@@ -25,6 +25,7 @@
 #include "lua/CzLuaImage.h"
 #include "lua/CzLuaInput.h"
 #include "lua/CzLuaMarket.h"
+#include "lua/CzLuaMatrix.h"
 #include "lua/CzLuaMedia.h"
 #include "lua/CzLuaParticles.h"
 #include "lua/CzLuaPhysics.h"
@@ -39,6 +40,7 @@
 #include "lua/CzLuaUserProps.h"
 #include "lua/CzLuaXml.h"
 #include "lua/CzLuaHttp.h"
+#include "lua/CzLuaAds.h"
 #include "CzActor.h"
 #include "CzScene.h"
 #include "lsqlite3.h"
@@ -78,6 +80,7 @@ int CzScriptEngineLua::Init(CzScene* scene)
 	luaopen_image(Lua);
 	luaopen_input(Lua);
 	luaopen_market(Lua);
+	luaopen_matrix(Lua);
 	luaopen_media(Lua);
 	luaopen_particles(Lua);
 	luaopen_physics(Lua);
@@ -93,6 +96,7 @@ int CzScriptEngineLua::Init(CzScene* scene)
 	luaopen_xml(Lua);
 	luaopen_lsqlite3(Lua);
 	luaopen_http(Lua);
+	luaopen_ads(Lua);
 
 	// Set the scene
 	Scene = scene;

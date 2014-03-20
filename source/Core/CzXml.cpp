@@ -15,6 +15,7 @@
 #include "CzString.h" 
 #include "CzDataIO.h"
 #include "CzFile.h"
+#include "CzDecrypt.h"
 
 #define SHOW_ERRORS	1
 
@@ -747,7 +748,7 @@ eCzXmlParseError	CzXmlParser::ParseAttributes(CzXmlNode* node)
 	return XmlErrorNone;
 }
 
-eCzXmlParseError CzXmlParser::Parse(CzFile *file)
+eCzXmlParseError CzXmlParser::Parse(CzFile *file, bool decrypt)
 {
 	if (file->Open(NULL, "rb", true))
 	{
@@ -757,6 +758,10 @@ eCzXmlParseError CzXmlParser::Parse(CzFile *file)
 		m_pDataInput->Init(size);
 		if (!file->Read(m_pDataInput->getData(), size))
 			return XmlErrorFileError;
+
+		// Decrypt encrypted code
+		if (decrypt)
+			CzDecrypt::Decrypt((unsigned char*)m_pDataInput->getData(), size, (unsigned char*)CzDecrypt::DecryptKey, 128);
 	}
 	else
 		return XmlErrorFileError;
@@ -766,11 +771,11 @@ eCzXmlParseError CzXmlParser::Parse(CzFile *file)
 	return Parse(m_pDataInput);
 }
 
-eCzXmlParseError CzXmlParser::Parse(const char* filename)
+eCzXmlParseError CzXmlParser::Parse(const char* filename, bool decrypt)
 {
 	CzFile file(filename);
 
-	eCzXmlParseError err = Parse(&file);
+	eCzXmlParseError err = Parse(&file, decrypt);
 
 	return err;
 }

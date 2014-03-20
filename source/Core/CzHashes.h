@@ -62,6 +62,7 @@ public:
 	static unsigned int Resource_Hash;
 	static unsigned int Tag_Hash;
 	static unsigned int Count_Hash;
+	static unsigned int IndexCount_Hash;
 	static unsigned int Action_Hash;
 	static unsigned int Name_Hash;
 	static unsigned int ResourceName_Hash;
@@ -365,6 +366,7 @@ public:
 	static unsigned int Price_Hash;
 	static unsigned int Vertical_Hash;
 	static unsigned int Horizontal_Hash;
+	static unsigned int HoldFocus_Hash;
 	
 	static unsigned int OnTapped_Hash;
 	static unsigned int OnTapped2_Hash;

@@ -474,10 +474,6 @@ CzSprite::~CzSprite()
 #if defined(CZ_ENABLE_METRICS)
 		CzMetrics::TotalSpritesDestroyed++;
 #endif
-	if (!Prim->SharedIndices)
-	{
-		int t = 0;
-	}
 	for (Iterator it = Children.begin(); it != Children.end(); ++it)
 		delete *it;
 	Children.clear();
@@ -635,7 +631,7 @@ void CzSprite::setGeometry(CzGeometry* geom)
 		}
 	}
 	for (int t = 0; t < geom->IndicesCount; t++)
-		Prim->Indices[t] = geom->Indices[t];
+		Prim->Indices[t] = geom->Indices[(geom->IndicesCount-1) - t];
 
 	Geometry = geom;
 }

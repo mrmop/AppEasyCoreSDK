@@ -35,6 +35,8 @@ int CzGeometry::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNo
 	CzString*		colours = NULL;
 	CzString*		indices = NULL;
 	CzString*		type = NULL;
+	int				vert_count = 0;
+	int				index_count = 0;
 
 	// Process attributes
 	for (CzXmlNode::_AttribIterator it = node->attribs_begin(); it != node->attribs_end(); it++)
@@ -64,6 +66,12 @@ int CzGeometry::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNo
 		else
 		if (name_hash == CzHashes::PercVerts_Hash)
 			PercBased = (*it)->getValueAsBool();
+		else
+		if (name_hash == CzHashes::Count_Hash)
+			vert_count = (*it)->getValueAsInt();
+		else
+		if (name_hash == CzHashes::IndexCount_Hash)
+			index_count = (*it)->getValueAsInt();
 	}
 
 	if (type == NULL)
@@ -95,7 +103,8 @@ int CzGeometry::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNo
 	{
 		index = 0;
 		VertCount = vertices->getAsListOfFloat(CzXmlTools::FloatListPool) >> 1;
-		Verts = new CzVec2[VertCount]();
+		if (vert_count < VertCount) vert_count = VertCount;
+		Verts = new CzVec2[vert_count]();
 		for (int t = 0; t < VertCount; t++)
 		{
 			Verts[t].x = CzXmlTools::FloatListPool[index++];
@@ -103,7 +112,10 @@ int CzGeometry::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNo
 		}
 	}
 	else
-		CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Geometry - Vertices are missing - ", DebugInfo.c_str());
+	{
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Geometry - Vertices are missing - ", DebugInfo.c_str());
+		return -1;
+	}
 
 	// Get UV coordinates
 	if (uvs != NULL)
@@ -112,7 +124,7 @@ int CzGeometry::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNo
 		int count = uvs->getAsListOfFloat(CzXmlTools::FloatListPool) >> 1;
 		if (count != VertCount)
 			CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Geometry - UV count is not the same as vertex count - ", DebugInfo.c_str());
-		UVs = new CzVec2[count]();
+		UVs = new CzVec2[vert_count]();
 		for (int t = 0; t < count; t++)
 		{
 			UVs[t].x = CzXmlTools::FloatListPool[index++];
@@ -127,7 +139,7 @@ int CzGeometry::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNo
 		int count = colours->getAsListOfInt(CzXmlTools::IntListPool) >> 2;
 		if (count != VertCount)
 			CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Geometry - Colours count is not the same as vertex count - ", DebugInfo.c_str());
-		Colours = new CzColour[count]();
+		Colours = new CzColour[vert_count]();
 		for (int t = 0; t < count; t++)
 		{
 			Colours[t].r = (uint8)(CzXmlTools::IntListPool[index++]);
@@ -136,22 +148,26 @@ int CzGeometry::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNo
 			Colours[t].a = (uint8)(CzXmlTools::IntListPool[index++]);
 		}
 	}
+	VertCount = vert_count;
 
 	// Get vertex indices
 	if (indices != NULL)
 	{
 		IndicesCount = indices->getAsListOfInt(CzXmlTools::IntListPool);
-		Indices = new uint16[IndicesCount];
+		if (index_count < IndicesCount) index_count = IndicesCount;
+		Indices = new uint16[index_count];
 		for (int t = 0; t < IndicesCount; t++)
 			Indices[t] = (uint16)(CzXmlTools::IntListPool[t]);
 	}
 	else
 	{
 		IndicesCount = VertCount;
-		Indices = new uint16[IndicesCount];
-		for (int t = 0; t < IndicesCount; t++)
+		if (index_count < IndicesCount) index_count = IndicesCount;
+		Indices = new uint16[index_count];
+		for (int t = 0; t < index_count; t++)
 			Indices[t] = t;
 	}
+	IndicesCount = index_count;
 
 	// Calculate face count
 	switch (Type)

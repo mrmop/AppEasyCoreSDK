@@ -50,6 +50,7 @@ unsigned int CzHashes::VideoCam_Hash				= CzString::CalculateHash("videocam");
 unsigned int CzHashes::Header_Hash					= CzString::CalculateHash("header");
 
 unsigned int CzHashes::Count_Hash					= CzString::CalculateHash("count");
+unsigned int CzHashes::IndexCount_Hash				= CzString::CalculateHash("indexcount");
 unsigned int CzHashes::Action_Hash					= CzString::CalculateHash("action");
 unsigned int CzHashes::Name_Hash					= CzString::CalculateHash("name");
 unsigned int CzHashes::ResourceName_Hash			= CzString::CalculateHash("resourcename");
@@ -354,6 +355,7 @@ unsigned int CzHashes::Consumable_Hash				= CzString::CalculateHash("consumable"
 unsigned int CzHashes::Price_Hash					= CzString::CalculateHash("price");
 unsigned int CzHashes::Vertical_Hash				= CzString::CalculateHash("vertical");
 unsigned int CzHashes::Horizontal_Hash				= CzString::CalculateHash("horizontal");
+unsigned int CzHashes::HoldFocus_Hash				= CzString::CalculateHash("holdfocus");
 
 unsigned int CzHashes::OnTapped_Hash				= CzString::CalculateHash("ontapped");
 unsigned int CzHashes::OnTapped2_Hash				= CzString::CalculateHash("ontapped2");

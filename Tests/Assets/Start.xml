@@ -118,9 +118,10 @@
 			<FromTemplate Template="TestButton" name="65 - Keyboard" num="65" />
 			<FromTemplate Template="TestButton" name="66 - Create Resources" num="66" />
 			<FromTemplate Template="TestButton" name="67 - Timers" num="67" />
-			<FromTemplate Template="TestButton" name="68 - Polygon sprites" num="68" />
-			<FromTemplate Template="TestButton" name="69 - SQLite test" num="69" />
+			<FromTemplate Template="TestButton" name="68 - Polygon Sprites" num="68" />
+			<FromTemplate Template="TestButton" name="69 - SQLite Test" num="69" />
 			<FromTemplate Template="TestButton" name="70 - Facebook" num="70" />
+			<FromTemplate Template="TestButton" name="71 - Dynamic Geometry" num="71" />
 		</ListBox>
 
 	</Scene>

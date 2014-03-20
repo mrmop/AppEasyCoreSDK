@@ -11,7 +11,7 @@ defines
 {
 	TARGET_PLATFORM=MARMALADE
 	IW_GXFONT_TTF
-	CZ_REMOVE_DUPLICATES
+#	CZ_REMOVE_DUPLICATES
 	IW_HTTP_SSL
 }
 
@@ -33,9 +33,13 @@ subprojects
 	s3eAndroidMarketBilling
 	SoundEngine
 	box2d
-	sqlite
+	third_party/sqlite
 	lsqlite3
 	UserAgent
+	
+	# extra modules
+	s3eFlurryAppSpot
+	revmob\RevMobEDK
 }
 
 includepath
@@ -188,6 +192,8 @@ files
 	CzColour.h
 	CzDataIO.cpp
 	CzDataIO.h
+	CzDecrypt.cpp
+	CzDecrypt.h
 	CzEvents.cpp
 	CzEvents.h
 	CzFile.cpp
@@ -347,6 +353,7 @@ files
 	(source/Platforms)
 	CzPlatform.cpp
 	CzPlatform.h
+	IzPlatformAds.h
 	IzPlatformAudio.h
 	IzPlatformCam.h
 	IzPlatformComms.h
@@ -365,6 +372,8 @@ files
 
 		[Platforms/Marm]
 		(source/Platforms/Marm)
+		CzPlatformAds.cpp
+		CzPlatformAds.h
 		CzPlatformAudio.cpp
 		CzPlatformAudio.h
 		CzPlatformCam.cpp
@@ -421,6 +430,8 @@ files
 		CzLuaAction.h
 		CzLuaActor.cpp
 		CzLuaActor.h
+		CzLuaAds.cpp
+		CzLuaAds.h
 		CzLuaBrush.cpp
 		CzLuaBrush.h
 		CzLuaCamera.cpp
@@ -441,6 +452,8 @@ files
 		CzLuaInput.h
 		CzLuaMarket.cpp
 		CzLuaMarket.h
+		CzLuaMatrix.cpp
+		CzLuaMatrix.h
 		CzLuaMedia.cpp
 		CzLuaMedia.h
 		CzLuaParticles.cpp

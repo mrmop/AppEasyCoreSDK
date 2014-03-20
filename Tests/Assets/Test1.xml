@@ -2,7 +2,10 @@
 <xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" >
 
 	<!-- Create scene -->
-	<Scene Name="Scene1" Current="true" Timeline="pos_anim1" Camera="Camera1">
+	<Scene Name="Scene1" Current="true" Timeline="pos_anim1" Camera="Camera1" OnKeyBack="OnKeyBack">
+		<Actions Name="OnKeyBack">
+			<Action Method="exit" />
+		</Actions>
 		<UserProperties Name="GameProperties">
 			<Property Name="Level" Type="int" Value="3" />
 			<Property Name="NumBaddies" Type="float" Value="10" />

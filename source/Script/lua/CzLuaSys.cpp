@@ -492,7 +492,7 @@ static int LUA_setBackgroundColour(lua_State *lua)
 	// Get colour cponents
 	int red = 0;
 	if (lua_isnumber(lua, 1))
-		red = lua_tonumber(lua, 1);
+		red = (int)lua_tonumber(lua, 1);
 	else
 	{
 		CzScriptEngineLua::DisplayError(lua, "sys.setBackgroundColour() invalid value (Param0), expected number");
@@ -501,7 +501,7 @@ static int LUA_setBackgroundColour(lua_State *lua)
 	}
 	int green = 0;
 	if (lua_isnumber(lua, 2))
-		green = lua_tonumber(lua, 2);
+		green = (int)lua_tonumber(lua, 2);
 	else
 	{
 		CzScriptEngineLua::DisplayError(lua, "sys.setBackgroundColour() invalid value (Param1), expected number");
@@ -510,7 +510,7 @@ static int LUA_setBackgroundColour(lua_State *lua)
 	}
 	int blue = 0;
 	if (lua_isnumber(lua, 3))
-		blue = lua_tonumber(lua, 3);
+		blue = (int)lua_tonumber(lua, 3);
 	else
 	{
 		CzScriptEngineLua::DisplayError(lua, "sys.setBackgroundColour() invalid value (Param2), expected number");

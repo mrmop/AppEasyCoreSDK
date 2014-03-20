@@ -55,15 +55,21 @@ public:
 	void		MultiplyPost(CzMatrix4* m0);
 	void		Multiply(CzMatrix4* m0, CzMatrix4* m1);
 	void		Transform(float x, float y, float z, CzVec3 *ov);
+	CzVec3		TransformProject(float x, float y, float z, float d);
 	void		Transform(CzVec3 *iv, CzVec3 *ov);
 	CzVec3		Transform(float x, float y, float z);
 	void		TransformRotationOnly(float x, float y, float z, CzVec3 *ov);
 	void		TransformRotationOnly(CzVec3* iv, CzVec3* ov);
 	void		TransformN(CzVec3* iv, CzVec3* ov, int nCount);
+	void		TransformProjectN(CzVec3* iv, CzVec3* ov, int nCount, float d);
 	void		TransformNRotationOnly(CzVec3* iv, CzVec3* ov, int nCount);
 	void		TransformNPreTranslate(CzVec3* iv, CzVec3* ov, int nCount);
 	float		TransformZ(float x, float y, float z);
 	float		TransformZRS(float x, float y, float z);
+
+	static void		Project(float x, float y, float z, CzVec3 *ov, float d);
+	static CzVec3	Project(float x, float y, float z, float d);
+	static void		ProjectN(CzVec3* iv, CzVec3* ov, int nCount, float d);
 
 	CzVec3		getTranslation();
 	float		getX() const;

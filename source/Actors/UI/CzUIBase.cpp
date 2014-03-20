@@ -27,7 +27,7 @@ CzXomlClassDef* CzUIBase::UIBaseClassDef = NULL;
  @fn	void CzActorImage::InitClass()
 
  @brief	Initialises the class.
-    
+	
  Sets up the classes avaiiable properties. Used by the XOML system to find, set amd get class properties.
 
  */
@@ -1553,11 +1553,27 @@ int CzUIBase::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode
 	int	fixtures_count = Box2dBody == NULL ? -1 : Box2dBody->getFixturesCount();
 	if (Box2dBody != NULL && Box2dBody->getWorld() != NULL && fixtures_count == 0 && box2dmaterial_name != NULL && !box2dmaterial_name->isEmpty())
 	{
-		CzBox2dMaterial* material = material = (CzBox2dMaterial*)Scene->getResourceManager()->findResource(box2dmaterial_name->c_str(), CzHashes::Box2dMaterial_Hash);
+		CzBox2dMaterial* material = (CzBox2dMaterial*)Scene->getResourceManager()->findResource(box2dmaterial_name->c_str(), CzHashes::Box2dMaterial_Hash);
 		if (material != NULL)
 		{
-			// If no shape attached or any fixtures then create a default shape
-			b2Fixture* fixture = Box2dBody->addFixture(material, (float)Size.x * Scale.x, (float)Size.y * Scale.y, com.x, com.y);
+			b2Fixture* fixture = NULL;
+			if (Geometry != NULL && Geometry->Type == PrimType_Poly)
+			{
+				// If actor has geometry then use geometry as shape
+				CzGeomShapePolygon* g = new CzGeomShapePolygon();
+				g->Vertices = new CzVec2[Geometry->VertCount]();
+				g->NumVertices = Geometry->VertCount;
+				for (int t = 0; t < g->NumVertices; t++)
+				{
+					g->Vertices[t].x = Geometry->Verts[t].x;
+					g->Vertices[t].y = Geometry->Verts[t].y;
+				}
+				CzShape shape;
+				shape.setShape(g);
+				fixture = Box2dBody->addFixture(&shape, material, com.x, com.y);
+			}
+			if (fixture == NULL)
+				fixture = Box2dBody->addFixture(material, (float)Size.x * Scale.x, (float)Size.y * Scale.y, com.x, com.y);
 			fixture->SetSensor(sensor);
 			b2Filter f;
 			f.categoryBits = Box2dBody->getCollisionCategory();
@@ -1607,7 +1623,7 @@ bool CzUIBase::getProperty(unsigned int property_name, CzXomlProperty& prop)
  @fn	bool CzUIBase::setProperty(unsigned int property_name, const CzXomlProperty& data, bool delta)
 
  @brief	Sets the named property of the actor.
-    
+	
  Sets the named property of this actor. The properties value supplied will be converted. If delta is set to true then the existing value of the property will 
  be added to instead of replaced.
 
@@ -2061,7 +2077,7 @@ void CzUIBase::InitPresetAnimations()
  @fn	void CzUIBase::ReleasePresetAnimations()
 
  @brief	Initialises the preset animations.
-    
+	
  Static method that detroys a group of preset animations.
  */
 

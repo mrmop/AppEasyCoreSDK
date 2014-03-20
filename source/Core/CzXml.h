@@ -597,9 +597,9 @@ public:
 	}
 
 	// Parse the supplied file
-	eCzXmlParseError		Parse(const char* pFilename);			///< Parses the supplied file
-	eCzXmlParseError		Parse(CzFile *file);					///< Parses the supplied file
-	eCzXmlParseError		Parse(CzDataInput* pData);				///< Parses the supplied memory buffer
+	eCzXmlParseError		Parse(const char* pFilename, bool decrypt = false);	///< Parses the supplied file
+	eCzXmlParseError		Parse(CzFile *file, bool decrypt = false);			///< Parses the supplied file
+	eCzXmlParseError		Parse(CzDataInput* pData);							///< Parses the supplied memory buffer
 	int						Save(const char* filename);				///< Saves entire node tree to a file with the specified filename
 	const char*				getErrorString(eCzXmlParseError error) const;	///< Returns the string repesentation of the supplied error
 	CzXmlNode*				getRoot()								///< Get root node (note that root node is '.' and not the first XML tag)

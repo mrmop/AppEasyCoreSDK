@@ -614,7 +614,7 @@ static int LUA_UpdateScenePhysics(lua_State *lua)
 	CzScene* scene = NULL;
 	if (lua_isuserdata(lua, 1))
 		scene = (CzScene*)lua_touserdata(lua, 1);
-	else
+	if (scene == NULL || scene->getClassTypeHash() != CzHashes::Scene_Hash)
 	{
 		CzScriptEngineLua::DisplayError(lua, "scene.updatePhysics() invalid scene (Param0), expected scene");
 		lua_pushboolean(lua, false);
@@ -655,7 +655,7 @@ static int LUA_CleanupScene(lua_State *lua)
 	CzScene* scene = NULL;
 	if (lua_isuserdata(lua, 1))
 		scene = (CzScene*)lua_touserdata(lua, 1);
-	else
+	if (scene == NULL || scene->getClassTypeHash() != CzHashes::Scene_Hash)
 	{
 		CzScriptEngineLua::DisplayError(lua, "scene.cleanup() invalid scene (Param0), expected scene");
 		lua_pushboolean(lua, false);

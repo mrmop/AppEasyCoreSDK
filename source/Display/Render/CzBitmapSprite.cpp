@@ -47,6 +47,11 @@ void CzBitmapSprite::setImage(CzImage* image)
 	}
 }
 
+void CzBitmapSprite::setUVsDirty(bool dirty)
+{
+	UVsDirty = dirty;
+}
+
 void CzBitmapSprite::setColour(const CzColour& colour, bool use_parent)
 {
 	Colour = colour;

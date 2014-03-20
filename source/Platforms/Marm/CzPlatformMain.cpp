@@ -27,6 +27,7 @@
 #include "CzPlatformCam.h"
 #include "CzPlatformMarket.h"
 #include "CzPlatformFacebook.h"
+#include "CzPlatformAds.h"
 #include "IwUtil.h"
 
 const char* CzPlatformMain::Platform = "marmalade";
@@ -64,6 +65,7 @@ int CzPlatformMain::Init()
 	PLATFORM->setUI(new CzPlatformUI());
 	PLATFORM->setCam(new CzPlatformCam());
 	PLATFORM->setFacebook(new CzPlatformFacebook());
+	PLATFORM->setAds(new CzPlatformAds());
 
 	int os = s3eDeviceGetInt(S3E_DEVICE_OS);
 	switch (os)

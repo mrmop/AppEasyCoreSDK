@@ -63,7 +63,8 @@ void CzPlatformMarketiOS::Release()
 	ReleaseReceipt();
 	ReleasePayment();
 
-	s3eIOSAppStoreBillingTerminate();
+	if (Initialised)
+		s3eIOSAppStoreBillingTerminate();
 	Initialised = false;
 	ActiveMarket = NULL;
 }
@@ -297,9 +298,9 @@ void CzPlatformMarketiOS::TransactionUpdateCallback(s3ePaymentTransaction* trans
 				}
 
 				// Find the product that was purchased / restored
-				CzMarketProduct* product = market->getActiveMarket()->findProduct(transaction_product_id);
+/*				CzMarketProduct* product = market->getActiveMarket()->findProduct(transaction_product_id);
 				if (product != NULL)
-				{
+				{*/
 					CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "Product Purchased / Restored with ProductID - ", transaction_product_id);
 					market->setPaymentTransaction(transaction);
 					market->setTransactionReceipt(transaction->m_TransactionReceipt->m_ReceiptData, transaction->m_TransactionReceipt->m_ReceiptSize);
@@ -307,13 +308,13 @@ void CzPlatformMarketiOS::TransactionUpdateCallback(s3ePaymentTransaction* trans
 					if (market->getActiveMarket() != NULL)
 						market->getActiveMarket()->NotifyComplete();
 					s3eIOSAppStoreBillingCompleteTransaction(transaction, S3E_TRUE);
-				}
+/*				}
 				else
 				{
 					// Product was not found
 					if (market->getActiveMarket() != NULL)
 						market->getActiveMarket()->NotifyError();
-				}
+				}*/
 			}
 			break;
 
@@ -513,8 +514,11 @@ int CzPlatformMarketAndroid::Init(void* id)
 
 void CzPlatformMarketAndroid::Release()
 {
-	s3eAndroidMarketBillingUnRegister(S3E_ANDROIDMARKETBILLING_ORDER_INFORMATION, OrderInformationChanged);
-	s3eAndroidMarketBillingTerminate();
+	if (Initialised)
+	{
+		s3eAndroidMarketBillingUnRegister(S3E_ANDROIDMARKETBILLING_ORDER_INFORMATION, OrderInformationChanged);
+		s3eAndroidMarketBillingTerminate();
+	}
 
 	Initialised = false;
 	ActiveMarket = NULL;

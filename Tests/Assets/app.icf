@@ -13,7 +13,7 @@ MaxChannels=16
 Rasterisation=HW
 DataCacheSize=307200
 VertCacheSize=20480
-UnIndexedStreamMax=10240
+UnIndexedStreamMax=20000
 [GXFONT]
 CacheTextureMaxSize=1024
 

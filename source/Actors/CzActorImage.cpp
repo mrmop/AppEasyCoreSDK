@@ -883,7 +883,7 @@ void CzActorImage::SetFromBrush(IzBrush* brush, bool resize)
 				if (LinkedTo != NULL)
 					Size.x = (LinkedTo->getSize().x * -OriginalSize.x) / 100;
 				else
-					Size.x = (PLATFORM_DISPLAY->getCurrentWidth() * -OriginalSize.x) / 100;
+					Size.x = (PLATFORM_DISPLAY->getCurrentWidth() * -OriginalSize.x) / (100 * Scene->getVirtualTransform().m[0][0]);
 			}
 			if (OriginalSize.y == 0)
 				Size.y = rc.h;
@@ -893,7 +893,7 @@ void CzActorImage::SetFromBrush(IzBrush* brush, bool resize)
 				if (LinkedTo != NULL)
 					Size.y = (LinkedTo->getSize().y * -OriginalSize.y) / 100;
 				else
-					Size.y = (PLATFORM_DISPLAY->getCurrentHeight() * -OriginalSize.y) / 100;
+					Size.y = (PLATFORM_DISPLAY->getCurrentHeight() * -OriginalSize.y) / (100 * Scene->getVirtualTransform().m[1][1]);
 			}
 			SetDestSize(Size.x, Size.y);
 		}

@@ -16,6 +16,7 @@
 #include "CzActor.h"
 #include "CzHashes.h"
 #include "CzXomlResourceManager.h"
+#include "CzDecrypt.h"
 
 //
 //
@@ -44,6 +45,10 @@ int CzScript::Init(const char* script, int script_len, CzScene* scene)
 {
 //	if (!setScript(script, script_len))
 //		return 1;
+
+	// Decrypt encypted code
+	if (CzDecrypt::Enabled)
+		CzDecrypt::Decrypt((unsigned char*)script, script_len, (unsigned char*)CzDecrypt::DecryptKey, 128);
 
 	if (scene == NULL)
 	{

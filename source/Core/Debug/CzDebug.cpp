@@ -7,7 +7,7 @@
 // For updates, tutorials and more details check out www.appeasymobile.com
 //
 // This code is provided free of charge and without any warranty whatsoever. You must ensure that this whole notice is present in all files and derivatives, so the reader knows its origin.
-// If you use this SDK in your product then please ensure that you credit AppEasy's usage appropriately. Please see http://www.appeasymobile.com for licensing details and support
+// If you use this SDK in your product then please ensure that you credit AppEasy's usage appropriately. Please see www.appeasymobile.com for licensing details and support
 //
 //
 
@@ -101,7 +101,7 @@ void CzDebug::Log(int channel, const char* message, const char* file, int line)
 	PLATFORM_SYS->ConsoleWrite(str.c_str());
 
 #if defined(_DEBUG_FILENAME_)
-	if (str.getLength() > 0)
+	if (PLATFORM_FILE != NULL && str.getLength() > 0)
 	{
 		CzFileHandle file = PLATFORM_FILE->Open(_DEBUG_FILENAME_, "ab");
 		if (file != NULL)
@@ -141,7 +141,7 @@ void CzDebug::Log(int channel, const char* message, const char* data)
 	PLATFORM_SYS->ConsoleWrite(str.c_str());
 
 #if defined(_DEBUG_FILENAME_)
-	if (str.getLength() > 0)
+	if (PLATFORM_FILE != NULL && str.getLength() > 0)
 	{
 		CzFileHandle file = PLATFORM_FILE->Open(_DEBUG_FILENAME_, "ab");
 		if (file != NULL)
@@ -184,7 +184,7 @@ void CzDebug::Log(int channel, const char* message, const char* data1, const cha
 	PLATFORM_SYS->ConsoleWrite(str.c_str());
 
 #if defined(_DEBUG_FILENAME_)
-	if (str.getLength() > 0)
+	if (PLATFORM_FILE != NULL && str.getLength() > 0)
 	{
 		CzFileHandle file = PLATFORM_FILE->Open(_DEBUG_FILENAME_, "ab");
 		if (file != NULL)
@@ -230,7 +230,7 @@ void CzDebug::Log(int channel, const char* message, const char* data, const char
 	PLATFORM_SYS->ConsoleWrite(str.c_str());
 
 #if defined(_DEBUG_FILENAME_)
-	if (str.getLength() > 0)
+	if (PLATFORM_FILE != NULL && str.getLength() > 0)
 	{
 		CzFileHandle file = PLATFORM_FILE->Open(_DEBUG_FILENAME_, "ab");
 		if (file != NULL)
