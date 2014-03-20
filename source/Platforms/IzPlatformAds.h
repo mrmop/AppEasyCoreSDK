@@ -18,7 +18,7 @@
 #include "CzScript.h"
 
 #define ADS_FLURRY_APPSPOT_ENABLE
-#define ADS_REVMOB_ENABLE
+//#define ADS_REVMOB_ENABLE
 
 enum eCzAdProvider
 {

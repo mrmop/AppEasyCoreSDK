@@ -39,7 +39,7 @@ subprojects
 	
 	# extra modules
 	s3eFlurryAppSpot
-	revmob\RevMobEDK
+#	revmob\RevMobEDK
 }
 
 includepath
