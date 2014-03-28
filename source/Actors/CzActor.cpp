@@ -89,6 +89,7 @@ void CzActor::InitClass()
 	ActorClassDef->addProperty(new CzXomlClassProperty("VelocityDamping",		PT_Vec2,		CzActor::_setVelocityDamping,			CzActor::_getVelocityDamping));
 	ActorClassDef->addProperty(new CzXomlClassProperty("AngularVelocityDamping",PT_Float,		CzActor::_setAngularVelocityDamping,	CzActor::_getAngularVelocityDamping));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Box2dMaterial",			PT_Resource,	CzActor::_setBox2dMaterial,				CzActor::_getBox2dMaterial));
+	ActorClassDef->addProperty(new CzXomlClassProperty("GravityScale",			PT_Float,		CzActor::_setGravityScale,				NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Shape",					PT_Resource,	CzActor::_setShape,						NULL));
 	ActorClassDef->addProperty(new CzXomlClassProperty("Sensor",				PT_Bool,		CzActor::_setSensor,					CzActor::_getSensor));
 	ActorClassDef->addProperty(new CzXomlClassProperty("CollisionFlags",		PT_Vec3,		CzActor::_setCollisionFlags,			CzActor::_getCollisionFlags));
@@ -1189,6 +1190,23 @@ CzXomlProperty CzActor::_getBox2dMaterial(IzXomlResource* target)
 
 	return CzXomlProperty(body->getBodyMaterial());
 }
+
+bool CzActor::_setGravityScale(IzXomlResource* target, const CzXomlProperty& prop, bool add)
+{
+	CzActor* actor = (CzActor*)target;
+	CzBox2dBody* body = actor->getBox2dBody();
+	if (body != NULL)
+		body->getBody()->SetGravityScale(prop.p_float);
+	else
+	{
+		CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Actor - setProperty - GravityScale, actor has no body attached - ", actor->getName().c_str(), actor->getDebugInfo().c_str());
+		return false;
+	}
+
+	return true;
+}
+
+
 
 bool CzActor::_setShape(IzXomlResource* target, const CzXomlProperty& prop, bool add)
 {
@@ -3366,6 +3384,8 @@ int CzActor::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 	bool			hit_test_set = false;
 	bool			layer_set = false;
 	float			ang_vel = 0;
+	float			gravity_scale = 0;
+	bool			gravity_scale_set = false;
 	CzVec2			vel  = CzVec2(0.0f, 0.0f);
 	CzScene::eDocking docking = CzScene::Dock_None;
 	bool			docking_set = false;
@@ -3670,6 +3690,12 @@ int CzActor::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 			if (!(*it)->getValueAsPoint3(collision_flags))
 				CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Actor - Invalid value for Actor::CollisionFlags, expected vec3 - ", DebugInfo.c_str());
 		}
+		else
+		if (name_hash == CzHashes::GravityScale_Hash)
+		{
+			gravity_scale = (*it)->getValueAsFloat();
+			gravity_scale_set = true;
+		}
 	}
 
 #if defined(_DEBUG)
@@ -3804,6 +3830,8 @@ int CzActor::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 			Box2dBody->setAsSensor(sensor);
 			Box2dBody->setCollisionFlags((int)collision_flags.x, (int)collision_flags.y, (int)collision_flags.z);
 			Box2dBody->setUserData(this);
+			if (gravity_scale_set)
+				Box2dBody->getBody()->SetGravityScale(gravity_scale);
 		}
 	}
 	setVelocity(vel.x, vel.y);

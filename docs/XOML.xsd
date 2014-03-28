@@ -2128,6 +2128,11 @@
                 <xs:documentation>Sets the physical material used by the Box2D actor</xs:documentation>
             </xs:annotation>
         </xs:attribute>
+        <xs:attribute name="GravityScale" type="xs:double">
+            <xs:annotation>
+                <xs:documentation>Sets the amount to scale gravity for this actor</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
         <xs:attribute name="Shape" type="xs:string">
             <xs:annotation>
                 <xs:documentation>Box2D fixture shape for the Box2D actor</xs:documentation>

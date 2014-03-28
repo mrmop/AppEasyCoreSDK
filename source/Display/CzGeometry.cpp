@@ -226,6 +226,12 @@ void CzGeometry::CalculateDimensions(float& min_x, float& max_x, float& min_y, f
 	}
 }
 
+void CzGeometry::setCounts(int vertices, int indices)
+{
+	VertCount = vertices;
+	IndicesCount = indices;
+}
+
 
 
 

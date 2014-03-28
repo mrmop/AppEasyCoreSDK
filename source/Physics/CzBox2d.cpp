@@ -314,26 +314,29 @@ bool CzBox2dBody::removeJoint(IzBox2dJoint* joint)
 
 int	CzBox2dBody::getCollisionCategory() const
 {
-	if (Fixtures.size() == 0)
+/*	if (Fixtures.size() == 0)
 		return 0;
 
-	return (*Fixtures.begin())->GetFilterData().categoryBits;
+	return (*Fixtures.begin())->GetFilterData().categoryBits;*/
+	return CollisionFlags >> 16;
 }
 
 int	CzBox2dBody::getCollisionMask() const
 {
-	if (Fixtures.size() == 0)
+/*	if (Fixtures.size() == 0)
 		return 0;
 
-	return (*Fixtures.begin())->GetFilterData().maskBits;
+	return (*Fixtures.begin())->GetFilterData().maskBits;*/
+	return (CollisionFlags >> 8) & 255;
 }
 
 int	CzBox2dBody::getCollisionGroup() const
 {
-	if (Fixtures.size() == 0)
+/*	if (Fixtures.size() == 0)
 		return 0;
 
-	return (*Fixtures.begin())->GetFilterData().groupIndex;
+	return (*Fixtures.begin())->GetFilterData().groupIndex;*/
+	return CollisionFlags & 255;
 }
 
 void CzBox2dBody::InitBody(CzBox2dWorld* world, CzShape* body_shape, CzBox2dMaterial* body_mat, CzVec2* pos, float angle, float com_x, float com_y)

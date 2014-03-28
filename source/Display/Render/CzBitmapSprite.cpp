@@ -329,4 +329,33 @@ void CzBitmapSprite::setGeometry(CzGeometry* geom)
 	
 }
 
+void CzBitmapSprite::setCounts(int vertices, int indices)
+{
+	if (Geometry == NULL)
+		return;
+	Prim->VertCount = vertices;
+	Prim->IndicesCount = indices;
+	// Calculate face count
+	switch (Geometry->Type)
+	{
+	case PrimType_TriList:
+		Prim->FaceCount = indices / 3;
+		break;
+	case PrimType_QuadList:
+		Prim->FaceCount = indices / 4;
+		break;
+	case PrimType_Poly:
+		Prim->FaceCount = 1;
+		break;
+	}
+	for (int t = 0; t < indices; t++)
+		Prim->Indices[t] = Geometry->Indices[(indices-1) - t];
+}
+
+
+
+
+
+
+
 

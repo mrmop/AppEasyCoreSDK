@@ -64,6 +64,7 @@ public:
 	void		setUV(CzVec2* uv, int offset);							// Modifies single UV's in an existing UV list
 	void		setGeometry(CzGeometry* geom);
 	void		setUVsDirty(bool dirty);
+	void		setCounts(int vertices, int indices);					// hanges vertex and face indices cuonts
 
 	// Properties End
 

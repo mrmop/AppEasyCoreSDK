@@ -1160,6 +1160,7 @@ public:
 	static bool				_setTorque(IzXomlResource* target, const CzXomlProperty& prop, bool add);
 	static bool				_setBox2dMaterial(IzXomlResource* target, const CzXomlProperty& prop, bool add);
 	static CzXomlProperty	_getBox2dMaterial(IzXomlResource* target);
+	static bool				_setGravityScale(IzXomlResource* target, const CzXomlProperty& prop, bool add);
 	static bool				_setShape(IzXomlResource* target, const CzXomlProperty& prop, bool add);
 	static bool				_setSensor(IzXomlResource* target, const CzXomlProperty& prop, bool add);
 	static CzXomlProperty	_getSensor(IzXomlResource* target);

@@ -101,6 +101,8 @@ public:
 	int					LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode* node);
 
 	void				CalculateDimensions(float& min_x, float& max_x, float& min_y, float& max_y);
+
+	void				setCounts(int vertices, int indices);
 };
 
 /**

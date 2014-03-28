@@ -29,6 +29,67 @@
 #include "CzXomlResourceManager.h"
 
 //
+// LUA_SetVertexCount actor (object), vertex-count (number), index-count (number)
+//
+static int LUA_SetVertexCount(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+	if (count < 3)
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setVertCount() not enough parameters, expected actor (object), vertex-count (number), index-count (number)");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get the target object
+	IzXomlResource* object = NULL;
+	if (lua_isuserdata(lua, 1))
+		object = (IzXomlResource*)lua_touserdata(lua, 1);
+	if (object == NULL || object->getClassTypeHash() != CzHashes::Actor_Hash)
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setVertCount() Invalid target object for Param0, expected actor");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	int vcount = 0;
+	if (lua_isnumber(lua, 2))
+		vcount = (int)lua_tonumber(lua, 2);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setVertCount() vertex-count must be a number (Param1) - object - ", object->getName().c_str());
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+	int icount = 0;
+	if (lua_isnumber(lua, 3))
+		icount = (int)lua_tonumber(lua, 3);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "actor.setVertCount() index-count must be a number (Param2) - object - ", object->getName().c_str());
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	CzBitmapSprite* visual = (CzBitmapSprite*)((CzActor*)object)->getVisual();
+	if (visual == NULL)
+	{
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+	CzGeometry* prim = visual->getGemoetry();
+	if (prim == NULL)
+	{
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+	prim->setCounts(vcount, icount);
+	visual->setCounts(vcount, icount);
+	lua_pushboolean(lua, true);
+ 
+	return 1;
+}
+//
 // LUA_SetVertexActor actor (object), index (number), (x (number), y (number)) or array of vecs
 //
 static int LUA_SetVertexActor(lua_State *lua)
@@ -1873,6 +1934,7 @@ static int LUA_FindFurthestActor(lua_State *lua)
 //
 static const luaL_Reg g_actorlib[] =
 {
+	{"setVertexCounts",		LUA_SetVertexCount}, 
 	{"setVertex",			LUA_SetVertexActor}, 
 	{"setVertexIndex",		LUA_SetVertexIndexActor}, 
 	{"setUV",				LUA_SetUVActor}, 
