@@ -2292,6 +2292,10 @@ bool CzActor::Update(float dt)
 			Position.y = world->WorldToPixelY(y);
 		}
 		Angle = (body->GetAngle() * 180.0f) / 3.1415927f;	// Radians to degrees
+		b2Vec2 v = body->GetLinearVelocity();
+		Velocity.x = v.x;
+		Velocity.y = v.y;
+		AngularVelocity = body->GetAngularVelocity();
 	}
 	else
 	{

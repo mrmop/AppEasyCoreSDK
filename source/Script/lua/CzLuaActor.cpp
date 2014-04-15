@@ -601,7 +601,7 @@ static int LUA_SetPropertyActor(lua_State *lua)
 		}
 		else
 		{
-			CzScriptEngineLua::DisplayError(lua, "actor.set() actor does not contain a user property list - object - ", object->getName().c_str());
+//			CzScriptEngineLua::DisplayError(lua, "actor.set() actor does not contain a user property list - object - ", object->getName().c_str());
 			CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "- property - ", prop_name.c_str());
 			lua_pushboolean(lua, false);
 			return 1;
@@ -1740,7 +1740,7 @@ static int LUA_changeTimelineActor(lua_State *lua)
 
 	const char* command = NULL;
 	if (lua_isstring(lua, 2))
-		actor = (CzActor*)lua_tostring(lua, 2);
+		command = lua_tostring(lua, 2);
 	else
 	{
 		CzScriptEngineLua::DisplayError(lua, "actor.changeTimeline() Invalid command for Param1, expected string");

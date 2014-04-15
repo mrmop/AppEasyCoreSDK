@@ -281,15 +281,13 @@ bool CzUIBase::_setScrollPos(IzXomlResource* target, const CzXomlProperty& prop,
 
 	if (add)
 	{
-		CzIRect rc = actor->getScrollRange();
-		rc.x += (int)prop.p_vec[0];
-		rc.y += (int)prop.p_vec[1];
-		rc.w += (int)prop.p_vec[2];
-		rc.h += (int)prop.p_vec[3];
-		actor->setScrollRange(rc.x, rc.y, rc.w, rc.h);
+		CzVec2 p = actor->getScrollPos();
+		p.x += prop.p_vec[0];
+		p.y += prop.p_vec[1];
+		actor->setScrollPos(p.x, p.y);
 	}
 	else
-		actor->setScrollRange((int)prop.p_vec[0], (int)prop.p_vec[1], (int)prop.p_vec[2], (int)prop.p_vec[3]);
+		actor->setScrollPos(prop.p_vec[0], prop.p_vec[1]);
 
 	return true;
 }
