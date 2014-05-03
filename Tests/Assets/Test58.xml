@@ -4,44 +4,38 @@
 	<!-- Create a scene -->
 	<Scene Name="Scene1" Current="true" ScriptEngine="lua">
 
+		<!-- Create a amrket with products -->
+		<Market Name="Market1" Vendor="googleplay" AndroidPublicKey="Add your Android public key">
+			<Product Name="zones3and4" iOSId="com.pocketeers.puzzlefriends.zones3and4" AndroidId="android.test.purchased" Price="0.99" />
+			<Product Name="coins10" iOSId="com.pocketeers.puzzlefriends.coins10" AndroidId="test5" Price="0.99" />
+		</Market>
+
 		<!-- Load script -->
 		<Script Name="Script1" Type="lua" />
 		<File Name="ScriptFile1" Location="Test58.lua" Script="Script1" />
 
-		<!-- Create amrket response actions -->
-		<Actions Name="BillingDisabled">
-			<Action Method="ShowActor" P1="BillingDisabledMessage"/>
-		</Actions>
-		<Actions Name="PurchaseError">
-			<Action Method="ShowActor" P1="PurchaseErrorMessage"/>
-		</Actions>
-		<Actions Name="PurchaseComplete">
-			<Action Method="ShowActor" P1="PurchaseCompleteMessage"/>
-		</Actions>
-		<Actions Name="Refunded">
-			<Action Method="ShowActor" P1="RefundedMessage"/>
-		</Actions>
-		
-		<!-- Create a amrket with products -->
-		<Market Name="Market1" OnBillingDisabled="BillingDisabled" OnError="PurchaseError" OnComplete="PurchaseComplete" OnRefund="Refunded" AndroidPublicKey="add_your_own_android_public_key_here">
-			<Product Name="coins1" iOSId="com.pocketeers.puzzlefriends.coinsten" AndroidId="android.test.purchased" Consumable="true" Price="0.99" />
-		</Market>
-		
-		<StackPanel Orientation="vertical">
-			<Label Background="Button1Brush" Font="serif" Text="Purchase via XOML" SelectedColour="128, 128, 128, 128" OnTapped="Tapped">
+		<StackPanel Orientation="vertical" Position="0,100">
+			<Label Background="Button1Brush" Font="serif" Text="Query Info" Size="200,40" SelectedColour="128, 128, 128, 128" OnTapped="Tapped">
 				<Actions Name="Tapped">
-					<Action Method="Purchase" P1="coins1" />
+					<Action Method="CallScript" P1="QueryProduct" />
 				</Actions>
 			</Label>
-			<Label Background="Button1Brush" Font="serif" Text="Purchase via Lua" SelectedColour="128, 128, 128, 128" OnTapped="Tapped">
+			<Label Background="Button1Brush" Font="serif" Text="Purchase" Size="200,40" SelectedColour="128, 128, 128, 128" OnTapped="Tapped">
 				<Actions Name="Tapped">
 					<Action Method="CallScript" P1="MakePurchase" />
 				</Actions>
 			</Label>
-			<Label Name="BillingDisabledMessage" Background="Button1Brush" Font="serif" Text="Billing is disabled" Visible="false" />
-			<Label Name="PurchaseErrorMessage" Background="Button1Brush" Font="serif" Text="Purchase error" Visible="false" />
-			<Label Name="PurchaseCompleteMessage" Background="Button1Brush" Font="serif" Text="Purchase complete" Visible="false" />
-			<Label Name="RefundedMessage" Background="Button1Brush" Font="serif" Text="Refund complete" Visible="false" />
+			<Label Background="Button1Brush" Font="serif" Text="Consume" Size="200,40" SelectedColour="128, 128, 128, 128" OnTapped="Tapped">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="ConsumeProduct" />
+				</Actions>
+			</Label>
+			<Label Background="Button1Brush" Font="serif" Text="Restore purhases" Size="200,40" SelectedColour="128, 128, 128, 128" OnTapped="Tapped">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="RestorePurchases" />
+				</Actions>
+			</Label>
+			<Label Name="Message" Background="Button1Brush" Font="serif" Text="" Size="200,40" />
 		</StackPanel>
 		
 		<Label Font="serif" Text="Demonstration of in-app purchasing using the Market" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />

@@ -22,7 +22,6 @@
 #include "CzTemplates.h"
 #include "CzSettings.h"
 #include "CzCam.h"
-#include "CzMarket.h"
 #include "CzHashes.h"
 #include "CzMath.h"
 
@@ -616,10 +615,6 @@ bool CzApp::Update()
 
 	// Update audio
 	PLATFORM_AUDIO->Update();
-
-	// Update market 
-	if (PLATFORM_MARKET != NULL)
-		PLATFORM_MARKET->Update();
 
 	// Remove any scenes that got deleted last frame
 	for (CzList<CzScene*>::iterator it = SceneRemovals.begin(); it != SceneRemovals.end(); ++it)

@@ -17,11 +17,11 @@
 #include "CzPlatform.h"
 #include "CzScript.h"
 
-#define ADS_FLURRY_APPSPOT_ENABLE
-//#define ADS_REVMOB_ENABLE
-
 enum eCzAdProvider
 {
+#if defined(ADS_CHARTBOOST_ENABLE)
+	Ads_Chartboost, 
+#endif // ADS_FLURRY_APPSPOT_ENABLE
 #if defined(ADS_FLURRY_APPSPOT_ENABLE)
 	Ads_FlurryAppSpot, 
 #endif // ADS_FLURRY_APPSPOT_ENABLE
@@ -32,9 +32,10 @@ enum eCzAdProvider
 
 enum eCzAdType
 {
-	AdType_Banner, 
-	AdType_Interstitial, 
-	AdType_Popup, 
+	AdType_Banner,			// Revmob, Flurry
+	AdType_Interstitial,	// Revmob, Flurry, Chartboost
+	AdType_Popup,			// Revmob
+	AdType_MoreApps,		// Chartboost
 	AdType_Max, 
 };
 

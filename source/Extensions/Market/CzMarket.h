@@ -21,15 +21,37 @@ struct CzMarketProduct
 public:
 	CzString			Name;		// Name of product
 	CzString			ProductID;	// External product ID (com.companyname.appname.productname for example)
-	bool				Purchased;	// Purchased state
-	bool				Consumable;	// True if this is a consumable item that can be repurchased when depleted
 	float				Price;		// Price of product
 
-	CzMarketProduct() : Purchased(false), Consumable(false), Price(0) {}
+	CzMarketProduct() : Price(0) {}
 
 	bool				Save();
 	bool				Load();
 };
+
+typedef struct CzMarketProductData
+{
+	const char* ProductID;              ///< Product ID
+	const char* Title;                  ///< Product title
+	const char* Description;            ///< Product description
+	const char* Price;                  ///< Product price
+} CzMarketProductData;
+
+typedef struct CzMarketProductReceipt
+{
+	const char* ProductID;              ///< Product ID
+	const char* TransactionID;          ///< Transaction ID
+	const char* Date;                   ///< Date of purchase
+	const char* SubscriptionStartDate;  ///< Date of subscription start (Amazon / BlackBerry only)
+	const char* SubscriptionEndDate;    ///< Date of subscription end (Amazon / BlackBerry only)
+	char*       Receipt;                ///< Transaction receipt
+	int         ReceiptLength;          ///< Transaction receipt length
+	void*       FinaliseData;           ///< Data used to finalise the transaction
+	const char* PurchaseToken;          ///< Purchase token used to consume items on Android
+	const char* Payload;                ///< Developer payload (used by Google Play)
+	bool        Restored;               ///< true if item was restored
+} CzMarketProductReceipt;
+
 
 
 //
@@ -50,12 +72,15 @@ public:
 
 protected:
 	// Properties
+	IzPlatformMarket::eMarketVendor	Vendor;			///< Market vendor
 	CzList<CzMarketProduct*> Products;				///< Available products
 	CzEventManager*			EventsManager;			///< List of events that the animation handles
 	CzScriptCallback		ScriptCallback;			///< Script call back
 	CzString				CurrentProductID;		///< Current Product ID (e.g. com.companyname.appname.productname)
 	bool					Busy;					///< When true the market is busy
 public:
+	bool					isAvailable();
+	void					setVendor(IzPlatformMarket::eMarketVendor vendor)	{ Vendor = vendor; }
 	CzEventManager*			getEventsManager()									{ return EventsManager; }
 	void					addProduct(CzMarketProduct* product)				{ Products.push_back(product); }
 	void					removeProduct(CzMarketProduct* product);
@@ -64,10 +89,13 @@ public:
 	void					setCurrentProductID(const char* product_id);
 	const char*				getCurrentProductID() const							{ return CurrentProductID.c_str(); }
 	int						getProductCount() const								{ return Products.size(); }
-	void					setPurchased(const char* product_id, bool purchased = true);
 	CzScriptCallback&		getScriptCallback()									{ return ScriptCallback; }
 	bool					isBusy() const										{ return Busy; }
 	void					setBusy(bool busy)									{ Busy = busy; }
+	void					setItemRange(int start, int end);
+	void					setPayload(const char* payload);
+	const char*				getPayload();
+	void					setTestMode(bool mode);
 	// Properties end
 
 protected:
@@ -91,15 +119,18 @@ public:
 
 	bool					QueryProduct(const char* product_id);
 	bool					PurchaseProduct(const char* product_id);
+	bool					ConsumeProduct(const char* purchase_token);
+	bool					FinishTransaction(const char* finish_data);
 	bool					RestoreProducts();
 
+	void					NotifyReady();
 	void					NotifyUnavailable();
-	void					NotifyComplete();
-	void					NotifyError();
+	void					NotifyComplete(CzMarketProductReceipt* data);
+	void					NotifyError(const char* product_id, int error);
 	void					NotifyBillingDisabled();
-	void					NotifyRefund();
-	void					NotifyInfoAvailable();
+	void					NotifyInfoAvailable(CzMarketProductData* data);
 
+	static IzPlatformMarket::eMarketVendor	VendorFromText(const char* vendor);
 };
 
 //

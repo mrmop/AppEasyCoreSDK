@@ -1543,9 +1543,9 @@
                 <xs:documentation>Defines your Google Play public key (Android)</xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="Simulate" type="SimulateEnum">
+        <xs:attribute name="Vendor" type="xs:string">
             <xs:annotation>
-                <xs:documentation>Defines a condition that the Windows in-app purchasing system should simulate</xs:documentation>
+                <xs:documentation>Market vendor, googleplay, amazon or samsung</xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:attributeGroup>
@@ -1563,11 +1563,6 @@
         <xs:attribute name="AndroidId" type="xs:string">
             <xs:annotation>
                 <xs:documentation>Andriod Google Play product ID (productname for example) </xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
-        <xs:attribute name="Consumable" type="xs:boolean">
-            <xs:annotation>
-                <xs:documentation>If true then this product will be marked so that it can be purchased any number of times</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="Price" type="xs:double">
@@ -2126,11 +2121,6 @@
         <xs:attribute name="Box2dMaterial" type="xs:string">
             <xs:annotation>
                 <xs:documentation>Sets the physical material used by the Box2D actor</xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
-        <xs:attribute name="GravityScale" type="xs:double">
-            <xs:annotation>
-                <xs:documentation>Sets the amount to scale gravity for this actor</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="Shape" type="xs:string">

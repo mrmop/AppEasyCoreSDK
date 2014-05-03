@@ -306,6 +306,54 @@ int CzScriptEngineLua::CallFunctionRef(int function_ref, CzString* param1, CzStr
 	return 0;
 }
 
+
+int CzScriptEngineLua::CallFunctionRefWithTable(int function_ref, CzList<const char*>* properties, CzList<const char*>* values)
+{
+	if (Lua == NULL)
+	{
+		// Check global script engine
+		IzScriptEngine* se = CZ_GLOBAL_RESOURCES->getScriptEngine();
+		if (se != this && se != NULL)
+			return se->CallFunctionRefWithTable(function_ref, properties, values);
+
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Script - No Lua script engine attached to the scene, trying to call script function ref");
+		return -1;
+	}
+
+	if (function_ref < 0)
+	{
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Script - Invalid Lua script function ref");
+		return -1;
+	}
+
+	lua_rawgeti(Lua, LUA_REGISTRYINDEX, function_ref);
+	if (properties != NULL)
+	{
+		lua_newtable(Lua);
+		int new_table = lua_gettop(Lua);
+		int index = 1;
+
+		// Add to table
+		CzList<const char*>::iterator value_it = values->begin();
+		for (CzList<const char*>::iterator prop_it = properties->begin(); prop_it != properties->end(); ++prop_it, ++value_it)
+		{
+			lua_pushstring(Lua, *prop_it);	// Push key (property name)
+			lua_pushstring(Lua, *value_it);	// Push value (property value)
+			lua_settable(Lua, new_table);
+		}
+	}
+ 
+	if (lua_pcall(Lua, 1, 0, 0) != 0)
+	{
+		CzString error = "Script - Calling script function ref with table - ";
+		error += lua_tostring(Lua, -1);
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, error.c_str());
+		lua_pop(Lua, 1);
+	}
+
+	return 0;
+}
+
 int CzScriptEngineLua::CallFunctionRefWithObject(void* object, int function_ref, CzString* param1, CzString* param2, CzString* param3, CzString* param4)
 {
 	if (Lua == NULL)

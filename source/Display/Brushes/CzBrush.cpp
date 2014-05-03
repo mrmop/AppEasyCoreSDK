@@ -121,10 +121,13 @@ int IzBrush::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 			if (!res)
 				return -1;
 		}
-#if defined (_DEBUG)
 		else
+		{
+#if defined (_DEBUG)
 			CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Brush - condition variable not found - ", condition->c_str(), DebugInfo.c_str());
 #endif // _DEBUG
+			return -1;
+		}
 	}
 
 	if (name == NULL)

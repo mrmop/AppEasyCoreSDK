@@ -15,6 +15,10 @@
 #include "CzPlatformAds.h"
 #include "IzPlatformDisplay.h"
 
+#if defined(ADS_CHARTBOOST_ENABLE)
+	#include "s3eChartBoost.h"
+#endif // ADS_CHARTBOOST_ENABLE
+
 #if defined(ADS_FLURRY_APPSPOT_ENABLE)
 	#include "s3eFlurryAppSpot.h"
 #endif // ADS_FLURRY_APPSPOT_ENABLE
@@ -27,6 +31,14 @@ bool CzPlatformAds::isAvailable(eCzAdProvider provider)
 {
 	switch (provider)
 	{
+#if defined(ADS_CHARTBOOST_ENABLE)
+	case Ads_Chartboost:
+		{
+			if (s3eChartBoostAvailable() == S3E_TRUE)
+				return true;
+			break;
+		}
+#endif // ADS_CHARTBOOST_ENABLE
 #if defined(ADS_FLURRY_APPSPOT_ENABLE)
 	case Ads_FlurryAppSpot:
 		{
@@ -55,6 +67,21 @@ int CzPlatformAds::Init(eCzAdProvider provider, const char* id, const char* data
 
 	switch (provider)
 	{
+#if defined(ADS_CHARTBOOST_ENABLE)
+	case Ads_Chartboost:
+		{
+			s3eChartBoostSetAppID(id);
+			s3eChartBoostSetAppSignature(data1);
+			s3eChartBoostRegister(S3E_CHARTBOOST_CALLBACK_REQUEST_RESPONSE, AdReceived, NULL);
+			s3eChartBoostRegister(S3E_CHARTBOOST_CALLBACK_AD_CLOSED, AdClosed, NULL);
+			s3eChartBoostRegister(S3E_CHARTBOOST_CALLBACK_AD_DISMISSED, AdClosed, NULL);
+			s3eChartBoostRegister(S3E_CHARTBOOST_CALLBACK_AD_CLICKED, AdClicked, NULL);
+			s3eChartBoostStartSession();
+			for (int t = 0; t < AdType_Max; t++)
+				Providers[t] = Ads_Chartboost;
+			break;
+		}
+#endif // ADS_CHARTBOOST_ENABLE
 #if defined(ADS_FLURRY_APPSPOT_ENABLE)
 	case Ads_FlurryAppSpot:
 		{
@@ -94,6 +121,25 @@ void	CzPlatformAds::Load(eCzAdType type, const char* data1, int data2)
 {
 	switch (Providers[type])
 	{
+#if defined(ADS_CHARTBOOST_ENABLE)
+	case Ads_Chartboost:
+		{
+			switch (type)
+			{
+			case AdType_Interstitial:
+				s3eChartBoostCacheInterstitial(NULL);
+				InterstitialData1 = data1;
+				InterstitialData2 = data2;
+				break;
+			case AdType_MoreApps:
+				s3eChartBoostCacheMoreApps();
+				InterstitialData1 = data1;
+				InterstitialData2 = data2;
+				break;
+			}
+			break;
+		}
+#endif // ADS_CHARTBOOST_ENABLE
 #if defined(ADS_FLURRY_APPSPOT_ENABLE)
 	case Ads_FlurryAppSpot:
 		{
@@ -128,6 +174,25 @@ void	CzPlatformAds::LoadShow(eCzAdType type, const char* data1, int data2)
 {
 	switch (Providers[type])
 	{
+#if defined(ADS_CHARTBOOST_ENABLE)
+	case Ads_Chartboost:
+		{
+			switch (type)
+			{
+			case AdType_Interstitial:
+				s3eChartBoostShowInterstitial(NULL);
+				InterstitialData1 = data1;
+				InterstitialData2 = data2;
+				break;
+			case AdType_MoreApps:
+				s3eChartBoostShowMoreApps();
+				InterstitialData1 = data1;
+				InterstitialData2 = data2;
+				break;
+			}
+			break;
+		}
+#endif // ADS_CHARTBOOST_ENABLE
 #if defined(ADS_FLURRY_APPSPOT_ENABLE)
 	case Ads_FlurryAppSpot:
 		{
@@ -173,6 +238,21 @@ void	CzPlatformAds::Show(eCzAdType type)
 {
 	switch (Providers[type])
 	{
+#if defined(ADS_CHARTBOOST_ENABLE)
+	case Ads_Chartboost:
+		{
+			switch (type)
+			{
+			case AdType_Interstitial:
+				s3eChartBoostShowInterstitial(NULL);
+				break;
+			case AdType_MoreApps:
+				s3eChartBoostShowMoreApps();
+				break;
+			}
+			break;
+		}
+#endif // ADS_CHARTBOOST_ENABLE
 #if defined(ADS_FLURRY_APPSPOT_ENABLE)
 	case Ads_FlurryAppSpot:
 		{
@@ -214,6 +294,10 @@ void	CzPlatformAds::Hide(eCzAdType type)
 {
 	switch (Providers[type])
 	{
+#if defined(ADS_CHARTBOOST_ENABLE)
+	case Ads_Chartboost:
+		break;
+#endif // ADS_CHARTBOOST_ENABLE
 #if defined(ADS_FLURRY_APPSPOT_ENABLE)
 	case Ads_FlurryAppSpot:
 		{

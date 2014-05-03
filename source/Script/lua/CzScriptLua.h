@@ -57,6 +57,7 @@ public:
 	int				CallFunction(IzXomlResource* object, CzString* function_name, CzString* param1, CzString* param2, CzString* param3);
 	CzXomlProperty getVariable(CzString* var_name);
 	int				CallFunctionRef(int function_ref, CzString* param1, CzString* param2, CzString* param3, CzString* param4);
+	int				CallFunctionRefWithTable(int function_ref, CzList<const char*>* properties, CzList<const char*>* values);
 	int				CallFunctionRefWithObject(void* object, int function_ref, CzString* param1, CzString* param2, CzString* param3, CzString* param4);
 	CzString		getType() { return CzString("lua"); }
 	

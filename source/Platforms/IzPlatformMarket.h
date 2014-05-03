@@ -15,7 +15,6 @@
 #define _CIZ_PLATFORM_MARKET_H_
 
 #include "CzPlatform.h"
-#include "CzMarket.h"
 
 #define	PLATFORM_MARKET			PLATFORM->getMarket()
 
@@ -29,53 +28,67 @@ class CzMarket;
 class IzPlatformMarket
 {
 public:
+	enum eMarketVendor
+	{
+		MV_VENDOR_NONE,
+		MV_VENDOR_APPLE,
+		MV_VENDOR_BLACKBERRY,
+		MV_VENDOR_WP8,
+		MV_VENDOR_WS8,
+		MV_VENDOR_TIZEN,
+		MV_VENDOR_GOOGLE_PLAY,
+		MV_VENDOR_AMAZON,
+		MV_VENDOR_ANDROID_MARKET,
+		MV_VENDOR_SAMSUNG,
+		MV_VENDOR_MAX
+	};
+
 	enum eMarketStatus
 	{
-		MS_IDLE, 
-		MS_PURCHASING, 
-		MS_PURCHASE_COMPLETED, 
-		MS_RESTORE_COMPLETED, 
-		MS_ERROR_CLIENT_INVALID, 
-		MS_ERROR_PAYMENT_CANCELLED, 
-		MS_ERROR_PAYMENT_INVALID, 
-		MS_ERROR_PAYMENT_NOT_ALLOWED, 
-		MS_ERROR_PURCHASE_UNKNOWN, 
-		MS_ERROR_PURCHASE_DISABLED, 
-		MS_ERROR_NO_CONNECTION, 
-		MS_ERROR_RESTORE_FAILED, 
-		MS_ERROR_UNKNOWN_PRODUCT, 
-		MS_ERROR_DEVELOPER_ERROR, 
-		MS_ERROR_UNAVAILABLE 
+		MS_ERROR_CLIENT_INVALID,
+		MS_ERROR_PAYMENT_CANCELLED,
+		MS_ERROR_PAYMENT_INVALID,
+		MS_ERROR_PAYMENT_NOT_ALLOWED,
+		MS_ERROR_PURCHASE_UNKNOWN,
+		MS_ERROR_PURCHASE_DISABLED,
+		MS_ERROR_PURCHASE_CANCELED,
+		MS_ERROR_NO_CONNECTION,
+		MS_ERROR_RESTORE_FAILED,
+		MS_ERROR_UNKNOWN_PRODUCT,
+		MS_ERROR_DEVELOPER_ERROR,
+		MS_ERROR_UNAVAILABLE,
+		MS_ERROR_ALREADY_OWNED,
+		MS_ERROR_NOT_OWNED,
+		MS_ERROR_FAILED,
+		MS_ERROR_PENDING,
+		MS_ERROR_NOT_READY,
+		MS_ERROR_SECURITY_FAILED,
 	};
 
 	// Properties
 protected:
-	bool					Available;						///< Is available on this platform
-	bool					Initialised;					///< Initialised state
-	eMarketStatus			Status;							///< Markets current status
+	eMarketVendor			CurrentVendor;
 	CzMarket*				ActiveMarket;					///< Currently active market
-	unsigned int			SimulationHash;					///< Name of sinulation to perform
 public:
-	bool					isAvailable() const										{ return Available; }
-	bool					isInitialised() const									{ return Initialised; }
-	eMarketStatus			getStatus() const										{ return Status; }
-	void					setStatus(eMarketStatus status)							{ Status = status; }
 	CzMarket*				getActiveMarket()										{ return ActiveMarket; }
 	void					setActiveMarket(CzMarket* market)						{ ActiveMarket = market; }
-	void					setSimulation(unsigned int sim)							{ SimulationHash = sim; }
-	unsigned int			getSimulation() const									{ return SimulationHash; }
-	virtual bool			isBillingEnabled() = 0;			///< Returns true if billing enabled on device
 	// Properties end
 public:
-	IzPlatformMarket() : SimulationHash(0), Available(false), Initialised(false), ActiveMarket(NULL), Status(MS_IDLE) 	{}
+	IzPlatformMarket() : CurrentVendor(MV_VENDOR_NONE), ActiveMarket(NULL) {}
 
 	// PLatform specific implementations
-	virtual int				Init(void* id) = 0;								///< Market intialisation
+	virtual bool			isAvailable(eMarketVendor vendor) = 0;			///< Check vendor availability
+	virtual int				Init(void* id, eMarketVendor vendor) = 0;		///< Market intialisation
 	virtual void			Release() = 0;									///< Market cleanup
-	virtual void			Update() = 0;									///< Per frame update
-	virtual bool			QueryProduct(const char* product_id) = 0;		///< Query product information
+	virtual bool			QueryProducts(const char** product_ids, int num_products) = 0;		///< Query product information
 	virtual bool			PurchaseProduct(const char* product_id) = 0;	///< Purchase a product
 	virtual bool			RestoreProducts() = 0;							///< Restore previously purchased products
+	virtual bool			ConsumeProduct(const char* purchase_token) = 0;	///< Comsumes a consumable product (Google Play only)
+	virtual bool			FinishTransaction(const char* finish_data) = 0;	///< Finalises a transaction after purchase
+	virtual void			setItemRange(int start, int end) = 0;
+	virtual void			setPayload(const char* payload) = 0;
+	virtual const char*		getPayload() = 0;
+	virtual void			setTestMode(bool mode) = 0;
 
 	// Event notification callbacks (platform agnostic, although you can override the event notification methods)
 protected:

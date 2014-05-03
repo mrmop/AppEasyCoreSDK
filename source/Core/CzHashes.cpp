@@ -155,6 +155,7 @@ unsigned int CzHashes::Tiling_Hash					= CzString::CalculateHash("tiling");
 unsigned int CzHashes::Location_Hash				= CzString::CalculateHash("location");
 unsigned int CzHashes::Resource_Hash				= CzString::CalculateHash("resource");
 unsigned int CzHashes::Tag_Hash						= CzString::CalculateHash("tag");
+unsigned int CzHashes::Vendor_Hash					= CzString::CalculateHash("vendor");
 unsigned int CzHashes::Preload_Hash					= CzString::CalculateHash("preload");
 unsigned int CzHashes::Blocking_Hash				= CzString::CalculateHash("blocking");
 unsigned int CzHashes::FileType_Hash				= CzString::CalculateHash("filetype");

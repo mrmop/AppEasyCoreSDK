@@ -23,12 +23,56 @@
 #include "CzTemplates.h"
 
 //
+// LUA_MarketSetVendor(product-name (string))
+//
+static int LUA_MarketSetVendor(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+	if (count < 1)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setVendor() not enough parameters, expected vendor-name (string)");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get the vendor name
+	const char* vendor = NULL;
+	if (lua_isstring(lua, 1))
+		vendor = lua_tostring(lua, 1);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setVendor() Invalid parameter, expected string for product-name for Param0");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (PLATFORM_MARKET->getActiveMarket() == NULL)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setVendor() Market has not been created");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Set the vendor
+	PLATFORM_MARKET->getActiveMarket()->setVendor(CzMarket::VendorFromText(vendor));
+
+	lua_pushboolean(lua, true);
+	return 1;
+}
+
+//
 // LUA_MarketAvailable()
 //
 static int LUA_MarketAvailable(lua_State *lua)
 {
+	if (PLATFORM_MARKET->getActiveMarket() == NULL)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.available() Market has not been created");
+		return 1;
+	}
+
 	// Return market availability
-	lua_pushboolean(lua, PLATFORM_MARKET->isAvailable());
+	lua_pushboolean(lua, PLATFORM_MARKET->getActiveMarket()->isAvailable());
 
 	return 1;
 }
@@ -59,7 +103,7 @@ static int LUA_MarketFindProduct(lua_State *lua)
 
 	if (PLATFORM_MARKET->getActiveMarket() == NULL)
 	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "market.find() Market has not been created");
+		CzScriptEngineLua::DisplayError(lua, "market.find() Market has not been created");
 		lua_pushnil(lua);
 		return 1;
 	}
@@ -88,7 +132,7 @@ static int LUA_MarketGetProducts(lua_State *lua)
 	CzMarket* market = PLATFORM_MARKET->getActiveMarket();
 	if (market == NULL)
 	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "market.getProducts(), market has not been created");
+		CzScriptEngineLua::DisplayError(lua, "market.getProducts(), market has not been created");
 		lua_pushnil(lua);
 		return 1;
 	}
@@ -132,7 +176,7 @@ static int LUA_MarketProductPurchase(lua_State *lua)
 
 	if (PLATFORM_MARKET->getActiveMarket() == NULL)
 	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "market.purchase() Market has not been created");
+		CzScriptEngineLua::DisplayError(lua, "market.purchase() Market has not been created");
 		lua_pushboolean(lua, false);
 		return 1;
 	}
@@ -146,6 +190,50 @@ static int LUA_MarketProductPurchase(lua_State *lua)
 
 	// Purchase the product
 	lua_pushboolean(lua, PLATFORM_MARKET->getActiveMarket()->PurchaseProduct(product->ProductID.c_str()));
+
+	return 1;
+}
+
+//
+// LUA_MarketConsume(product (object))
+//
+static int LUA_MarketConsume(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+	if (count < 1)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.consume() not enough parameters, expected purchase-token (string)");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get the purchase token
+	const char* purchase_token = NULL;
+	if (lua_isstring(lua, 1))
+		purchase_token = lua_tostring(lua, 1);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.consume() Invalid purchase-token, expect string for Param0");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (PLATFORM_MARKET->getActiveMarket() == NULL)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.consume() Market has not been created");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (PLATFORM_MARKET->getActiveMarket()->isBusy())
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.consume() Market is busy");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Purchase the product
+	lua_pushboolean(lua, PLATFORM_MARKET->getActiveMarket()->ConsumeProduct(purchase_token));
 
 	return 1;
 }
@@ -165,7 +253,7 @@ static int LUA_MarketSetCallback(lua_State *lua)
 
 	if (PLATFORM_MARKET->getActiveMarket() == NULL)
 	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "market.purchase() Market has not been created");
+		CzScriptEngineLua::DisplayError(lua, "market.purchase() Market has not been created");
 		lua_pushboolean(lua, false);
 		return 1;
 	}
@@ -209,79 +297,6 @@ static int LUA_MarketSetCallback(lua_State *lua)
 }
 
 //
-// LUA_MarketIsProductPurchased(product (object))
-//
-static int LUA_MarketIsProductPurchased(lua_State *lua)
-{
-	int count = lua_gettop(lua);
-	if (count < 1)
-	{
-		CzScriptEngineLua::DisplayError(lua, "market.purchased() not enough parameters, expected product (object)");
-		lua_pushboolean(lua, false);
-		return 1;
-	}
-
-	// Get the product object
-	CzMarketProduct* product = NULL;
-	if (lua_islightuserdata(lua, 1))
-		product = (CzMarketProduct*)lua_touserdata(lua, 1);
-	else
-	{
-		CzScriptEngineLua::DisplayError(lua, "market.purchased() Invalid target object, expected product");
-		lua_pushboolean(lua, false);
-		return 1;
-	}
-
-	if (PLATFORM_MARKET->getActiveMarket() == NULL)
-	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "market.purchased() Market has not been created");
-		lua_pushboolean(lua, false);
-		return 1;
-	}
-
-	lua_pushboolean(lua, product->Purchased);
-
-	return 1;
-}
-
-//
-// LUA_MarketIsProducConsumable(product (object))
-//
-static int LUA_MarketIsProducConsumable(lua_State *lua)
-{
-	int count = lua_gettop(lua);
-	if (count < 1)
-	{
-		CzScriptEngineLua::DisplayError(lua, "market.consumable() not enough parameters, expected product (object)");
-		lua_pushboolean(lua, false);
-		return 1;
-	}
-
-	// Get the product object
-	CzMarketProduct* product = NULL;
-	if (lua_islightuserdata(lua, 1))
-		product = (CzMarketProduct*)lua_touserdata(lua, 1);
-	else
-	{
-		CzScriptEngineLua::DisplayError(lua, "market.consumable() Invalid target object, expected product");
-		lua_pushboolean(lua, false);
-		return 1;
-	}
-
-	if (PLATFORM_MARKET->getActiveMarket() == NULL)
-	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "market.consumable(), market has not been created");
-		lua_pushboolean(lua, false);
-		return 1;
-	}
-
-
-	lua_pushboolean(lua, product->Consumable);
-
-	return 1;
-}
-
-//
 // LUA_MarketRestore()
 //
 static int LUA_MarketRestore(lua_State *lua)
@@ -290,7 +305,7 @@ static int LUA_MarketRestore(lua_State *lua)
 
 	if (PLATFORM_MARKET->getActiveMarket() == NULL)
 	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "market.restore(), market has not been created");
+		CzScriptEngineLua::DisplayError(lua, "market.restore(), market has not been created");
 		lua_pushnumber(lua, -1);
 		return 1;
 	}
@@ -309,32 +324,13 @@ static int LUA_MarketCurrentProduct(lua_State *lua)
 
 	if (PLATFORM_MARKET->getActiveMarket() == NULL)
 	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "market.currentProduct(), market has not been created");
+		CzScriptEngineLua::DisplayError(lua, "market.currentProduct(), market has not been created");
 		lua_pushnil(lua);
 		return 1;
 	}
 	const char* product_id = PLATFORM_MARKET->getActiveMarket()->getCurrentProductID();
 
 	lua_pushlightuserdata(lua, PLATFORM_MARKET->getActiveMarket()->findProduct(product_id));
-
-	return 1;
-}
-
-//
-// LUA_MarketIsBusy()
-//
-static int LUA_MarketIsBusy(lua_State *lua)
-{
-	int count = lua_gettop(lua);
-
-	if (PLATFORM_MARKET->getActiveMarket() == NULL)
-	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "market.busy() Market has not been created");
-		lua_pushboolean(lua, false);
-		return 1;
-	}
-
-	lua_pushboolean(lua, PLATFORM_MARKET->getActiveMarket()->isBusy());
 
 	return 1;
 }
@@ -398,31 +394,198 @@ static int LUA_MarketGetName(lua_State *lua)
 }
 
 //
-// LUA_MarketGetStatus(product (object))
+// LUA_MarketSetItemRange(start (number), end (number))
 //
-static int LUA_MarketGetStatus(lua_State *lua)
+static int LUA_MarketSetItemRange(lua_State *lua)
 {
 	int count = lua_gettop(lua);
+	if (count < 2)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setRange() not enough parameters, expected start (number), end (number)");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
 
-	lua_pushnumber(lua, (double)PLATFORM_MARKET->getStatus());
+	// Get start
+	int start = 0;
+	if (lua_isnumber(lua, 1))
+		start = (int)lua_tonumber(lua, 1);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setRange() Invalid start, expected number for Param0");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get end
+	int end = 0;
+	if (lua_isnumber(lua, 2))
+		end = (int)lua_tonumber(lua, 2);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setRange() Invalid end, expected number for Param1");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (PLATFORM_MARKET->getActiveMarket() == NULL)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setRange() Market has not been created");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (PLATFORM_MARKET->getActiveMarket()->isBusy())
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setRange() Market is busy");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Purchase the product
+	PLATFORM_MARKET->getActiveMarket()->setItemRange(start, end);
+
+	lua_pushboolean(lua, true);
+	return 1;
+}
+
+//
+// LUA_MarketSetPayload(product-name (string))
+//
+static int LUA_MarketSetPayload(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+	if (count < 1)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setPayload() not enough parameters, expected payload (string)");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get the payload
+	const char* payload = NULL;
+	if (lua_isstring(lua, 1))
+		payload = lua_tostring(lua, 1);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setPayload() Invalid parameter, expected string for payload for Param0");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (PLATFORM_MARKET->getActiveMarket() == NULL)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setPayload() Market has not been created");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Set the vendor
+	PLATFORM_MARKET->getActiveMarket()->setPayload(payload);
+
+	lua_pushboolean(lua, true);
+	return 1;
+}
+
+//
+// LUA_MarketQueryProduct(product (object))
+//
+static int LUA_MarketQueryProduct(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+	if (count < 1)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.query() not enough parameters, expected product (object)");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get the product object
+	CzMarketProduct* product = NULL;
+	if (lua_islightuserdata(lua, 1))
+		product = (CzMarketProduct*)lua_touserdata(lua, 1);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.query() Invalid target object, expected product");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (PLATFORM_MARKET->getActiveMarket() == NULL)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.query() Market has not been created");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (PLATFORM_MARKET->getActiveMarket()->isBusy())
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.query() Market is busy");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Purchase the product
+	lua_pushboolean(lua, PLATFORM_MARKET->getActiveMarket()->QueryProduct(product->ProductID.c_str()));
 
 	return 1;
 }
+
+//
+// LUA_MarketSetTestMode(mode (boolean))
+//
+static int LUA_MarketSetTestMode(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+	if (count < 1)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setTestMode() not enough parameters, expected mode (boolean)");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Get the payload
+	bool mode = false;
+	if (lua_isboolean(lua, 1))
+		mode = lua_toboolean(lua, 1);
+	else
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setTestMode() Invalid parameter, expected boolean for mode for Param0");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	if (PLATFORM_MARKET->getActiveMarket() == NULL)
+	{
+		CzScriptEngineLua::DisplayError(lua, "market.setTestMode() Market has not been created");
+		lua_pushboolean(lua, false);
+		return 1;
+	}
+
+	// Set the vendor
+	PLATFORM_MARKET->getActiveMarket()->setTestMode(mode);
+
+	lua_pushboolean(lua, true);
+	return 1;
+}
+
 static const luaL_Reg g_marketlib[] =
 {
+	{"setVendor",		LUA_MarketSetVendor}, 
 	{"available",		LUA_MarketAvailable}, 
+	{"query",			LUA_MarketQueryProduct}, 
 	{"find",			LUA_MarketFindProduct}, 
 	{"products",		LUA_MarketGetProducts}, 
-	{"purchased",		LUA_MarketIsProductPurchased}, 
-	{"consumable",		LUA_MarketIsProducConsumable}, 
 	{"setCallback",		LUA_MarketSetCallback}, 
 	{"purchase",		LUA_MarketProductPurchase}, 
 	{"currentProduct",  LUA_MarketCurrentProduct}, 
 	{"restore",			LUA_MarketRestore}, 
-	{"busy",			LUA_MarketIsBusy}, 
+	{"consume",			LUA_MarketConsume}, 
 	{"price",			LUA_MarketGetPrice}, 
 	{"name",			LUA_MarketGetName}, 
-	{"status",			LUA_MarketGetStatus}, 
+	{"setItemRange",	LUA_MarketSetItemRange}, 
+	{"setPayload",		LUA_MarketSetPayload}, 
+	{"setTestMode",		LUA_MarketSetTestMode}, 
 	{NULL, NULL}
 };
 

@@ -13,6 +13,9 @@ defines
 	IW_GXFONT_TTF
 #	CZ_REMOVE_DUPLICATES
 	IW_HTTP_SSL
+#	ADS_CHARTBOOST_ENABLE
+	ADS_FLURRY_APPSPOT_ENABLE
+#	ADS_REVMOB_ENABLE
 }
 
 subprojects
@@ -29,8 +32,7 @@ subprojects
 	iwhttp
 	s3eWebView
 	s3eFacebook
-	s3eIOSAppStoreBilling
-	s3eAndroidMarketBilling
+	iwbilling
 	SoundEngine
 	box2d
 	third_party/sqlite
@@ -39,6 +41,7 @@ subprojects
 	
 	# extra modules
 	s3eFlurryAppSpot
+#	s3eChartBoost
 #	revmob\RevMobEDK
 }
 

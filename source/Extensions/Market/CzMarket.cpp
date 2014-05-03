@@ -42,6 +42,43 @@ bool CzMarketProduct::Load()
 //
 //
 //
+
+IzPlatformMarket::eMarketVendor	CzMarket::VendorFromText(const char* vendor)
+{
+	unsigned int vendor_hash = CZ_HASH(vendor);
+	
+	if (vendor_hash == CZ_HASH("amazon"))
+		return IzPlatformMarket::MV_VENDOR_AMAZON;
+	else
+	if (vendor_hash == CZ_HASH("googleplay"))
+		return IzPlatformMarket::MV_VENDOR_GOOGLE_PLAY;
+	else
+	if (vendor_hash == CZ_HASH("android"))
+		return IzPlatformMarket::MV_VENDOR_ANDROID_MARKET;
+	else
+	if (vendor_hash == CZ_HASH("samsung"))
+		return IzPlatformMarket::MV_VENDOR_SAMSUNG;
+	else
+	if (vendor_hash == CZ_HASH("blackberry"))
+		return IzPlatformMarket::MV_VENDOR_BLACKBERRY;
+	else
+	if (vendor_hash == CZ_HASH("apple"))
+		return IzPlatformMarket::MV_VENDOR_APPLE;
+	else
+	if (vendor_hash == CZ_HASH("wp8"))
+		return IzPlatformMarket::MV_VENDOR_WP8;
+	else
+	if (vendor_hash == CZ_HASH("ws8"))
+		return IzPlatformMarket::MV_VENDOR_WS8;
+
+	return IzPlatformMarket::MV_VENDOR_NONE;
+}
+
+bool CzMarket::isAvailable()
+{
+	return PLATFORM_MARKET->isAvailable(Vendor);
+}
+
 int	CzMarket::Init(const char* public_key)
 {
 	PLATFORM_MARKET->setActiveMarket(this);
@@ -49,14 +86,12 @@ int	CzMarket::Init(const char* public_key)
 	if (EventsManager == NULL)
 		EventsManager = new CzEventManager();
 
-	if (!PLATFORM_MARKET->isInitialised())
+	if (PLATFORM_MARKET->Init((void*)public_key, Vendor) == 0)
 	{
-		if (PLATFORM_MARKET->Init((void*)public_key) == 0)
-		{
-			CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market could not be created");
-			NotifyUnavailable();
-			return 0;
-		}
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market could not be created");
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, CzString(Vendor).c_str());
+		NotifyUnavailable();
+		return 0;
 	}
 
 	Busy = false;
@@ -77,8 +112,7 @@ void	CzMarket::Release()
 	if (PLATFORM_MARKET->getActiveMarket() == this)
 		PLATFORM_MARKET->setActiveMarket(NULL);
 
-	if (PLATFORM_MARKET->isInitialised())
-		PLATFORM_MARKET->Release();
+	PLATFORM_MARKET->Release();
 }
 
 CzMarketProduct* CzMarket::findProduct(const char* product_id)
@@ -138,22 +172,65 @@ void CzMarket::setCurrentProductID(const char* product_id)
 	CurrentProductID = product_id;
 }
 
-void CzMarket::setPurchased(const char* product_id, bool purchased)
+void CzMarket::setItemRange(int start, int end)
 {
-	CzMarketProduct* product = findProduct(product_id);
-	if (product != NULL)
+	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable(Vendor))
 	{
-		product->Purchased = purchased;
-		product->Save();
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
+		return;
 	}
-	setCurrentProductID(product_id);
+
+	PLATFORM_MARKET->setItemRange(start, end);
+}
+
+void CzMarket::setPayload(const char* payload)
+{
+	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable(Vendor))
+	{
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
+		return;
+	}
+
+	PLATFORM_MARKET->setPayload(payload);
+}
+
+const char* CzMarket::getPayload()
+{
+	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable(Vendor))
+	{
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
+		return NULL;
+	}
+
+	return PLATFORM_MARKET->getPayload();
+}
+
+void CzMarket::setTestMode(bool mode)
+{
+	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable(Vendor))
+	{
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
+		return;
+	}
+
+	PLATFORM_MARKET->setTestMode(mode);
+}
+
+bool CzMarket::FinishTransaction(const char* finish_data)
+{
+	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable(Vendor))
+	{
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
+		return false;
+	}
+
+	return PLATFORM_MARKET->FinishTransaction(finish_data);
 }
 
 int CzMarket::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode* node)
 {
 	// Process market attributes
 	CzString* public_key = NULL;
-	CzString* simulate = NULL;
 
 	if (EventsManager == NULL)
 		EventsManager = new CzEventManager();
@@ -168,6 +245,9 @@ int CzMarket::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode
 		if (name_hash == CzHashes::Tag_Hash)
 			setTag((*it)->getValue().c_str());
 		else
+		if (name_hash == CzHashes::Vendor_Hash)
+			setVendor(VendorFromText((*it)->getValue().c_str()));
+		else
 		if (name_hash == CzHashes::OnError_Hash)
 			EventsManager->addEvent("OnError", (*it)->getValue().c_str(), true);
 		else
@@ -180,19 +260,21 @@ int CzMarket::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode
 		if (name_hash == CzHashes::OnBillingDisabled_Hash)
 			EventsManager->addEvent("OnBillingDisabled", (*it)->getValue().c_str(), true);
 		else
-		if (name_hash == CzHashes::OnRefund_Hash)
-			EventsManager->addEvent("OnRefund", (*it)->getValue().c_str(), true);
-		else
 		if (name_hash == CzHashes::AndroidPublicKey_Hash)
 			public_key = &(*it)->getValue();
-		else
-		if (name_hash == CzHashes::Simulate_Hash)
-			simulate = &(*it)->getValue();
 	}
 
 	CzScene* scene = NULL;
 	if (parent != NULL && parent->getClassTypeHash() == CzHashes::Scene_Hash)
 		scene = (CzScene*)parent;
+	bool added = false;
+	if (scene != NULL)
+		added = scene->getResourceManager()->addResource(this) ? 1 : 0;
+	else
+		added = CZ_GLOBAL_RESOURCES->getResourceManager()->addResource(this) ? 1 : 0;
+	if (!added)
+		return 0;
+
 
 	Init(public_key->c_str());
 
@@ -239,9 +321,6 @@ int CzMarket::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode
 						product->ProductID = (*it)->getValue();
 				}
 				else
-				if (attrib_hash == CzHashes::Consumable_Hash)
-					product->Consumable = (*it)->getValueAsBool();
-				else
 				if (attrib_hash == CzHashes::Price_Hash)
 					product->Price = (*it)->getValueAsFloat();
 			}
@@ -255,31 +334,18 @@ int CzMarket::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode
 			delete product;
 	}
 
-	if (simulate != NULL)
-		PLATFORM_MARKET->setSimulation(simulate->getHash());
-
-	if (scene != NULL)
-		return scene->getResourceManager()->addResource(this) ? 1 : 0;
-	else
-		return CZ_GLOBAL_RESOURCES->getResourceManager()->addResource(this) ? 1 : 0;
-
 	return 1;
 }
 
 bool CzMarket::QueryProduct(const char* product_id)
 {
-	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable())
+	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable(Vendor))
 	{
 		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
 		return false;
 	}
-	if (!PLATFORM_MARKET->isInitialised())
-	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not initialised", DebugInfo.c_str());
-		return false;
-	}
 
-	if (!PLATFORM_MARKET->QueryProduct(product_id))
+	if (!PLATFORM_MARKET->QueryProducts(&product_id, 1))
 	{
 		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Could not query product with ID - ", CzString(product_id).c_str(), DebugInfo.c_str());
 		return false;
@@ -290,14 +356,9 @@ bool CzMarket::QueryProduct(const char* product_id)
 
 bool CzMarket::PurchaseProduct(const char* product_id)
 {
-	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable())
+	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable(Vendor))
 	{
 		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
-		return false;
-	}
-	if (!PLATFORM_MARKET->isInitialised())
-	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not initialised", DebugInfo.c_str());
 		return false;
 	}
 
@@ -312,18 +373,30 @@ bool CzMarket::PurchaseProduct(const char* product_id)
 
 bool CzMarket::RestoreProducts()
 {
-	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable())
+	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable(Vendor))
 	{
 		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
 		return false;
 	}
-	if (!PLATFORM_MARKET->isInitialised())
+
+	if (!PLATFORM_MARKET->RestoreProducts())
 	{
-		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not initialised", DebugInfo.c_str());
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Could not restore products", DebugInfo.c_str());
 		return false;
 	}
 
-	if (!PLATFORM_MARKET->RestoreProducts())
+	return true;
+}
+
+bool CzMarket::ConsumeProduct(const char* purchase_token)
+{
+	if (PLATFORM_MARKET == NULL || !PLATFORM_MARKET->isAvailable(Vendor))
+	{
+		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Not available", DebugInfo.c_str());
+		return false;
+	}
+
+	if (!PLATFORM_MARKET->ConsumeProduct(purchase_token))
 	{
 		CzDebug::Log(CZ_DEBUG_CHANNEL_ERROR, "Market - Could not restore products", DebugInfo.c_str());
 		return false;
@@ -347,16 +420,38 @@ void CzMarket::ProcessEventActions(unsigned int event_name, IzXomlResource* pare
 	}
 }
 
-void	CzMarket::NotifyError()
+void	CzMarket::NotifyReady()
+{
+	Busy = false;
+	ProcessEventActions(CZ_HASH("OnReady"), Parent->getParent());
+	CzScriptCallback& callback = getScriptCallback();
+	if (callback.Valid)
+	{
+		CzList<const char*> props;
+		CzList<const char*> vals;
+		props.push_back("event");
+		vals.push_back("ready");
+		callback.ScriptEngine->CallFunctionRefWithTable(callback.FunctionRef, &props, &vals);
+	}
+}
+
+void	CzMarket::NotifyError(const char* product_id, int error)
 {
 	Busy = false;
 	ProcessEventActions(CZ_HASH("OnError"), Parent->getParent());
 	CzScriptCallback& callback = getScriptCallback();
 	if (callback.Valid)
 	{
-		CzString p1 = "error";
-		CzString p2 = CurrentProductID;
-		callback.ScriptEngine->CallFunctionRef(callback.FunctionRef, &p1, &p2, NULL, NULL);
+		CzList<const char*> props;
+		CzList<const char*> vals;
+		props.push_back("event");
+		vals.push_back("error");
+		props.push_back("error");
+		CzString err = CzString(error);
+		vals.push_back(err.c_str());
+		props.push_back("productID");
+		vals.push_back(product_id);
+		callback.ScriptEngine->CallFunctionRefWithTable(callback.FunctionRef, &props, &vals);
 	}
 }
 
@@ -367,22 +462,45 @@ void	CzMarket::NotifyUnavailable()
 	CzScriptCallback& callback = getScriptCallback();
 	if (callback.Valid)
 	{
-		CzString p1 = "unavailable";
-		CzString p2 = CurrentProductID;
-		callback.ScriptEngine->CallFunctionRef(callback.FunctionRef, &p1, &p2, NULL, NULL);
+		CzList<const char*> props;
+		CzList<const char*> vals;
+		props.push_back("event");
+		vals.push_back("unavailable");
+		callback.ScriptEngine->CallFunctionRefWithTable(callback.FunctionRef, &props, &vals);
 	}
 }
 
-void	CzMarket::NotifyComplete()
+void	CzMarket::NotifyComplete(CzMarketProductReceipt* data)
 {
 	Busy = false;
 	ProcessEventActions(CZ_HASH("OnComplete"), Parent->getParent());
 	CzScriptCallback& callback = getScriptCallback();
 	if (callback.Valid)
 	{
-		CzString p1 = "purchased";
-		CzString p2 = CurrentProductID;
-		callback.ScriptEngine->CallFunctionRef(callback.FunctionRef, &p1, &p2, NULL, NULL);
+		CzList<const char*> props;
+		CzList<const char*> vals;
+		props.push_back("event");
+		vals.push_back("purchased");
+		props.push_back("productID");
+		vals.push_back(data->ProductID);
+		props.push_back("restored");
+		CzString restored = CzString(data->Restored);
+		vals.push_back(restored.c_str());
+		props.push_back("payload");
+		vals.push_back(data->Payload);
+		props.push_back("date");
+		vals.push_back(data->Date);
+		props.push_back("subscriptionStartDate");
+		vals.push_back(data->SubscriptionStartDate);
+		props.push_back("subscriptionEndDate");
+		vals.push_back(data->SubscriptionEndDate);
+		props.push_back("purchaseToken");
+		vals.push_back(data->PurchaseToken);
+		props.push_back("transactionID");
+		vals.push_back(data->TransactionID);
+		callback.ScriptEngine->CallFunctionRefWithTable(callback.FunctionRef, &props, &vals);
+		if (data->FinaliseData != NULL)
+			FinishTransaction((const char*)data->FinaliseData);
 	}
 }
 
@@ -393,36 +511,35 @@ void	CzMarket::NotifyBillingDisabled()
 	CzScriptCallback& callback = getScriptCallback();
 	if (callback.Valid)
 	{
-		CzString p1 = "disabled";
-		CzString p2 = CurrentProductID;
-		callback.ScriptEngine->CallFunctionRef(callback.FunctionRef, &p1, &p2, NULL, NULL);
+		CzList<const char*> props;
+		CzList<const char*> vals;
+		props.push_back("event");
+		vals.push_back("disabled");
+		callback.ScriptEngine->CallFunctionRefWithTable(callback.FunctionRef, &props, &vals);
 	}
 	Busy = false;
 }
 
-void	CzMarket::NotifyRefund()
-{
-	Busy = false;
-	ProcessEventActions(CZ_HASH("OnRefund"), Parent->getParent());
-	CzScriptCallback& callback = getScriptCallback();
-	if (callback.Valid)
-	{
-		CzString p1 = "refund";
-		CzString p2 = CurrentProductID;
-		callback.ScriptEngine->CallFunctionRef(callback.FunctionRef, &p1, &p2, NULL, NULL);
-	}
-}
-
-void	CzMarket::NotifyInfoAvailable()
+void	CzMarket::NotifyInfoAvailable(CzMarketProductData* data)
 {
 	Busy = false;
 	ProcessEventActions(CZ_HASH("OnInfoAvailable"), Parent->getParent());
 	CzScriptCallback& callback = getScriptCallback();
 	if (callback.Valid)
 	{
-		CzString p1 = "info";
-		CzString p2 = CurrentProductID;
-		callback.ScriptEngine->CallFunctionRef(callback.FunctionRef, &p1, &p2, NULL, NULL);
+		CzList<const char*> props;
+		CzList<const char*> vals;
+		props.push_back("event");
+		vals.push_back("info");
+		props.push_back("productID");
+		vals.push_back(data->ProductID);
+		props.push_back("title");
+		vals.push_back(data->Title);
+		props.push_back("description");
+		vals.push_back(data->Description);
+		props.push_back("price");
+		vals.push_back(data->Price);
+		callback.ScriptEngine->CallFunctionRefWithTable(callback.FunctionRef, &props, &vals);
 	}
 }
 

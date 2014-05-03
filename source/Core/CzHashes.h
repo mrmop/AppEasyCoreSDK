@@ -61,6 +61,7 @@ public:
 
 	static unsigned int Resource_Hash;
 	static unsigned int Tag_Hash;
+	static unsigned int Vendor_Hash;
 	static unsigned int Count_Hash;
 	static unsigned int IndexCount_Hash;
 	static unsigned int Action_Hash;

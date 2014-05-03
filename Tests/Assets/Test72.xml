@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<xml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<!-- Create a scene -->
+	<Scene Name="Scene1" Current="true" ScriptEngine="lua">
+		<!-- Load script -->
+		<Script Name="Script1" Type="lua" />
+		<File Name="ScriptFile1" Location="Test72.lua" Script="Script1" />
+
+		<!-- Create test buttons -->
+		<StackPanel Orientation="vertical" Size="-80, -80" SizeToContent="y">
+			<Label Font="serif" Text="Show Chartboost Interstitial" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="300, 40" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="ShowAd" P3="chartboost" P4="int" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Show Chartboost MoreApps" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="300, 40" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="ShowAd" P3="chartboost" P4="moreapps" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Show App Spot Interstitial" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="300, 40" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="ShowAd" P3="appspot" P4="int" />
+				</Actions>
+			</Label>
+			<Label Font="serif" Text="Show Revmob Interstitial" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="300, 40" AutoHeight="true" OnTapped="Tapped" Layer="5">
+				<Actions Name="Tapped">
+					<Action Method="CallScript" P1="ShowAd" P3="revmob" P4="int" />
+				</Actions>
+			</Label>
+		</StackPanel>
+
+		<Label Font="serif" Text="Demonstration of native ads" BackgroundColour="80, 80, 80, 255" Background="Button1Brush" Size="-100, -10" Docking="top" AutoHeight="true" IgnoreCamera="true" />
+
+	</Scene>
+
+
+</xml>
+

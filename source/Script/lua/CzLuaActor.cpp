@@ -687,7 +687,7 @@ static int LUA_AddPropertyActor(lua_State *lua)
 		}
 		else
 		{
-			CzScriptEngineLua::DisplayError(lua, "actor.add() actor does not contain a user property list - object - ", object->getName().c_str());
+//			CzScriptEngineLua::DisplayError(lua, "actor.add() actor does not contain a user property list - object - ", object->getName().c_str());
 			CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "- property - ", prop_name.c_str());
 			lua_pushboolean(lua, false);
 			return 1;
@@ -763,7 +763,7 @@ static int LUA_GetPropertyActor(lua_State *lua)
 		}
 		else
 		{
-			CzScriptEngineLua::DisplayError(lua, "actor.get() actor does not contain a user property list - object - ", object->getName().c_str());
+//			CzScriptEngineLua::DisplayError(lua, "actor.get() actor does not contain a user property list - object - ", object->getName().c_str());
 			lua_pushnil(lua);
 			return 1;
 		}

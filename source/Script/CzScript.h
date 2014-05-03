@@ -48,6 +48,7 @@ public:
 	virtual int			CallFunction(IzXomlResource* object, CzString* function_name, CzString* param1, CzString* param2, CzString* param3) = 0;
 	virtual CzXomlProperty getVariable(CzString* var_name) = 0;
 	virtual int			CallFunctionRef(int function_ref, CzString* param1, CzString* param2, CzString* param3, CzString* param4) = 0;
+	virtual int			CallFunctionRefWithTable(int function_ref, CzList<const char*>* properties, CzList<const char*>* values) = 0;
 	virtual int			CallFunctionRefWithObject(void* object, int function_ref, CzString* param1, CzString* param2, CzString* param3, CzString* param4) = 0;
 	virtual CzString	getType() = 0;
 

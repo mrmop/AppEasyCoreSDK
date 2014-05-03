@@ -67,18 +67,8 @@ int CzPlatformMain::Init()
 	PLATFORM->setFacebook(new CzPlatformFacebook());
 	PLATFORM->setAds(new CzPlatformAds());
 
-	int os = s3eDeviceGetInt(S3E_DEVICE_OS);
-	switch (os)
-	{
-	case S3E_OS_ID_IPHONE:
-		PLATFORM->setMarket(new CzPlatformMarketiOS());
-		break;
-	case S3E_OS_ID_ANDROID:
-		PLATFORM->setMarket(new CzPlatformMarketAndroid());
-		break;
-	default:
-		PLATFORM->setMarket(new CzPlatformMarketTest());
-	}
+//	int os = s3eDeviceGetInt(S3E_DEVICE_OS);
+	PLATFORM->setMarket(new CzPlatformMarket());
 
 	return 1;
 }

@@ -16,130 +16,38 @@
 
 #include "IzPlatformMarket.h"
 
-#include "s3eIOSAppStoreBilling.h"
-#include "s3eAndroidMarketBilling.h"
+#include "IwBilling.h"
 
-//
-//
-//
-//
-// CzPlatformMarketiOS - Handles in-app purchasing for iOS
-//
-//
-// 
-//
-class CzPlatformMarketiOS : public IzPlatformMarket
+class CzPlatformMarket : public IzPlatformMarket
 {
 	// Properties
 protected:
-	s3ePaymentRequest*		getPaymentRequest();
-	void					setTransactionReceipt(void *receipt_data, uint receipt_size);
-	s3eTransactionReceipt*	getTransactionReceipt();
-	void					setProductInformation(s3eProductInformation* info);
-	s3eProductInformation*	getProductInformation();
-	void					setPaymentTransaction(s3ePaymentTransaction* trans);
-	s3ePaymentTransaction*	getPaymentTransaction();
-	bool					isBillingEnabled();
 	// Properties end
 
 protected:
-	s3ePaymentRequest		PaymentRequest;
-	s3eTransactionReceipt	TransactionReceipt;
-	s3eProductInformation*	ProductInformation;
-	s3ePaymentTransaction*	PaymentTransaction;
 
 public:
 
-	int						Init(void* id);
+	bool					isAvailable(eMarketVendor vendor);
+	int						Init(void* id, eMarketVendor vendor);
 	void					Release();
-	void					Update();
-	bool					QueryProduct(const char* product_id);
+	bool					QueryProducts(const char** product_ids, int num_products);
 	bool					PurchaseProduct(const char* product_id);
 	bool					RestoreProducts();
-
-	void					StopProductinfo();
-	void					GetReceipt();
+	bool					ConsumeProduct(const char* purchase_token);
+	bool					FinishTransaction(const char* finish_data);
+	void					setItemRange(int start, int end);
+	void					setPayload(const char* payload);
+	const char*				getPayload();
+	void					setTestMode(bool mode);
 
 	// Internal
-	static void				TransactionUpdateCallback(s3ePaymentTransaction* transaction, void* userData);
-	static void				ProductInfoCallback(s3eProductInformation* productInfo, void* userData);
-	void					ReleaseReceipt();
-	void					ReleasePayment();
-	void					ReleaseProductInfo();
+	static void ReadyCallback(void* caller, void* data);
+	static void ErrorCallback(void* userdata, IwBilling::CIwBillingErrorData* data);
+	static void ProductInfoAvailableCallback(void* userdata, IwBilling::CIwBillingInfoAvailableData* data);
+	static void ReceiptAvailableCallback(void* userdata, IwBilling::CIwBillingReceiptAvailableData* data);
+	static void ConsumeCallback(void* userdata, void* data);
 
-};
-
-//
-//
-//
-//
-// CzPlatformMarketAndroid - Handles in-app purchasing fro Android
-//
-//
-// 
-//
-class CzPlatformMarketAndroid : public IzPlatformMarket
-{
-	// Properties
-protected:
-	CzString				PublicKey;
-	CzString				RefundedID;
-public:
-	void					setPublicKey(const char* key)	{ PublicKey = key; }
-	void					setRefundedID(const char* id)	{ RefundedID = id; }
-	CzString&				getRefundedID()					{ return RefundedID; }
-	bool					isBillingEnabled();
-	// Properties end
-
-protected:
-
-public:
-
-	int						Init(void* id);
-	void					Release();
-	void					Update();
-	bool					QueryProduct(const char* product_id);		// Does nothing
-	bool					PurchaseProduct(const char* product_id);
-	bool					RestoreProducts();
-
-	void					NotifyRefund();
-
-
-	// Internal
-	static int32			AsyncResponse(void* system, void* user);
-	static int32			OrderInformationChanged(void* system, void* user);
-
-};
-
-//
-//
-//
-//
-// CzPlatformMarketTest - A test class that simply allows testing of in-app purchase without performing any actual purchasing
-//
-//
-// 
-//
-class CzPlatformMarketTest : public IzPlatformMarket
-{
-	// Properties
-protected:
-	bool					isBillingEnabled();
-	// Properties end
-
-protected:
-	CzTimer					PurchaseTimer;
-
-public:
-
-	int						Init(void* id);
-	void					Release();
-	void					Update();
-	bool					QueryProduct(const char* product_id);
-	bool					PurchaseProduct(const char* product_id);
-	bool					RestoreProducts();
-
-	void					ForceError(eMarketStatus status);
 };
 
 

@@ -31,6 +31,14 @@ public:
 	// Properties end
 public:
 	bool			isAvailable(eCzAdProvider provider);
+
+	/**
+	 @brief	Initialises ads.
+	 @param	provider	The provider.
+	 @param	id			ChartBoost = App ID, Flurry = ApiKey
+	 @param	dat11   	String data, ChartBoost = App SIgnature
+	 @param	data2   	Integer data
+	 */
 	int				Init(eCzAdProvider provider, const char* id, const char* dat11, int data2);
 	void			Release();
 	void			Update();

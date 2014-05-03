@@ -123,10 +123,19 @@ static int LUA_AdsInit(lua_State *lua)
 	}
 
 	// Init ads system
+#if defined(ADS_CHARTBOOST_ENABLE)
+	if (strcmp(provider, "chartboost") == 0)
+	{
+		PLATFORM_ADS->Init(Ads_Chartboost, id, data1, data2);
+		lua_pushboolean(lua, true);
+		return 1;
+	}
+#endif // ADS_FLURRY_APPSPOT_ENABLE
 #if defined(ADS_FLURRY_APPSPOT_ENABLE)
 	if (strcmp(provider, "flurry_appspot") == 0)
 	{
 		PLATFORM_ADS->Init(Ads_FlurryAppSpot, id, data1, data2);
+		lua_pushboolean(lua, true);
 		return 1;
 	}
 #endif // ADS_FLURRY_APPSPOT_ENABLE
@@ -134,11 +143,12 @@ static int LUA_AdsInit(lua_State *lua)
 	if (strcmp(provider, "revmob") == 0)
 	{
 		PLATFORM_ADS->Init(Ads_Revmob, id, data1, data2);
+		lua_pushboolean(lua, true);
 		return 1;
 	}
 #endif // ADS_REVMOB_ENABLE
 
-	lua_pushboolean(lua, true);
+	lua_pushboolean(lua, false);
 	return 1;
 }
 
@@ -178,6 +188,18 @@ static int LUA_AdsSetProvider(lua_State *lua)
 	}
 
 	// Init ads system
+#if defined(ADS_CHARTBOOST_ENABLE)
+	if (strcmp(provider, "chartboost") == 0)
+	{
+		if (strcmp(type, "moreapps") == 0)
+			PLATFORM_ADS->setProvider(AdType_MoreApps, Ads_Chartboost);
+		else
+		if (strcmp(type, "inter") == 0)
+			PLATFORM_ADS->setProvider(AdType_Interstitial, Ads_Chartboost);
+		lua_pushboolean(lua, true);
+		return 1;
+	}
+#endif // ADS_FLURRY_APPSPOT_ENABLE
 #if defined(ADS_FLURRY_APPSPOT_ENABLE)
 	if (strcmp(provider, "flurry_appspot") == 0)
 	{
@@ -186,6 +208,7 @@ static int LUA_AdsSetProvider(lua_State *lua)
 		else
 		if (strcmp(type, "inter") == 0)
 			PLATFORM_ADS->setProvider(AdType_Interstitial, Ads_FlurryAppSpot);
+		lua_pushboolean(lua, true);
 		return 1;
 	}
 #endif // ADS_FLURRY_APPSPOT_ENABLE
@@ -200,11 +223,12 @@ static int LUA_AdsSetProvider(lua_State *lua)
 		else
 		if (strcmp(type, "popup") == 0)
 			PLATFORM_ADS->setProvider(AdType_Popup, Ads_Revmob);
+		lua_pushboolean(lua, true);
 		return 1;
 	}
 #endif // ADS_REVMOB_ENABLE
 
-	lua_pushboolean(lua, true);
+	lua_pushboolean(lua, false);
 	return 1;
 }
 
@@ -313,6 +337,11 @@ static int LUA_AdsLoad(lua_State *lua)
 		PLATFORM_ADS->Load(AdType_Interstitial, data1, data2);
 	}
 	else
+	if (strcmp(type, "moreapps") == 0)
+	{
+		PLATFORM_ADS->Load(AdType_MoreApps, data1, data2);
+	}
+	else
 	{
 		CzScriptEngineLua::DisplayError(lua, "ads.load() Invalid ad type for Param0");
 		lua_pushboolean(lua, false);
@@ -384,6 +413,11 @@ static int LUA_AdsLoadShow(lua_State *lua)
 		PLATFORM_ADS->LoadShow(AdType_Interstitial, data1, data2);
 	}
 	else
+	if (strcmp(type, "moreapps") == 0)
+	{
+		PLATFORM_ADS->LoadShow(AdType_MoreApps, data1, data2);
+	}
+	else
 	{
 		CzScriptEngineLua::DisplayError(lua, "ads.load() Invalid ad type for Param0");
 		lua_pushboolean(lua, false);
@@ -430,6 +464,11 @@ static int LUA_AdsShow(lua_State *lua)
 		PLATFORM_ADS->Show(AdType_Interstitial);
 	}
 	else
+	if (strcmp(type, "moreapps") == 0)
+	{
+		PLATFORM_ADS->Show(AdType_MoreApps);
+	}
+	else
 	{
 		CzScriptEngineLua::DisplayError(lua, "ads.show() Invalid ad type for Param0");
 		lua_pushboolean(lua, false);
@@ -472,6 +511,11 @@ static int LUA_AdsHide(lua_State *lua)
 	if (strcmp(type, "inter") == 0)
 	{
 		PLATFORM_ADS->Hide(AdType_Interstitial);
+	}
+	else
+	if (strcmp(type, "moreapps") == 0)
+	{
+		PLATFORM_ADS->Hide(AdType_MoreApps);
 	}
 	else
 	{

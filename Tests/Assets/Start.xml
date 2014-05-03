@@ -122,6 +122,7 @@
 			<FromTemplate Template="TestButton" name="69 - SQLite Test" num="69" />
 			<FromTemplate Template="TestButton" name="70 - Facebook" num="70" />
 			<FromTemplate Template="TestButton" name="71 - Dynamic Geometry" num="71" />
+			<FromTemplate Template="TestButton" name="72 - Native Ads" num="72" />
 		</ListBox>
 
 	</Scene>
