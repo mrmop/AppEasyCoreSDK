@@ -65,11 +65,8 @@ IzPlatformMarket::eMarketVendor	CzMarket::VendorFromText(const char* vendor)
 	if (vendor_hash == CZ_HASH("apple"))
 		return IzPlatformMarket::MV_VENDOR_APPLE;
 	else
-	if (vendor_hash == CZ_HASH("wp8"))
-		return IzPlatformMarket::MV_VENDOR_WP8;
-	else
-	if (vendor_hash == CZ_HASH("ws8"))
-		return IzPlatformMarket::MV_VENDOR_WS8;
+	if (vendor_hash == CZ_HASH("windows"))
+		return IzPlatformMarket::MV_VENDOR_WINDOWS;
 
 	return IzPlatformMarket::MV_VENDOR_NONE;
 }
@@ -318,6 +315,13 @@ int CzMarket::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode
 				if (attrib_hash == CzHashes::AndroidId_Hash)
 				{
 					if (os == CzDeviceType_Android)
+						product->ProductID = (*it)->getValue();
+				}
+				if (attrib_hash == CzHashes::WindowsId_Hash)
+				{
+					if (os == CzDeviceType_WinMobile // wp7.x ?
+						|| os == CzDeviceType_Windows 
+						|| os==CzDeviceType_WP8)
 						product->ProductID = (*it)->getValue();
 				}
 				else

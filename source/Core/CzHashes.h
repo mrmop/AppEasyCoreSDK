@@ -363,6 +363,7 @@ public:
 	static unsigned int Id_Hash;
 	static unsigned int iOSId_Hash;
 	static unsigned int AndroidId_Hash;
+	static unsigned int WindowsId_Hash;
 	static unsigned int Consumable_Hash;
 	static unsigned int Price_Hash;
 	static unsigned int Vertical_Hash;
