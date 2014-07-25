@@ -352,6 +352,7 @@ unsigned int CzHashes::Product_Hash					= CzString::CalculateHash("product");
 unsigned int CzHashes::Id_Hash						= CzString::CalculateHash("id");
 unsigned int CzHashes::iOSId_Hash					= CzString::CalculateHash("iosid");
 unsigned int CzHashes::AndroidId_Hash				= CzString::CalculateHash("androidid");
+unsigned int CzHashes::WindowsId_Hash				= CzString::CalculateHash("windowsid");
 unsigned int CzHashes::Consumable_Hash				= CzString::CalculateHash("consumable");
 unsigned int CzHashes::Price_Hash					= CzString::CalculateHash("price");
 unsigned int CzHashes::Vertical_Hash				= CzString::CalculateHash("vertical");
