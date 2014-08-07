@@ -19,7 +19,7 @@
 #include "CzApp.h"
 #include "CzPlatform.h"
 #include "CzSettings.h"
-
+#include "s3eFile.h"
 
 //
 // LUA_isType(type-name)
@@ -524,6 +524,83 @@ static int LUA_setBackgroundColour(lua_State *lua)
  
     return 1;
 }
+
+//
+// LUA_listDirectory - lists directory contents. if passed path is nil then lists drives instead
+//
+static int LUA_listDirectory(lua_State *lua)
+{	
+	const char* dir = NULL;
+
+	int count = lua_gettop(lua);
+	if (count > 0)
+	{
+		// Get directory name
+		if (lua_isstring(lua, 1))
+			dir = lua_tostring(lua, 1);
+	}
+
+	//get file list
+	s3eFileList* list = s3eFileListDirectory(dir);
+	if (list==NULL)
+	{
+		switch (s3eFileGetError())
+		{
+		case S3E_FILE_ERR_NOT_FOUND:
+			CzScriptEngineLua::DisplayError(lua, "sys.listDirectory() directory doesn't exist or doesn't contain any files.");
+		case S3E_FILE_ERR_DEVICE:
+			CzScriptEngineLua::DisplayError(lua, "sys.listDirectory() file device failed.");
+		case S3E_FILE_ERR_TOO_MANY:
+			CzScriptEngineLua::DisplayError(lua, "sys.listDirectory() too many file handles are open.");
+		case S3E_FILE_ERR_MEM:
+			CzScriptEngineLua::DisplayError(lua, "sys.listDirectory() couldn't allocate enough memory for the list.");
+		}
+		lua_pushnil(lua);
+		return 1;
+	}	
+
+	//count items
+	int file_count = 0;
+	char buf[512];
+	while (s3eFileListNext(list,&buf[0],512)==S3E_RESULT_SUCCESS)
+		file_count+=1;
+	s3eFileListClose(list);
+
+	//get list again
+	list = s3eFileListDirectory(dir);
+	if (list==NULL)
+	{
+		switch (s3eFileGetError())
+		{
+		case S3E_FILE_ERR_NOT_FOUND:
+			CzScriptEngineLua::DisplayError(lua, "sys.listDirectory() directory doesn't exist or doesn't contain any files.");
+		case S3E_FILE_ERR_DEVICE:
+			CzScriptEngineLua::DisplayError(lua, "sys.listDirectory() file device failed.");
+		case S3E_FILE_ERR_TOO_MANY:
+			CzScriptEngineLua::DisplayError(lua, "sys.listDirectory() too many file handles are open.");
+		case S3E_FILE_ERR_MEM:
+			CzScriptEngineLua::DisplayError(lua, "sys.listDirectory() couldn't allocate enough memory for the list.");
+		}
+		lua_pushnil(lua);
+		return 1;
+	}
+
+	lua_createtable(lua, file_count, 0);
+	int new_table = lua_gettop(lua);
+	int index = 1;
+
+	// push file names
+	for (int i=0;i<file_count;i++)
+	{
+		s3eFileListNext(list,&buf[0],512);		
+		lua_pushstring(lua, &buf[0]);
+		lua_rawseti(lua, new_table, index++);	
+	}
+	s3eFileListClose(list);
+
+	return 1;
+}
+
 //
 // Lua AppEasy System library
 //
@@ -548,6 +625,7 @@ static const luaL_Reg g_syslib[] = {
 	{"pauseTime",			LUA_PauseTime}, 
 	{"isTimePaused",		LUA_isTimePaused}, 
 	{"setBackgroundColour",	LUA_setBackgroundColour}, 
+	{"listDirectory",	LUA_listDirectory}, 	
 	{NULL, NULL}
 };
 
