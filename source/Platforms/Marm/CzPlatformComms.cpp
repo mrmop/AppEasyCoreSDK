@@ -256,7 +256,7 @@ CzString CzPlatformComms::HttpDetermineUserAgent()
 		CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, ">>>>UserAgent: ", UserAgent.c_str());
 	}
 
-	if (UserAgent.isEmpty())
+/*	if (UserAgent.isEmpty())
 	{
 		CzString device_id(s3eDeviceGetString(S3E_DEVICE_ID));
 		CzString locale(s3eDeviceGetString(S3E_DEVICE_LOCALE));
@@ -267,11 +267,6 @@ CzString CzPlatformComms::HttpDetermineUserAgent()
 
 		switch (os)
 		{
-		case S3E_OS_ID_SYMBIAN:
-			UserAgent = "Mozilla/5.0 (SymbianOS/9.1; U; ";
-			UserAgent += locale;
-			UserAgent += ") AppleWebKit/413 (KHTML, like Gecko) Safari/413";
-			break;
 		case S3E_OS_ID_WINMOBILE:
 			UserAgent = device_id;
 			UserAgent += " Opera/9.50 (Windows NT 5.1; U; ";
@@ -298,19 +293,6 @@ CzString CzPlatformComms::HttpDetermineUserAgent()
 			UserAgent += locale;
 			UserAgent += ") AppleWebKit/534.8+ (KHTML, like Gecko) Version/0.0.1 Safari/534.8+";
 			break;
-/*		case S3E_OS_ID_BADA:
-			{
-				UserAgent = "SAMSUNG; ";
-				UserAgent += device_id;
-				UserAgent += "; U; Bada/1.2; ";
-				UserAgent += locale;
-				UserAgent += ") AppleWebKit/533.1 (KHTML, like Gecko) Dolfin/2.2 Mobile ";
-				const char* mode_name = CzUtils::GetGraphicModeName(width, height);
-				if (mode_name != NULL)
-					UserAgent += mode_name;
-				UserAgent += " SMM-MMS/1.2.0 OPN-B";
-			}
-			break;*/
 		case S3E_OS_ID_ANDROID:
 			UserAgent = "Mozilla/5.0 (Linux; U; Android 2.1; ";
 			UserAgent += locale;
@@ -367,7 +349,7 @@ CzString CzPlatformComms::HttpDetermineUserAgent()
 				UserAgent += mode_name;
 			UserAgent += " SMM-MMS/1.2.0 OPN-B";
 		}
-	}
+	}*/
 
 	return CzString(UserAgent.c_str());
 }

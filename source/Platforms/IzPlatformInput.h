@@ -33,6 +33,7 @@ public:
 	// Properties end
 public:
 	// Init
+	virtual ~IzPlatformInput() {}
 	virtual int		Init() = 0;
 	virtual void	Release() = 0;
 	// Feature query

@@ -60,6 +60,7 @@ public:
 	CzScriptCallback&		getScriptCallback()						{ return ScriptCallback; }
 	// Properties end
 public:
+	virtual ~IzPlatformAds() {}
 	virtual bool			isAvailable(eCzAdProvider provider) = 0;
 	virtual int				Init(eCzAdProvider provider, const char* id, const char* data1, int data2) = 0;
 	virtual void			Release() = 0;

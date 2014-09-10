@@ -119,6 +119,7 @@ public:
 	bool		isInitialised() const	{ return Initialised; }
 	// Properties end
 public:
+	virtual ~IzPlatformRender() {}
 	// Init
 	virtual int		Init(int max_primitives = 1024, int max_materials = 100) = 0;
 	virtual void	Release() = 0;

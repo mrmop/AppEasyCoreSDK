@@ -83,6 +83,7 @@ public:
 	// Properties end
 protected:
 public:
+	virtual ~IzPlatformCam() {}
 	virtual int		Init() = 0;
 	virtual void	Release() = 0;
 

@@ -13,9 +13,10 @@ defines
 	IW_GXFONT_TTF
 #	CZ_REMOVE_DUPLICATES
 	IW_HTTP_SSL
-#	ADS_CHARTBOOST_ENABLE
-	ADS_FLURRY_APPSPOT_ENABLE
-#	ADS_REVMOB_ENABLE
+	CZ_FACEBOOK_ENABLE
+#	CZ_ADS_CHARTBOOST_ENABLE
+#	CZ_ADS_FLURRY_APPSPOT_ENABLE
+#	CZ_ADS_REVMOB_ENABLE
 }
 
 subprojects
@@ -40,7 +41,7 @@ subprojects
 	UserAgent
 	
 	# extra modules
-	s3eFlurryAppSpot
+#	s3eFlurryAppSpot
 #	s3eChartBoost
 #	revmob\RevMobEDK
 }

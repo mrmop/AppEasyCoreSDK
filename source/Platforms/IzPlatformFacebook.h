@@ -50,6 +50,7 @@ public:
 	// Properties end
 
 public:
+	virtual ~IzPlatformFacebook() {}
 	virtual int			Init() = 0;
 	virtual void		Release() = 0;
 

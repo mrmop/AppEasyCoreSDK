@@ -64,6 +64,7 @@ public:
 	void				setParameter(int index, const char* data)				{ Params[index] = data; }
 	// Properties End
 public:
+	virtual ~IzModifier() {}
 	IzModifier() : Active(true), Initialised(false), Parent(NULL) {}
 	virtual void		InitModifier(IzXomlResource* target) = 0;				// Initialise the Modifier
 	virtual void		ReleaseModifier(IzXomlResource* target) = 0;			// Clean-up the Modifier
@@ -149,6 +150,7 @@ public:
 	CzString&				getClasstName()						{ return ClassName; }
 #endif
 public:
+	virtual ~IzModifierCreator() {}
 	virtual IzModifier* CreateInstance() = 0;
 };
 

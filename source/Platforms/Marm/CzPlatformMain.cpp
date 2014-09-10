@@ -64,7 +64,9 @@ int CzPlatformMain::Init()
 	PLATFORM->setOther(new CzPlatformOther());
 	PLATFORM->setUI(new CzPlatformUI());
 	PLATFORM->setCam(new CzPlatformCam());
+#if defined(CZ_FACEBOOK_ENABLE)
 	PLATFORM->setFacebook(new CzPlatformFacebook());
+#endif	// CZ_FACEBOOK_ENABLE
 	PLATFORM->setAds(new CzPlatformAds());
 
 //	int os = s3eDeviceGetInt(S3E_DEVICE_OS);

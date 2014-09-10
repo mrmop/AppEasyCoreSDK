@@ -65,7 +65,7 @@ class IzPlatform
 public:
 	virtual int		Init() = 0;
 	virtual void	Release() = 0;
-
+	virtual ~IzPlatform() {}
 	// Query
 	virtual const char*	getName() const	= 0;
 

@@ -289,22 +289,10 @@ CzAds::eAdsPortalType CzAds::FindPortalType(bool text_ad)
 	// Calculate portal type from OS
 	switch (os)
 	{
-	case CzDeviceType_Symbian:
-		if (text_ad)
-			return OVIText;
-		return OVIBanner;
-	case CzDeviceType_WinMobile:
-		if (text_ad)
-			return WinMobileText;
-		return WinMobileBanner;
 	case CzDeviceType_QNX:
 		if (text_ad)
 			return BlackberryText;
 		return BlackberryBanner;
-	case CzDeviceType_Bada:
-		if (text_ad)
-			return BadaText;
-		return BadaBanner;
 	case CzDeviceType_Android:
 		if (text_ad)
 			return AndroidText;
@@ -323,10 +311,6 @@ CzAds::eAdsPortalType CzAds::FindPortalType(bool text_ad)
 				return iPhoneText;
 			return iPhoneBanner;
 		}
-	case CzDeviceType_WebOS:
-		if (text_ad)
-			return WebOSText;
-		return WebOSBanner;
 	default:
 		if (text_ad)
 			return MobileWebText;

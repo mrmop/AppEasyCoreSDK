@@ -14,6 +14,7 @@
 #if !defined(_CCZ_PLATFORM_FACEBOOK_H_)
 #define _CCZ_PLATFORM_FACEBOOK_H_
 
+#if defined(CZ_FACEBOOK_ENABLE)
 #include "IzPlatformFacebook.h"
 #include "CzString.h"
 #include "s3eFacebook.h"
@@ -62,6 +63,7 @@ public:
 	void				WaitForCallback();
 	
 };
+#endif	// CZ_FACEBOOK_ENABLE
 
 
 #endif	// _CCZ_PLATFORM_FACEBOOK_H_

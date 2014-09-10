@@ -114,12 +114,14 @@ int CzPlatform::Init(IzPlatform* platform, bool comms, bool use_gl)
 			CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "Initialising Cam");
 		Cam->Init();
 	}
+#if defined(CZ_FACEBOOK_ENABLE)
 	if (Facebook != NULL)
 	{
 		if (g_CzShowTracing > 1)
 			CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "Initialising Facebook");
 		Facebook->Init();
 	}
+#endif	// CZ_FACEBOOK_ENABLE
 	if (Ads != NULL)
 	{
 		if (g_CzShowTracing > 1)
@@ -140,6 +142,7 @@ void CzPlatform::Release()
 		delete Ads;
 		Ads = NULL;
 	}
+#if defined(CZ_FACEBOOK_ENABLE)
 	if (Facebook != NULL)
 	{
 		if (g_CzShowTracing > 1)
@@ -148,6 +151,7 @@ void CzPlatform::Release()
 		delete Facebook;
 		Facebook = NULL;
 	}
+#endif	// CZ_FACEBOOK_ENABLE
 	if (Market != NULL)
 	{
 		if (g_CzShowTracing > 1)

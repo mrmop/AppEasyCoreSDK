@@ -306,6 +306,9 @@ int CzMarket::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode
 					}
 				}
 				else
+				if (attrib_hash == CzHashes::Id_Hash)
+					product->ProductID = (*it)->getValue();
+				else
 				if (attrib_hash == CzHashes::iOSId_Hash)
 				{
 					if (os == CzDeviceType_iPhone || os == CzDeviceType_iPad)

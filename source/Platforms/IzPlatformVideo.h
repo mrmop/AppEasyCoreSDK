@@ -48,6 +48,7 @@ public:
 	CzCallback			getVideoStoppedCallback()									{ return VideoStoppedCallback; }
 	// Properties end
 public:
+	virtual ~IzPlatformVideo() {}
 	virtual int			Init() = 0;
 	virtual void		Release() = 0;
 	virtual bool		Play(const char* filename, const CzIRect& rect, int repeat_count, eCzVideoCodec codec) = 0;

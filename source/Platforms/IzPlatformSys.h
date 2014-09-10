@@ -28,17 +28,15 @@ enum eCzDeviceType
 	CzDeviceType_iPhone			= 0,
 	CzDeviceType_iPad			= 1,
 	CzDeviceType_Android		= 2,
-	CzDeviceType_Bada			= 3,
-	CzDeviceType_QNX			= 4,
-	CzDeviceType_Symbian		= 5,
-	CzDeviceType_WinMobile		= 6,
-	CzDeviceType_WebOS			= 7,
-	CzDeviceType_Windows		= 8,
-	CzDeviceType_OSX			= 9,
-	CzDeviceType_Vita			= 10,
-	CzDeviceType_WP8			= 11,
-	CzDeviceType_TIZEN			= 12,
-	CzDeviceType_ROKU			= 13,
+	CzDeviceType_QNX			= 3,
+	CzDeviceType_Windows		= 4,
+	CzDeviceType_OSX			= 5,
+	CzDeviceType_WP8			= 6,
+	CzDeviceType_WP81			= 7,
+	CzDeviceType_WS8			= 8,
+	CzDeviceType_WS81			= 9,
+	CzDeviceType_TIZEN			= 10,
+	CzDeviceType_ROKU			= 11,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -71,6 +69,7 @@ public:
 	void		setScreenSizeChangedCallback(CzCallback callback)	{ ScreenSizeChangedCallback	= callback; }
 	// Properties end
 public:
+	virtual ~IzPlatformSys() {}
 	IzPlatformSys() :	SuspendedCallback(NULL), ResumedCallback(NULL), VolumeUpCallback(NULL), VolumeDownCallback(NULL), NetworkOnlineCallback(NULL), NetworkOfflineCallback(NULL), 
 						ScreenSizeChangedCallback(NULL), Suspended(false), Initialised(false) {}
 
@@ -116,6 +115,9 @@ public:
 
 	// Device OS version query
 	virtual const char*		getDeviceOSVersion() = 0;
+
+	// Device OS version query
+	virtual int				getDeviceOSVersionInt() = 0;
 
 	// Device UDID
 	virtual int				getDeviceUDID() = 0;

@@ -32,6 +32,7 @@ public:
 	bool		isInitialised() const	{ return Initialised; }
 	// Properties end
 public:
+	virtual ~IzPlatformOther() {}
 	virtual int Init() = 0;
 	virtual void Release() = 0;
 

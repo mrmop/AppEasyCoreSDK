@@ -179,6 +179,7 @@ public:
 	CzString&			getCommandtName()						{ return CommandName; }
 #endif
 public:
+	virtual ~CzCommandCreator() {}
 	virtual CzCommand* CreateInstance() = 0;
 };
 

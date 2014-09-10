@@ -54,6 +54,7 @@ public:
 	virtual void			setMusicOn(bool on) = 0;
 	// Properties end
 public:
+	virtual ~IzPlatformAudio() {}
 	virtual int				Init() = 0;
 	virtual void			Release() = 0;
 	virtual void			Update() = 0;

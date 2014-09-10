@@ -76,6 +76,7 @@ public:
 	IzPlatformMarket() : CurrentVendor(MV_VENDOR_NONE), ActiveMarket(NULL) {}
 
 	// PLatform specific implementations
+	virtual ~IzPlatformMarket() {}
 	virtual bool			isAvailable(eMarketVendor vendor) = 0;			///< Check vendor availability
 	virtual int				Init(void* id, eMarketVendor vendor) = 0;		///< Market intialisation
 	virtual void			Release() = 0;									///< Market cleanup

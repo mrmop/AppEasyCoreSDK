@@ -250,25 +250,33 @@ static int LUA_getDeviceType(lua_State *lua)
 	case CzDeviceType_Android:
 		lua_pushstring(lua, "android");
 		break;
-/*	case CzDeviceType_Bada:
-		break;
 	case CzDeviceType_QNX:
+		lua_pushstring(lua, "blackberry");
 		break;
-	case CzDeviceType_Symbian:
-		break;
-	case CzDeviceType_WinMobile:
-		break;
-	case CzDeviceType_WebOS:
-		break;*/
 	case CzDeviceType_Windows:
 		lua_pushstring(lua, "windows");
 		break;
-/*	case CzDeviceType_OSX:
-		break;
-	case CzDeviceType_Vita:
+	case CzDeviceType_OSX:
+		lua_pushstring(lua, "osx");
 		break;
 	case CzDeviceType_WP8:
-		break;*/
+		lua_pushstring(lua, "wp8");
+		break;
+	case CzDeviceType_WP81:
+		lua_pushstring(lua, "wp81");
+		break;
+	case CzDeviceType_WS8:
+		lua_pushstring(lua, "ws8");
+		break;
+	case CzDeviceType_WS81:
+		lua_pushstring(lua, "ws81");
+		break;
+	case CzDeviceType_TIZEN:
+		lua_pushstring(lua, "tizen");
+		break;
+	case CzDeviceType_ROKU:
+		lua_pushstring(lua, "roku");
+		break;
 	default:
 		lua_pushstring(lua, "unsupported");
 	}
@@ -283,8 +291,21 @@ static int LUA_getOSVersion(lua_State *lua)
 {
 	int count = lua_gettop(lua);
 
-	const char* locale = PLATFORM_SYS->getDeviceOSVersion();
-	lua_pushstring(lua, locale);
+	const char* version = PLATFORM_SYS->getDeviceOSVersion();
+	lua_pushstring(lua, version);
+
+    return 1;
+}
+
+//
+// LUA_getOSVersionInt - Returns OS version (return the devices OS version as integer)
+//
+static int LUA_getOSVersionInt(lua_State *lua)
+{
+	int count = lua_gettop(lua);
+
+	int version = PLATFORM_SYS->getDeviceOSVersionInt();
+	lua_pushnumber(lua, version);
 
     return 1;
 }
@@ -615,6 +636,7 @@ static const luaL_Reg g_syslib[] = {
 	{"getFrameRate",		LUA_getFrameRate}, 
 	{"getDeviceType",		LUA_getDeviceType}, 
 	{"getOSVersion",		LUA_getOSVersion}, 
+	{"getOSVersionInt",		LUA_getOSVersionInt}, 
 	{"getLocale",			LUA_getLocale}, 
 	{"getFreeMem",			LUA_getFreeMem}, 
 	{"vibrate",				LUA_StartVibrate}, 

@@ -81,7 +81,7 @@ class CzApp;
 private:										\
 	static the_class* _instance;				\
 	the_class() {}								\
-	~the_class() {}								\
+	virtual ~the_class() {}						\
 	the_class(const the_class &);				\
 	the_class& operator=(const the_class &);	\
 public:											\

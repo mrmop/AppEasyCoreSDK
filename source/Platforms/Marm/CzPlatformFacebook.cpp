@@ -11,6 +11,7 @@
 //
 //
 
+#if defined(CZ_FACEBOOK_ENABLE)
 #include "Marm/CzPlatformFacebook.h"
 #include "s3e.h"
 
@@ -60,7 +61,7 @@ int CzPlatformFacebook::Init()
 	SessionStatus = FB_UNINITIALISED;
 	CurrentSession = 0;
 
-	if (s3eExtFacebookAvailable())
+	if (s3eFacebookAvailable())
 		Available = true;
 	else
 		return 0;
@@ -351,5 +352,6 @@ const char* CzPlatformFacebook::GetAccessToken()
 	
 	return true;
 }*/
+#endif	// CZ_FACEBOOK_ENABLE
 
 

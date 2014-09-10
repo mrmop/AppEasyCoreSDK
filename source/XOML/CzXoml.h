@@ -227,6 +227,7 @@ public:
 #endif
 	// Properties end
 public:
+	virtual ~IzXomlClassCreator() {}
 	virtual IzXomlResource* CreateInstance(IzXomlResource* parent) = 0;
 };
 

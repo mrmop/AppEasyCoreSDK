@@ -56,6 +56,7 @@ struct IzBox2dJoint
 	b2Vec2				AnchorB;				///< Body B world anchor pos
 	bool				SelfCollide;			///< True to allow self collision
 
+	virtual ~IzBox2dJoint() {}
 	virtual void		Create(CzBox2dWorld* world) = 0;
 	virtual b2Joint*	getJoint() = 0;
 	void				setName(const char* name)

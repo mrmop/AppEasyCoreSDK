@@ -33,6 +33,7 @@ public:
 	// Properties end
 public:
 	// Init
+	virtual ~IzPlatformDisplay() {}
 	virtual int		Init(bool use_gl) = 0;
 	virtual void	Release() = 0;
 

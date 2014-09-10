@@ -59,6 +59,7 @@ public:
 #endif
 	// Properties end
 public:
+	virtual ~IzXomlAction() {}
 	virtual void Execute(IzXomlResource* source, CzAction* action) = 0;
 
 	static IzXomlResource* getContainer(IzXomlResource* source, CzApp*& app, CzScene*& scene, CzActor*& actor);

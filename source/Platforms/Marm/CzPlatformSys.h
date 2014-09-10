@@ -67,6 +67,7 @@ public:
 
 	// Device OS version query
 	const char*		getDeviceOSVersion();
+	int				getDeviceOSVersionInt();
 
 	// Device UDID
 	int				getDeviceUDID();

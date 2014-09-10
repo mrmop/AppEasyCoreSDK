@@ -193,15 +193,8 @@ eCzDeviceType CzPlatformSys::getDeviceType()
 	// Calculate portal type from OS
 	switch (os)
 	{
-	case S3E_OS_ID_SYMBIAN:
-		return CzDeviceType_Symbian;
-	case S3E_OS_ID_WINMOBILE:
-	case S3E_OS_ID_WINCE:
-		return CzDeviceType_WinMobile;
 	case S3E_OS_ID_QNX:
 		return CzDeviceType_QNX;
-//	case S3E_OS_ID_BADA:
-//		return CzDeviceType_Bada;
 	case S3E_OS_ID_ANDROID:
 		return CzDeviceType_Android;
 	case S3E_OS_ID_IPHONE:
@@ -209,14 +202,18 @@ eCzDeviceType CzPlatformSys::getDeviceType()
 			return CzDeviceType_iPad;
 		else
 			return CzDeviceType_iPhone;
-	case S3E_OS_ID_WEBOS:
-		return CzDeviceType_WebOS;
 	case S3E_OS_ID_WINDOWS:
 		return CzDeviceType_Windows;
 	case S3E_OS_ID_OSX:
 		return CzDeviceType_OSX;
 	case S3E_OS_ID_WP8:
 		return CzDeviceType_WP8;
+	case S3E_OS_ID_WP81:
+		return CzDeviceType_WP81;
+	case S3E_OS_ID_WS8:
+		return CzDeviceType_WS8;
+	case S3E_OS_ID_WS81:
+		return CzDeviceType_WS81;
 	case S3E_OS_ID_TIZEN:
 		return CzDeviceType_TIZEN;
 	case S3E_OS_ID_ROKU:
@@ -229,6 +226,11 @@ eCzDeviceType CzPlatformSys::getDeviceType()
 const char* CzPlatformSys::getDeviceOSVersion()
 {
 	return s3eDeviceGetString(S3E_DEVICE_OS_VERSION);
+}
+
+int CzPlatformSys::getDeviceOSVersionInt()
+{
+	return s3eDeviceGetInt(S3E_DEVICE_OS_VERSION);
 }
 
 int CzPlatformSys::getDeviceUDID()
