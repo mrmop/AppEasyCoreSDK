@@ -28,7 +28,7 @@
 
 #include "Marm/CzPlatformComms.h"
 #include "s3eSocket.h"
-#include "UserAgent.h"
+//#include "UserAgent.h"
 #include "IzPlatformDisplay.h"
 #include "CzPlatform.h"
 
@@ -250,11 +250,11 @@ CzString CzPlatformComms::HttpDetermineUserAgent()
 	CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "device_locale = ", s3eDeviceGetString(S3E_DEVICE_LOCALE));
 	CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "device_name = ", s3eDeviceGetString(S3E_DEVICE_NAME));
 
-	if (UserAgentAvailable())
+/*	if (UserAgentAvailable())
 	{
 		UserAgent = ::getUserAgent();	// Get user-agent from extension
 		CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, ">>>>UserAgent: ", UserAgent.c_str());
-	}
+	}*/
 
 /*	if (UserAgent.isEmpty())
 	{

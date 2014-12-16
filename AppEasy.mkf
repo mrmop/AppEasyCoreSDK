@@ -38,7 +38,7 @@ subprojects
 	box2d
 	third_party/sqlite
 	lsqlite3
-	UserAgent
+#	UserAgent
 	
 	# extra modules
 #	s3eFlurryAppSpot

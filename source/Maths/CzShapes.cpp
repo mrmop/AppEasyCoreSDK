@@ -36,6 +36,8 @@ int CzShape::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 	float	width = 0, height = 0, radius = 0;
 	CzGeomShape::eGeomShapeType type = CzGeomShape::ST_None;
 	CzString* points = NULL;
+	CzString* convex_counts = NULL;
+	int num_convex = 0;
 
 	for (CzXmlNode::_AttribIterator it = node->attribs_begin(); it != node->attribs_end(); it++)
 	{
@@ -73,6 +75,12 @@ int CzShape::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 		else
 		if (name_hash == CzHashes::Points_Hash)
 			points = &(*it)->getValue();
+		else
+		if (name_hash == CzHashes::ConvexCounts_Hash)
+			convex_counts = &(*it)->getValue();
+		else
+		if (name_hash == CzHashes::NumConvex_Hash)
+			num_convex = (*it)->getValueAsInt();
 	}
 
 	if (type == CzGeomShape::ST_None)
@@ -104,6 +112,15 @@ int CzShape::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 		shape->ShapeType = type;
 		Shape = shape;
 
+		if (convex_counts != NULL && num_convex > 0)
+		{
+			shape->NumConvex = num_convex;
+			int count = convex_counts->getAsListOfInt(CzXmlTools::IntListPool);
+			shape->ConvexCounts = new int [count];
+			for (int t = 0; t < count; t++)
+				shape->ConvexCounts[t] = CzXmlTools::IntListPool[t];
+		}
+
 		if (points != NULL)
 		{
 			shape->NumVertices = points->getAsListOfFloat(CzXmlTools::FloatListPool) >> 1;
@@ -127,7 +144,7 @@ int CzShape::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 			shape->Vertices = new CzVec2[num_points]();
 			shape->NumVertices = num_points;
 
-			// Prrocess polygon points
+			// Process polygon points
 			int index = 0;
 			for (CzXmlNode::_Iterator it2 = node->begin(); it2 != node->end(); ++it2)
 			{

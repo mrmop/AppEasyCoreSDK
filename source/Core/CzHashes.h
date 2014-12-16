@@ -198,6 +198,8 @@ public:
 	static unsigned int Point_Hash;
 	static unsigned int RowDefinition_Hash;
 	static unsigned int ColumnDefinition_Hash;
+	static unsigned int ConvexCounts_Hash;
+	static unsigned int NumConvex_Hash;
 	static unsigned int Particle_Hash;
 	static unsigned int Data_Hash;
 	static unsigned int Density_Hash;

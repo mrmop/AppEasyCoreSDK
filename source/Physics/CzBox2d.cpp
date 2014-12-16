@@ -201,23 +201,71 @@ b2Fixture* CzBox2dBody::addFixture(CzShape* body_shape, CzBox2dMaterial* body_ma
 	case CzGeomShape::ST_Polygon:
 		{
 			CzGeomShapePolygon* shp = (CzGeomShapePolygon*)body_shape->getShape();
-			fixture1.shape = &poly_shape;
-			poly_shape.m_vertexCount = shp->NumVertices;
-			CzVec2* points = shp->Vertices;
-			int count = shp->NumVertices;
-			if (count > 8)
+			if (shp->NumConvex > 0)
 			{
-				CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Fixture shape has more than 8 vertices - ", body_shape->getName().c_str());
-				count = 8;
+				int vi = 0;
+				b2FixtureDef fixtd;
+				b2Fixture* fixture = NULL;
+				for (int t = 0; t < shp->NumConvex; t++)
+				{
+					int count = shp->ConvexCounts[t];
+					if (count > 8)
+					{
+						CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Fixture shape has more than 8 vertices - ", body_shape->getName().c_str());
+						count = 8;
+					}
+					b2PolygonShape ps;
+					fixtd.shape = &ps;
+					ps.m_vertexCount = count;
+					CzVec2* points = shp->Vertices + vi;
+					b2Vec2 verts[8];
+					for (int t2 = 0; t2 < count; t2++)
+					{
+						verts[t2].x = World->PixelToWorldX(points->x) + cm.x;
+						verts[t2].y = World->PixelToWorldY(points->y) + cm.y;
+						points++;
+					}
+					ps.Set(verts, count);
+					vi += count;
+
+					if (body_mat != NULL)
+					{
+						fixtd.density = body_mat->getDensity();
+						fixtd.friction = body_mat->getFriction();
+						fixtd.restitution = body_mat->getRestitution();
+					}
+					else
+					{
+						fixtd.density = 1.0f;
+						fixtd.friction = 1.0f;
+						fixtd.restitution = 0.1f;
+					}
+					fixture = Body->CreateFixture(&fixtd);
+					Fixtures.push_back(fixture);
+				}
+
+				return fixture;
 			}
-			b2Vec2 verts[8];
-			for (int t = 0; t < count; t++)
+			else
 			{
-				verts[t].x = World->PixelToWorldX(points->x) + cm.x;
-				verts[t].y = World->PixelToWorldY(points->y) + cm.y;
-				points++;
+				fixture1.shape = &poly_shape;
+				poly_shape.m_vertexCount = shp->NumVertices;
+				CzVec2* points = shp->Vertices;
+				int count = shp->NumVertices;
+				if (count > 8)
+				{
+					CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Fixture shape has more than 8 vertices - ", body_shape->getName().c_str());
+					count = 8;
+				}
+				b2Vec2 verts[8];
+				for (int t = 0; t < count; t++)
+				{
+					verts[t].x = World->PixelToWorldX(points->x) + cm.x;
+					verts[t].y = World->PixelToWorldY(points->y) + cm.y;
+					points++;
+				}
+				poly_shape.Set(verts, count);
 			}
-			poly_shape.Set(verts, count);
 		}
 		break;
 	}

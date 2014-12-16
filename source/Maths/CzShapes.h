@@ -58,8 +58,14 @@ struct CzGeomShapePolygon : public CzGeomShape
 {
 	CzVec2*		Vertices;							// Radius of circle
 	int			NumVertices;						// Number of vertices in the polygon
-	CzGeomShapePolygon() : Vertices(NULL)			{ ShapeType = ST_Polygon; }
-	virtual ~CzGeomShapePolygon()					{ SAFE_DELETE_ARRAY(Vertices) }
+	int*		ConvexCounts;						// List of number of vertices in each convex shape
+	int			NumConvex;							// number of convex shapes in ths convex vertices list
+	CzGeomShapePolygon() : Vertices(NULL), ConvexCounts(NULL), NumConvex(0)			{ ShapeType = ST_Polygon; }
+	virtual ~CzGeomShapePolygon()
+	{
+		SAFE_DELETE_ARRAY(Vertices)
+		SAFE_DELETE_ARRAY(ConvexCounts)
+	}
 };
 
 class CzShape : public IzXomlResource
