@@ -815,6 +815,7 @@ protected:
 	bool				UseParentOpacity;		///< If true then this actors visuals opacity will be scaled by its parent, if it has one
 	bool				PercentagePosition;		///< If true then position 
 	bool				IgnoreCamera;			///< If true then actor will not move with scene camera
+	int					RenderAs;				///< Type of object to render as (0 - no override, 1 - arc, 2 - rect)
 	eCzAspectLock		AspectLock;				///< Determines which acis to use to lock aspect ratio of actors size
 	CzSprite*			Visual;					///< Visual element that represents the actor
 	CzAnimTimeline*		Timeline;				///< Timeline, controls animation of the actor
@@ -967,6 +968,8 @@ public:
 	void				setTickEnabled(bool enabled)			{ TickEnabled = enabled; }
 	bool				isTickEnabled() const					{ return TickEnabled; }
 	void				setOriginalSize(int w, int h)			{ OriginalSize.x = w; OriginalSize.y = h; }
+	void				setRenderAs(int render_as)				{ RenderAs = render_as; }
+	int					getRenderAs() const						{ return RenderAs; }
 	// Properties end
 protected:
 	CzIVec2				OriginalSize;										///< Original visual size
@@ -981,7 +984,7 @@ protected:
 
 public:
 	CzActor() : IzXomlResource(), Used(false), Scene(NULL), Visual(NULL), Timeline(NULL), EventsManager(NULL), Modifiers(NULL), LinkedTo(NULL), Bindings(NULL), SimpleBinding(NULL), ActionsManager(NULL), TimelinesManager(NULL), 
-	PercentagePosition(false), UserData(NULL), Orphan(false), IgnoreCamera(false), UserPropertyList(NULL) , Box2dBody(NULL), TimersManager(NULL)
+	PercentagePosition(false), UserData(NULL), Orphan(false), IgnoreCamera(false), UserPropertyList(NULL) , Box2dBody(NULL), TimersManager(NULL), RenderAs(0)
 	{
 		setClassType("actor");
 		Reset();

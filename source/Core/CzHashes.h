@@ -159,6 +159,7 @@ public:
 	static unsigned int Duration_Hash;
 	static unsigned int SpawnDelay_Hash;
 	static unsigned int SrcRect_Hash;
+	static unsigned int RectFrames_Hash;
 	static unsigned int UV_Hash;
 	static unsigned int Colours_Hash;
 	static unsigned int Vertices_Hash;
@@ -176,6 +177,7 @@ public:
 	static unsigned int PointSize_Hash;
 	static unsigned int AutoPointSize_Hash;
 	static unsigned int Anim_Hash;
+	static unsigned int AnimFrames_Hash;
 	static unsigned int StartAtTime_Hash;
 	static unsigned int TimeScale_Hash;
 	static unsigned int Delta_Hash;
@@ -371,6 +373,11 @@ public:
 	static unsigned int Vertical_Hash;
 	static unsigned int Horizontal_Hash;
 	static unsigned int HoldFocus_Hash;
+	static unsigned int RenderAs_Hash;
+	static unsigned int Filled_Hash;
+	static unsigned int Thickness_Hash;
+	static unsigned int CornerRadius_Hash;
+	static unsigned int PlaybackSpeed_Hash;
 	
 	static unsigned int OnTapped_Hash;
 	static unsigned int OnTapped2_Hash;

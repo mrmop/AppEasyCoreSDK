@@ -82,6 +82,7 @@ protected:
 	float					ScaleX;					///< X axis scale of sprite
 	float					ScaleY;					///< X axis scale of sprite
 	CzColour				Colour;					///< Colour of sprite
+	bool					NoDraw;					///< If set to true then forces this sprite not to be rendered, although its children will be
 	bool					Visible;				///< Sprites visible state
 	bool					Pooled;					///< Tells system if we belong to a sprite pool or not
 	bool					InUse;					///< Used in a memory pooling system to mark this sprite as in use
@@ -211,6 +212,8 @@ public:
 	int				getOpacity() const			{ return Colour.a; }
 	void			setVisible(bool show)		{ Visible = show; }
 	bool			isVisible() const			{ return Visible; }
+	void			setNoDraw(bool no_draw)		{ NoDraw = no_draw; }
+	bool			isNoDraw() const			{ return NoDraw; }
 	void			setFilter(bool enable)		{ Material->Filter = enable; }
 	bool			isFilter() const			{ return Material->Filter; }
 	bool			isVisibleWithParents() const;
@@ -272,7 +275,7 @@ protected:
 	void			UpdateClipping();
 
 public:
-	CzSprite() : Pooled(false), Prim(NULL), Material(NULL), Actor(NULL), Geometry(NULL)
+	CzSprite() : Pooled(false), Prim(NULL), Material(NULL), Actor(NULL), Geometry(NULL), Parent(NULL)
 	{
 		setSpriteType(ST_None);
 #if defined(CZ_ENABLE_METRICS)

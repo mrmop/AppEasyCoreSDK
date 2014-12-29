@@ -232,9 +232,779 @@ void CzGeometry::setCounts(int vertices, int indices)
 	IndicesCount = indices;
 }
 
+/**
+ @fn	void CzGeometry::generateEllipse(float radius_x, float radius_y, float start_angle, float end_angle, int resolution, CzColour& colour)
 
+ @brief	Geberates a circle geometry
 
+ @param [in]	radius_x	X axis radius
+ @param [in]	radius_y	Y axis radius
+ @param [in]	start_angle	Start angle of ellipse in degrees
+ @param [in]	end_angle	End angle of sllipse in degrees
+ @param [in]	resolution	Resolution of sllipse segments
+ @param [in]	colour		Colour of circle
+ */
 
+void CzGeometry::generateEllipse(float radius_x, float radius_y, float start_angle, float end_angle, int resolution, CzColour& colour)
+{
+	if (resolution == 0)
+	{
+		resolution = (int)(radius_x > radius_y ? radius_x : radius_y);
+		if ((end_angle - start_angle) != 360.0f)
+			resolution = (int)((resolution * (end_angle - start_angle)) / 360);
+		if (resolution < 8) resolution = 8;
+	}
+	start_angle = start_angle * (2.0f * PI) / 360.0f;
+	end_angle = end_angle * (2.0f * PI) / 360.0f;
 
+	int nv = resolution + 1;
+	int ni = (resolution - 1) * 3;
+
+	// Allocate space for geometry data
+	SAFE_DELETE_ARRAY(Verts)
+	SAFE_DELETE_ARRAY(Colours)
+	SAFE_DELETE_ARRAY(UVs)
+	SAFE_DELETE_ARRAY(Indices)
+	Verts = new CzVec2[nv]();
+	Colours = new CzColour[nv]();
+	VertCount = nv;
+	Indices = new uint16[ni];
+	IndicesCount = ni;
+	FaceCount = resolution;
+	Type = PrimType_TriList;
+
+	// Generate circle geometry
+	CzVec2* tv = Verts;
+	CzColour* cv = Colours;
+
+	tv->x = 0;
+	tv->y = 0;
+	tv++;
+	cv->r = colour.r;
+	cv->g = colour.g;
+	cv->b = colour.b;
+	cv->a = colour.a;
+	cv++;
+	float da = (end_angle - start_angle) / (resolution - 1);
+	for (int i = 0; i < resolution; i++)
+	{
+		tv->x = radius_x * CzMath::cos(start_angle);
+		tv->y = -radius_y * CzMath::sin(start_angle);
+		tv++;
+		cv->r = colour.r;
+		cv->g = colour.g;
+		cv->b = colour.b;
+		cv->a = colour.a;
+		cv++;
+		start_angle += da;
+	}
+
+	// Set face indices
+	uint16* ind = Indices + (resolution - 1) * 3 - 1;
+	for (int i = 0; i < resolution - 1; i++)
+	{
+		*ind-- = 0;
+		*ind-- = i + 1;
+		*ind-- = (i < (resolution - 1)) ? i + 2 : 1;
+	}
+}
+
+/**
+ @fn	void CzGeometry::generateEllipseWire(float radius_x, float radius_y, float start_angle, float end_angle, int resolution, CzColour& colour, float thickness)
+
+ @brief	Geberates a circle geometry
+
+ @param [in]	radius_x	X axis radius
+ @param [in]	radius_y	Y axis radius
+ @param [in]	start_angle	Start angle of ellipse in degrees
+ @param [in]	end_angle	End angle of sllipse in degrees
+ @param [in]	resolution	Resolution of sllipse segments
+ @param [in]	colour		Colour of circle
+ @param [in]	thickness	Wire thickness
+ */
+
+void CzGeometry::generateEllipseWire(float radius_x, float radius_y, float start_angle, float end_angle, int resolution, CzColour& colour, float thickness)
+{
+	thickness /= 2.0f;
+	if (resolution == 0)
+	{
+		resolution = (int)(radius_x > radius_y ? radius_x : radius_y);
+		if ((end_angle - start_angle) != 360.0f)
+			resolution = (int)((resolution * (end_angle - start_angle)) / 360);
+		if (resolution < 8) resolution = 8;
+	}
+	start_angle = start_angle * (2.0f * PI) / 360.0f;
+	end_angle = end_angle * (2.0f * PI) / 360.0f;
+
+	int nv = resolution << 1;
+	int ni = (resolution - 1) * 3 * 2;
+
+	// Allocate space for geometry data
+	SAFE_DELETE_ARRAY(Verts)
+	SAFE_DELETE_ARRAY(Colours)
+	SAFE_DELETE_ARRAY(UVs)
+	SAFE_DELETE_ARRAY(Indices)
+	Verts = new CzVec2[nv]();
+	Colours = new CzColour[nv]();
+	VertCount = nv;
+	Indices = new uint16[ni];
+	IndicesCount = ni;
+	FaceCount = resolution;
+	Type = PrimType_TriList;
+
+	// Generate circle geometry
+	CzVec2* tv = Verts;
+	CzColour* cv = Colours;
+	float da = (end_angle - start_angle) / (resolution - 1);
+    for (int i = 0; i < resolution; i++)
+    {
+        float xs = radius_x * CzMath::cos(start_angle);
+        float ys = -radius_y * CzMath::sin(start_angle);
+        start_angle += da;
+        float xe = radius_x * CzMath::cos(start_angle);
+        float ye = -radius_y * CzMath::sin(start_angle);
+        float dx = xe - xs;
+        float dy = ye - ys;
+        float d = CzMath::sqrt(dx * dx + dy * dy);
+        float ddx = -dy * thickness / d;
+        float ddy = dx * thickness / d;
+
+        tv->x = xs - ddx;
+		tv->y = ys - ddy;
+		tv++;
+		cv->r = colour.r;
+		cv->g = colour.g;
+		cv->b = colour.b;
+		cv->a = colour.a;
+		cv++;
+        tv->x = xs + ddx;
+		tv->y = ys + ddy;
+		tv++;
+		cv->r = colour.r;
+		cv->g = colour.g;
+		cv->b = colour.b;
+		cv->a = colour.a;
+		cv++;
+    }
+
+	// Set face indices
+	uint16* ind = Indices;	// + (resolution - 1) * 3 - 1;
+	int index = 0;
+	for (int i = 0; i < resolution - 1; i++)
+	{
+		*ind++ = index;
+		*ind++ = index + 2;
+		*ind++ = index + 1;
+		*ind++ = index + 2;
+		*ind++ = index + 3;
+		*ind++ = index + 1;
+		index += 2;
+	}
+}
+
+/**
+ @fn	void CzGeometry::generateRect(float width, float height, CzColour& colour)
+
+ @brief	Geberates a circle geometry
+
+ @param [in]	width		Width of rect
+ @param [in]	height		Height of rect
+ @param [in]	colour		Colour of circle
+ */
+
+void CzGeometry::generateRect(float width, float height, CzColour& colour)
+{
+	width /= 2;
+	height /= 2;
+	int nv = 4;
+	int ni = 4;
+
+	// Allocate space for geometry data
+	SAFE_DELETE_ARRAY(Verts)
+	SAFE_DELETE_ARRAY(Colours)
+	SAFE_DELETE_ARRAY(UVs)
+	SAFE_DELETE_ARRAY(Indices)
+	Verts = new CzVec2[nv]();
+	Colours = new CzColour[nv]();
+	VertCount = nv;
+	Indices = new uint16[ni];
+	IndicesCount = ni;
+	FaceCount = 1;
+	Type = PrimType_QuadList;
+
+	CzVec2* tv = Verts;
+	CzColour* cv = Colours;
+	tv->x = -width;
+	tv->y = -height;
+	tv++;
+	tv->x = width;
+	tv->y = -height;
+	tv++;
+	tv->x = width;
+	tv->y = height;
+	tv++;
+	tv->x = -width;
+	tv->y = height;
+	tv++;
+	for (int t = 0; t < nv; t++)
+	{
+		cv->r = colour.r;
+		cv->g = colour.g;
+		cv->b = colour.b;
+		cv->a = colour.a;
+		cv++;
+	}
+
+	// Set face indices
+	uint16* ind = Indices;
+	*ind++ = 0;
+	*ind++ = 1;
+	*ind++ = 2;
+	*ind++ = 3;
+}
+
+/**
+ @fn	void CzGeometry::generateRectWire(float width, float height, CzColour& colour, float thickness)
+
+ @brief	Geberates a circle geometry
+
+ @param [in]	width		Width of rect
+ @param [in]	height		Height of rect
+ @param [in]	colour		Colour of circle
+ @param [in]	thickness	Wire thickness
+ */
+
+void CzGeometry::generateRectWire(float width, float height, CzColour& colour, float thickness)
+{
+	width /= 2;
+	height /= 2;
+	int nv = 8;
+	int ni = 16;
+
+	// Allocate space for geometry data
+	SAFE_DELETE_ARRAY(Verts)
+	SAFE_DELETE_ARRAY(Colours)
+	SAFE_DELETE_ARRAY(UVs)
+	SAFE_DELETE_ARRAY(Indices)
+	Verts = new CzVec2[nv]();
+	Colours = new CzColour[nv]();
+	VertCount = nv;
+	Indices = new uint16[ni];
+	IndicesCount = ni;
+	FaceCount = 4;
+	Type = PrimType_QuadList;
+
+	CzVec2* tv = Verts;
+	CzColour* cv = Colours;
+	tv->x = -width;
+	tv->y = -height;
+	tv++;
+	tv->x = width;
+	tv->y = -height;
+	tv++;
+	tv->x = -width + thickness;
+	tv->y = -height + thickness;
+	tv++;
+	tv->x = width - thickness;
+	tv->y = -height + thickness;
+	tv++;
+	tv->x = -width + thickness;
+	tv->y = height - thickness;
+	tv++;
+	tv->x = width - thickness;
+	tv->y = height - thickness;
+	tv++;
+	tv->x = -width;
+	tv->y = height;
+	tv++;
+	tv->x = width;
+	tv->y = height;
+	tv++;
+
+	for (int t = 0; t < nv; t++)
+	{
+		cv->r = colour.r;
+		cv->g = colour.g;
+		cv->b = colour.b;
+		cv->a = colour.a;
+		cv++;
+	}
+
+	// Set face indices
+	uint16* ind = Indices;
+	*ind++ = 0;	*ind++ = 1;	*ind++ = 3;	*ind++ = 2;
+	*ind++ = 4;	*ind++ = 5;	*ind++ = 7;	*ind++ = 6;
+	*ind++ = 0;	*ind++ = 2;	*ind++ = 4;	*ind++ = 6;
+	*ind++ = 3;	*ind++ = 1;	*ind++ = 7;	*ind++ = 5;
+}
+
+/**
+ @fn	void CzGeometry::generateRoundedRect(float width, float height, CzColour& colour, float radius)
+
+ @brief	Geberates a circle geometry
+
+ @param [in]	width		Width of rect
+ @param [in]	height		Height of rect
+ @param [in]	colour		Colour of circle
+ @param [in]	radius		Corner radius
+ */
+
+void CzGeometry::generateRoundedRect(float width, float height, CzColour& colour, float radius)
+{
+    int resolution = (int)((radius / 2) + 1);
+	int nv = 12 + (resolution + 2) * 4;
+	int ni = 6 * 3 + 4 * resolution * 3;
+
+	// Allocate space for geometry data
+	SAFE_DELETE_ARRAY(Verts)
+	SAFE_DELETE_ARRAY(Colours)
+	SAFE_DELETE_ARRAY(UVs)
+	SAFE_DELETE_ARRAY(Indices)
+	Verts = new CzVec2[nv]();
+	Colours = new CzColour[nv]();
+	VertCount = nv;
+	Indices = new uint16[ni];
+	IndicesCount = ni;
+	FaceCount = ni / 3;
+	Type = PrimType_TriList;
+
+    float w = width / 2.0f;
+    float h = height / 2.0f;
+    if (radius < 0)
+        radius = 1.0f;
+    if (radius > w)
+        radius = w;
+    if (radius > h)
+        radius = h;
+    float x1 = -w;
+    float x2 = -w + radius;
+    float x3 = w - radius;
+    float x4 = w;
+    float y1 = -h;
+    float y2 = -h + radius;
+    float y3 = h - radius;
+    float y4 = h;
+
+	CzVec2* tv = Verts;
+	CzColour* cv = Colours;
+	tv->x = x2;
+	tv->y = y1;
+	tv++;
+	tv->x = x3;
+	tv->y = y1;
+	tv++;
+	tv->x = x3;
+	tv->y = y4;
+	tv++;
+	tv->x = x2;
+	tv->y = y4;
+	tv++;
+
+	tv->x = x1;
+	tv->y = y2;
+	tv++;
+	tv->x = x2;
+	tv->y = y2;
+	tv++;
+	tv->x = x2;
+	tv->y = y3;
+	tv++;
+	tv->x = x1;
+	tv->y = y3;
+	tv++;
+
+	tv->x = x3;
+	tv->y = y2;
+	tv++;
+	tv->x = x4;
+	tv->y = y2;
+	tv++;
+	tv->x = x4;
+	tv->y = y3;
+	tv++;
+	tv->x = x3;
+	tv->y = y3;
+	tv++;
+
+	for (int t = 0; t < nv; t++)
+	{
+		cv->r = colour.r;
+		cv->g = colour.g;
+		cv->b = colour.b;
+		cv->a = colour.a;
+		cv++;
+	}
+
+	// Set face indices
+	uint16* ind = Indices;
+	int index = 0;
+	for (int t = 0; t < 3; t++)
+	{
+		*ind++ = index;
+		*ind++ = index + 1;
+		*ind++ = index + 2;
+		*ind++ = index;
+		*ind++ = index + 2;
+		*ind++ = index + 3;
+		index += 4;
+	}
+
+    float d2r = (2 * PI) / 360.0f;
+    float da = 90.0f / (float)resolution * d2r;
+
+    // Add top left corner vertices
+    float start = 90.0f * d2r;
+	tv->x = x2;
+	tv->y = y2;
+	tv++;
+    for (int i = 0; i < resolution + 1; i++)
+    {
+		tv->x = x2 + radius * CzMath::cos(start);
+		tv->y = y2 - radius * CzMath::sin(start);
+		tv++;
+        start += da;
+    }
+
+    // Add bottom left corner vertices
+    start = 180.0f * d2r;
+	tv->x = x2;
+	tv->y = y3;
+	tv++;
+    for (int i = 0; i < resolution + 1; i++)
+    {
+		tv->x = x2 + radius * CzMath::cos(start);
+		tv->y = y3 - radius * CzMath::sin(start);
+		tv++;
+        start += da;
+    }
+
+    // Add bottom right corner vertices
+    start = 270.0f * d2r;
+	tv->x = x3;
+	tv->y = y3;
+	tv++;
+    for (int i = 0; i < resolution + 1; i++)
+    {
+		tv->x = x3 + radius * CzMath::cos(start);
+		tv->y = y3 - radius * CzMath::sin(start);
+		tv++;
+        start += da;
+    }
+
+    // Add top right corner vertices
+    start = 0 * d2r;
+	tv->x = x3;
+	tv->y = y2;
+	tv++;
+    for (int i = 0; i < resolution + 1; i++)
+    {
+		tv->x = x3 + radius * CzMath::cos(start);
+		tv->y = y2 - radius * CzMath::sin(start);
+		tv++;
+        start += da;
+    }
+
+    // Add corner point indices
+    for (int t = 0; t < 4; t++)
+    {
+        for (int i = 0; i < resolution; i++)
+        {
+			*ind++ = index;
+			*ind++ = index + i + 2;
+			*ind++ = index + i + 1;
+        }
+        index += resolution + 2;
+    }
+}
+
+/**
+ @fn	void CzGeometry::generateRoundedRectWire(float width, float height, CzColour& colour, float radius, float thickness)
+
+ @brief	Geberates a circle geometry
+
+ @param [in]	width		Width of rect
+ @param [in]	height		Height of rect
+ @param [in]	colour		Colour of circle
+ @param [in]	radius		Corner radius
+ @param [in]	thickness	Wire thickness
+ */
+
+void CzGeometry::generateRoundedRectWire(float width, float height, CzColour& colour, float radius, float thickness)
+{
+    int resolution = (int)(radius / 2) + 1;
+    float r1 = radius - thickness;
+	int nv = 16 + (resolution + 1) * 8;
+	int ni = 6 * 4 + 4 * resolution * 6;
+
+	// Allocate space for geometry data
+	SAFE_DELETE_ARRAY(Verts)
+	SAFE_DELETE_ARRAY(Colours)
+	SAFE_DELETE_ARRAY(UVs)
+	SAFE_DELETE_ARRAY(Indices)
+	Verts = new CzVec2[nv]();
+	Colours = new CzColour[nv]();
+	VertCount = nv;
+	Indices = new uint16[ni];
+	IndicesCount = ni;
+	FaceCount = ni / 3;
+	Type = PrimType_TriList;
+
+    float w = width / 2.0f;
+    float h = height / 2.0f;
+    if (radius < 0)
+        radius = 1.0f;
+    if (radius > w)
+        radius = w;
+    if (radius > h)
+        radius = h;
+    float x1 = -w + radius;
+    float x2 = x1 + width - radius * 2;
+    float x3 = -w;
+    float x4 = -w + thickness;
+    float x5 = w - thickness;
+    float x6 = w;
+    float y1 = -h;
+    float y2 = -h + thickness;
+    float y3 = -h + radius;
+    float y4 = y3 + height - radius * 2;
+    float y5 = h - thickness;
+    float y6 = h;
+
+	CzVec2* tv = Verts;
+	CzColour* cv = Colours;
+	tv->x = x1;
+	tv->y = y1;
+	tv++;
+	tv->x = x2;
+	tv->y = y1;
+	tv++;
+	tv->x = x2;
+	tv->y = y2;
+	tv++;
+	tv->x = x1;
+	tv->y = y2;
+	tv++;
+
+	tv->x = x3;
+	tv->y = y3;
+	tv++;
+	tv->x = x4;
+	tv->y = y3;
+	tv++;
+	tv->x = x4;
+	tv->y = y4;
+	tv++;
+	tv->x = x3;
+	tv->y = y4;
+	tv++;
+
+	tv->x = x5;
+	tv->y = y3;
+	tv++;
+	tv->x = x6;
+	tv->y = y3;
+	tv++;
+	tv->x = x6;
+	tv->y = y4;
+	tv++;
+	tv->x = x5;
+	tv->y = y4;
+	tv++;
+
+	tv->x = x1;
+	tv->y = y5;
+	tv++;
+	tv->x = x2;
+	tv->y = y5;
+	tv++;
+	tv->x = x2;
+	tv->y = y6;
+	tv++;
+	tv->x = x1;
+	tv->y = y6;
+	tv++;
+
+	for (int t = 0; t < nv; t++)
+	{
+		cv->r = colour.r;
+		cv->g = colour.g;
+		cv->b = colour.b;
+		cv->a = colour.a;
+		cv++;
+	}
+
+	// Set face indices
+	uint16* ind = Indices;
+	int index = 0;
+	for (int t = 0; t < 4; t++)
+	{
+		*ind++ = index;
+		*ind++ = index + 1;
+		*ind++ = index + 2;
+		*ind++ = index;
+		*ind++ = index + 2;
+		*ind++ = index + 3;
+		index += 4;
+	}
+
+    x2 = -w + radius;
+    x3 = w - radius;
+    y2 = -h + radius;
+    y3 = h - radius;
+
+    float d2r = (2 * PI) / 360.0f;
+    float da = 90.0f / (float)resolution * d2r;
+
+    // Add top left corner vertices
+    float start = 90.0f * d2r;
+    for (int i = 0; i < resolution + 1; i++)
+    {
+		tv->x = x2 + radius * CzMath::cos(start);
+		tv->y = y2 - radius * CzMath::sin(start);
+		tv++;
+		tv->x = x2 + r1 * CzMath::cos(start);
+		tv->y = y2 - r1 * CzMath::sin(start);
+		tv++;
+        start += da;
+    }
+
+    // Add bottom left corner vertices
+    start = 180.0f * d2r;
+    for (int i = 0; i < resolution + 1; i++)
+    {
+		tv->x = x2 + radius * CzMath::cos(start);
+		tv->y = y3 - radius * CzMath::sin(start);
+		tv++;
+		tv->x = x2 + r1 * CzMath::cos(start);
+		tv->y = y3 - r1 * CzMath::sin(start);
+		tv++;
+        start += da;
+    }
+
+    // Add bottom right corner vertices
+    start = 270.0f * d2r;
+    for (int i = 0; i < resolution + 1; i++)
+    {
+		tv->x = x3 + radius * CzMath::cos(start);
+		tv->y = y3 - radius * CzMath::sin(start);
+		tv++;
+		tv->x = x3 + r1 * CzMath::cos(start);
+		tv->y = y3 - r1 * CzMath::sin(start);
+		tv++;
+        start += da;
+    }
+
+    // Add top right corner vertices
+    start = 0 * d2r;
+    for (int i = 0; i < resolution + 1; i++)
+    {
+		tv->x = x3 + radius * CzMath::cos(start);
+		tv->y = y2 - radius * CzMath::sin(start);
+		tv++;
+		tv->x = x3 + r1 * CzMath::cos(start);
+		tv->y = y2 - r1 * CzMath::sin(start);
+		tv++;
+        start += da;
+    }
+
+    // Add corner point indices
+    for (int t = 0; t < 4; t++)
+    {
+        for (int i = 0; i < resolution; i++)
+        {
+			*ind++ = index;
+			*ind++ = index + 1;
+			*ind++ = index + 2;
+			*ind++ = index + 1;
+			*ind++ = index + 3;
+			*ind++ = index + 2;
+            index += 2;
+        }
+        index += 2;
+    }
+}
+
+/**
+ @fn	void CzGeometry::generateRoundedRectWire(CzColour& colour, CzVec2* verts, int count, float thickness)
+
+ @brief	Geberates a circle geometry
+
+ @param [in]	colour		Colour of circle
+ @param [in]	verts		Polygon vertices
+ @param [in]	count		Number of vertices in polygon
+ @param [in]	thickness	Wire thickness
+ */
+
+void CzGeometry::generatePolygonWire(CzColour& colour, CzVec2* verts, int count, float thickness)
+{
+    thickness /= 2;
+
+	int nv = (count + 1) * 4;
+	int ni = count * 12;
+
+	// Allocate space for geometry data
+	SAFE_DELETE_ARRAY(Verts)
+	SAFE_DELETE_ARRAY(Colours)
+	SAFE_DELETE_ARRAY(UVs)
+	SAFE_DELETE_ARRAY(Indices)
+	Verts = new CzVec2[nv]();
+	Colours = new CzColour[nv]();
+	VertCount = nv;
+	Indices = new uint16[ni];
+	IndicesCount = ni;
+	FaceCount = ni / 3;
+	Type = PrimType_TriList;
+
+    CzVec2* tv = Verts;
+	int i1 = 0;
+    int i2 = 1;
+    for (int i = 0; i < count + 1; i++)
+    {
+		CzVec2* v1 = verts + i1;
+		CzVec2* v2 = verts + i2;
+        float dx = v2->x - v1->x;
+        float dy = v2->y - v1->y;
+        float d = CzMath::sqrt(dx * dx + dy * dy);
+        float ddx = -dy * thickness / d;
+        float ddy = dx * thickness / d;
+
+        tv->x = -ddx;
+		tv->y = -ddy;
+		tv++;
+        tv->x = ddx;
+		tv->y = ddy;
+		tv++;
+        tv->x = -ddx;
+		tv->y = -ddy;
+		tv++;
+        tv->x = ddx;
+		tv->y = ddy;
+		tv++;
+
+        i1 = i2;
+        i2++;
+        if (i2 >= count) i2 = 0;
+
+    }
+	// Set face indices
+	uint16* ind = Indices;
+	int index = 0;
+    for (int i = 0; i < count; i++)
+    {
+		*ind++ = index;
+		*ind++ = index + 2;
+		*ind++ = index + 1;
+		*ind++ = index + 2;
+		*ind++ = index + 1;
+		*ind++ = index + 3;
+		*ind++ = index + 2;
+		*ind++ = index + 3;
+		*ind++ = index + 4;
+		*ind++ = index + 3;
+		*ind++ = index + 4;
+		*ind++ = index + 5;
+        index += 4;
+    }
+}
 
 

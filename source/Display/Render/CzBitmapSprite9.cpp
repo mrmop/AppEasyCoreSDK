@@ -233,19 +233,22 @@ void CzBitmapSprite9::Draw()
 	if (!BeforeChildren)
 		DrawChildren();
 
-	// Do not render if not visible
-	CzImage* image = Material->Image;
-	if (AccumDepth > 0 && image != NULL && image->getTexture() != NULL)
+	if (!NoDraw)
 	{
-		if (!isClippedByManager(&Sprite9ClipIndices[0], 4))
+		// Do not render if not visible
+		CzImage* image = Material->Image;
+		if (AccumDepth > 0 && image != NULL && image->getTexture() != NULL)
 		{
-			if (UVsDirty)
-				RebuildUVList();
+			if (!isClippedByManager(&Sprite9ClipIndices[0], 4))
+			{
+				if (UVsDirty)
+					RebuildUVList();
 
-//			if (Manager != NULL &&  Manager->getBatching())
-//				PLATFORM_RENDER->AddPrimtives(Prim, Material, 1, true);
-//			else
-			PLATFORM_RENDER->DrawPrimitives(Prim, Material, 1, true);
+//				if (Manager != NULL &&  Manager->getBatching())
+//					PLATFORM_RENDER->AddPrimtives(Prim, Material, 1, true);
+//				else
+				PLATFORM_RENDER->DrawPrimitives(Prim, Material, 1, true);
+			}
 		}
 	}
 

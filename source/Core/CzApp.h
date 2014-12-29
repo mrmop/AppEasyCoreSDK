@@ -19,7 +19,7 @@
 
  @brief	Current AppEasy Version.
  */
-#define	CZ_VERSION		0x00410
+#define	CZ_VERSION		0x00420
 
 #include "CzUtil.h"
 #include "CzActor.h"

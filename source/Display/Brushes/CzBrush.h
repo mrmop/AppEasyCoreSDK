@@ -131,8 +131,10 @@ class CzBrushImage : public IzBrush
 	// Properties
 protected:
 	CzImage*			Image;					// Image used to render this brush
-	CzIRect				SrcRect;				// Rectangular area od source image used to ggenerate UV coordinates
+	CzIRect				SrcRect;				// Rectangular area of source image used to generate UV coordinates
 	CzVec2*				UVList;					// UVList, if present then SrcRect is ignored
+	CzIRect*			Frames;					// A collection of Srcrects that can be used to animate the brush
+	int					NumFrames;				// Number of frames in the animation
 public:
 	void				setImage(CzImage* image)				{ Image = image; }
 	CzImage*			getImage()								{ return Image; }
@@ -141,13 +143,18 @@ public:
 	CzIRect				getSrcRect() const						{ return SrcRect; }
 	void				setUVList(CzVec2* uvs)					{ SAFE_DELETE_ARRAY(UVList); UVList = uvs; }
 	CzVec2*				getUVList()								{ return UVList; }
+	void				setFrames(CzIRect* frames)				{ Frames = frames; }
+	CzIRect*			getFrames()								{ return Frames; }
+	void				setNumFrames(int num_frames)			{ NumFrames = num_frames; }
+	int					getNumFrames() const					{ return NumFrames; }
 	// Properties End
 protected:
 
 public:
-	CzBrushImage() : IzBrush(), Image(NULL), UVList(NULL) { setBrushType(BT_Image); }
+	CzBrushImage() : IzBrush(), Image(NULL), UVList(NULL), Frames(NULL), NumFrames(0) { setBrushType(BT_Image); }
 	~CzBrushImage()
 	{
+		SAFE_DELETE_ARRAY(Frames);
 		SAFE_DELETE_ARRAY(UVList);
 	}
 

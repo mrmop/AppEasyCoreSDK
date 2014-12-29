@@ -161,21 +161,24 @@ void CzBitmapSprite::setSrcTiled(bool tiled)
 void CzBitmapSprite::setFromBrush(CzBrushImage* brush)
 {
 	Brush = brush;
-	Material->Image = brush->getImage();
-	CzVec2* uvs = brush->getUVList();
-	if (uvs != NULL)
+	if (brush != NULL)
 	{
-		setUVList(uvs, 0, Prim->VertCount);
-		UVsDirty = false;
-	}
-	else
-	{
-		CzIRect rect = brush->getSrcRect();
-		SrcX = rect.x;
-		SrcY = rect.y;
-		SrcWidth = rect.w;
-		SrcHeight = rect.h;
-		UVsDirty = true;
+		Material->Image = brush->getImage();
+		CzVec2* uvs = brush->getUVList();
+		if (uvs != NULL)
+		{
+			setUVList(uvs, 0, Prim->VertCount);
+			UVsDirty = false;
+		}
+		else
+		{
+			CzIRect rect = brush->getSrcRect();
+			SrcX = rect.x;
+			SrcY = rect.y;
+			SrcWidth = rect.w;
+			SrcHeight = rect.h;
+			UVsDirty = true;
+		}
 	}
 }
 
@@ -267,25 +270,29 @@ void CzBitmapSprite::Draw()
 	if (!BeforeChildren)
 		DrawChildren();
 
-	// Do not render if not visible
-	CzImage* image = Material->Image;
-	if (AccumDepth > 0 && image != NULL && image->getTexture() != NULL)
+	if (!NoDraw)
 	{
-		if (!isClippedByManager(NULL, Prim->VertCount))
+		// Do not render if not visible
+		CzImage* image = Material->Image;
+		bool can_render = (image != NULL && image->getTexture()) || image == NULL;
+		if (AccumDepth > 0 && can_render)
 		{
-			if (UVsDirty)
-				RebuildUVList();
+			if (!isClippedByManager(NULL, Prim->VertCount))
+			{
+				if (UVsDirty)
+					RebuildUVList();
 
-			if (Manager != NULL && Manager->getBatching() && Prim->VertCount == 4)
-				PLATFORM_RENDER->AddPrimtives(Prim, Material, 1, true);
-			else
-				PLATFORM_RENDER->DrawPrimitives(Prim, Material, 1, true);
+				if (Manager != NULL && Manager->getBatching() && Prim->VertCount == 4)
+					PLATFORM_RENDER->AddPrimtives(Prim, Material, 1, true);
+				else
+					PLATFORM_RENDER->DrawPrimitives(Prim, Material, 1, true);
+			}
 		}
-	}
 #if defined (_DEBUG_)
-	else
-		CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "CzBitmapSprite - Image is not available!");
+		else
+			CzDebug::Log(CZ_DEBUG_CHANNEL_INFO, "CzBitmapSprite - Image is not available!");
 #endif // _DEBUG_
+	}
 
 	if (BeforeChildren)
 		DrawChildren();
@@ -306,27 +313,33 @@ void CzBitmapSprite::setGeometry(CzGeometry* geom)
 	// If UV's are missing from geometry then calculate them
 	if (geom->UVs == NULL)
 	{
-		CzImage* image = Material->Image;
-		float bw = (float)image->getWidth() / SrcTileX;
-		float bh = (float)image->getHeight() / SrcTileY;
-		CzVec2* uvs = Prim->UVs;
-		CzVec2* v = Prim->Verts;
 		float min_x, max_x;
 		float min_y, max_y;
 		geom->CalculateDimensions(min_x, max_x, min_y, max_y);
-		float dx = max_x - min_x;
-		float dy = max_y - min_y;
-		for (int t = 0; t < geom->VertCount; t++)
-		{
-			float tu = (v->x - min_x) / dx;
-			float tv = (v->y - min_y) / dy;
-			uvs->x = (((float)SrcX + (float)SrcWidth * tu)) / bw;
-			uvs->y = (((float)SrcY + (float)SrcHeight * tv)) / bh;
-			uvs++;
-			v++;
-		}
+		calculateVVs(min_x, max_x, min_y, max_y);
 	}
-	
+}
+
+void CzBitmapSprite::calculateVVs(float min_x, float max_x, float min_y, float max_y)
+{
+	CzImage* image = Material->Image;
+	if (image == NULL)
+		return;
+	float bw = (float)image->getWidth() / SrcTileX;
+	float bh = (float)image->getHeight() / SrcTileY;
+	CzVec2* uvs = Prim->UVs;
+	CzVec2* v = Prim->Verts;
+	float dx = max_x - min_x;
+	float dy = max_y - min_y;
+	for (int t = 0; t < Prim->VertCount; t++)
+	{
+		float tu = (v->x - min_x) / dx;
+		float tv = (v->y - min_y) / dy;
+		uvs->x = (((float)SrcX + (float)SrcWidth * tu)) / bw;
+		uvs->y = (((float)SrcY + (float)SrcHeight * tv)) / bh;
+		uvs++;
+		v++;
+	}
 }
 
 void CzBitmapSprite::setCounts(int vertices, int indices)

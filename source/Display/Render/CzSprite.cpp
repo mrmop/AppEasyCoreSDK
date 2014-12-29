@@ -17,6 +17,7 @@
 #include "CzRender.h"
 #include "CzActor.h"
 #include "CzSpriteManager.h"
+#include "CzMath.h"
 
 uint16 CzSprite::SpriteIndices[] = { 0, 3, 1, 2 };
 
@@ -549,6 +550,7 @@ void CzSprite::Init(int vertex_count)
 	Orphan = false;
 	IgnoreCamera = false;
 	Anchor = Centre;
+	NoDraw = false;
 }
 
 /**
@@ -624,10 +626,10 @@ void CzSprite::setGeometry(CzGeometry* geom)
 			Prim->Colours[t] = geom->Colours[t];
 		else
 		{
-			Prim->Colours[t].r = 255;
-			Prim->Colours[t].g = 255;
-			Prim->Colours[t].b = 255;
-			Prim->Colours[t].a = 255;
+			Prim->Colours[t].r = Colour.r;
+			Prim->Colours[t].g = Colour.g;
+			Prim->Colours[t].b = Colour.b;
+			Prim->Colours[t].a = Colour.a;
 		}
 	}
 	for (int t = 0; t < geom->IndicesCount; t++)
@@ -635,6 +637,7 @@ void CzSprite::setGeometry(CzGeometry* geom)
 
 	Geometry = geom;
 }
+
 
 /**
  @fn	bool CzSprite::HitTest(float x, float y)
@@ -675,32 +678,70 @@ bool CzSprite::HitTestNoClip(float x, float y)
 {
 	int start = 0;
 	int nf = Prim->FaceCount;
-	int nv = Prim->VertCount / nf;
-	CzVec2* tv = Prim->Verts;
-	for (int f = 0; f < nf; f++)
+	if (Actor->getRenderAs() == 0)
 	{
-		bool failed = false;
-		int i1 = start;
-		int i2 = start + nv - 1;
-		for (int t = 0; t < nv; t++)
+		int nv = Prim->VertCount / nf;
+		CzVec2* tv = Prim->Verts;
+		for (int f = 0; f < nf; f++)
 		{
-			float x0 = tv[i1].x - tv[i2].x;
-			float y0 = tv[i1].y - tv[i2].y;
-			float x1 = x - tv[i2].x;
-			float y1 = y - tv[i2].y;
-
-			if ((x1 * y0 - x0 * y1) >= 0)
+			bool failed = false;
+			int i1 = start;
+			int i2 = start + nv - 1;
+			for (int t = 0; t < nv; t++)
 			{
-				failed = true;
-				break;
-			}
+				float x0 = tv[i1].x - tv[i2].x;
+				float y0 = tv[i1].y - tv[i2].y;
+				float x1 = x - tv[i2].x;
+				float y1 = y - tv[i2].y;
 
-			i2 = i1;
-			i1++;
+				if ((x1 * y0 - x0 * y1) >= 0)
+				{
+					failed = true;
+					break;
+				}
+
+				i2 = i1;
+				i1++;
+			}
+			if (!failed)
+				return true;
+			start += nv;
 		}
-		if (!failed)
-			return true;
-		start += nv;
+	}
+	else
+	{
+		int nv = 3;
+		if (Prim->Type == PrimType_QuadList || Prim->Type == PrimType_QuadStrip)
+			nv = 4;
+
+		CzVec2* tv = Prim->Verts;
+		for (int f = 0; f < nf; f++)
+		{
+			bool failed = false;
+			int i1 = start;
+			int i2 = start + nv - 1;
+			for (int t = 0; t < nv; t++)
+			{
+				int a = Prim->Indices[i1];
+				int b = Prim->Indices[i2];
+				float x0 = tv[a].x - tv[b].x;
+				float y0 = tv[a].y - tv[b].y;
+				float x1 = x - tv[b].x;
+				float y1 = y - tv[b].y;
+
+				if ((x1 * y0 - x0 * y1) <= 0)
+				{
+					failed = true;
+					break;
+				}
+
+				i2 = i1;
+				i1++;
+			}
+			if (!failed)
+				return true;
+			start += nv;
+		}
 	}
 
 	return false;

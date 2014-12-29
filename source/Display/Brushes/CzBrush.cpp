@@ -30,6 +30,7 @@ int IzBrush::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 	CzString*		name = NULL;
 	CzString*		image_name = NULL;
 	CzString*		uvs = NULL;
+	CzString*		rect_frames = NULL;
 	CzIRect			rect = CzIRect(0, 0, 0, 0);
 	CzIRect			scale_area = CzIRect(0, 0, 0, 0);
 	CzString*		condition = NULL;
@@ -83,6 +84,9 @@ int IzBrush::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 			if (!(*it)->getValueAsRect(rect))
 				CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Brush - Invalid value for SrcRect, expected rect", DebugInfo.c_str());
 		}
+		else
+		if (attrib_hash == CzHashes::RectFrames_Hash)
+			rect_frames = &(*it)->getValue();
 		else
 		if (attrib_hash == CzHashes::UV_Hash)
 			uvs = &(*it)->getValue();
@@ -236,6 +240,29 @@ int IzBrush::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode*
 			else
 			{
 				CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Brush - Only image brush supports UV's - ", image_name->c_str(), DebugInfo.c_str());
+			}
+		}
+		if (rect_frames != NULL)
+		{
+			if (type == BT_Image)
+			{
+				int count = rect_frames->getAsListOfFloat(CzXmlTools::FloatListPool) >> 2;
+				CzIRect* rects = new CzIRect[count]();
+
+				int index = 0;
+				for (int t = 0; t < count; t++)
+				{
+					rects[t].x = CzXmlTools::FloatListPool[index++];
+					rects[t].y = CzXmlTools::FloatListPool[index++];
+					rects[t].w = CzXmlTools::FloatListPool[index++];
+					rects[t].h = CzXmlTools::FloatListPool[index++];
+				}
+				((CzBrushImage*)brush)->setFrames(rects);
+				((CzBrushImage*)brush)->setNumFrames(count);
+			}
+			else
+			{
+				CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "Brush - Only image brush supports rect animations - ", image_name->c_str(), DebugInfo.c_str());
 			}
 		}
 	}

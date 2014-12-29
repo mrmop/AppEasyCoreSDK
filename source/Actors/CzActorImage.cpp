@@ -910,6 +910,14 @@ void CzActorImage::SetFromBrush(IzBrush* brush, bool resize)
 
 void CzActorImage::setGeometry(CzGeometry* geom)
 {
+	if (Geometry != NULL)
+	{
+		if (Geometry->getParent() == NULL)
+		{
+			delete Geometry;
+			Geometry = NULL;
+		}
+	}
 	if (Visual->getSpriteType() == CzSprite::ST_9Patch)
 	{
 		Geometry = NULL;
@@ -922,6 +930,33 @@ void CzActorImage::setGeometry(CzGeometry* geom)
 	}
 }
 
+
+bool CzActorImage::Update(float dt)
+{
+	if (CzActor::Update(dt))
+	{
+		if (Visual != NULL && FramePlaybackSpeed != 0)
+		{
+			IzBrush* brush = Visual->getBrush();
+			if (brush != NULL && brush->getBrushType() == IzBrush::BT_Image)
+			{
+				float pf = CurrentFrame;
+				CurrentFrame += FramePlaybackSpeed * dt;
+				if (CurrentFrame >= (float)((CzBrushImage*)brush)->getNumFrames())
+					CurrentFrame -= (float)((CzBrushImage*)brush)->getNumFrames();
+				if ((int)pf != (int)CurrentFrame)
+				{
+					int frame = (int)CurrentFrame;
+					if (AnimFrames != NULL)
+						frame = AnimFrames[frame];
+					((CzBitmapSprite*)Visual)->setSrcRect(((CzBrushImage*)brush)->getFrames() + frame);
+				}
+			}
+		}
+		return true;
+	}
+	return false;
+}
 
 /**
  @fn	bool CzActorImage::UpdateVisual()
@@ -1149,9 +1184,13 @@ int CzActorImage::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXml
 	eCzAlphaMode alpha_mode = AlphaMode_Blend;
 	CzString*	anchor = NULL;
 	CzString*	geometry = NULL;
+	CzString*	anim_frames = NULL;
 	CzVec2		com(0, 0);
 	bool		sensor = false;
 	CzString*	box2dmaterial_name = NULL;
+	bool		filled = true;
+	float		corner_radius = 0;
+	float		thickness = 1;
 
 	for (CzXmlNode::_AttribIterator it = node->attribs_begin(); it != node->attribs_end(); it++)
 	{
@@ -1184,8 +1223,14 @@ int CzActorImage::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXml
 			tiled_set = true;
 		}
 		else
+		if (name_hash == CzHashes::PlaybackSpeed_Hash)
+			FramePlaybackSpeed = (*it)->getValueAsFloat();
+		else
 		if (name_hash == CzHashes::Anchor_Hash)
 			anchor = &(*it)->getValue();
+		else
+		if (name_hash == CzHashes::AnimFrames_Hash)
+			anim_frames = &(*it)->getValue();
 		else
 		if (name_hash == CzHashes::FlipX_Hash)
 		{
@@ -1256,6 +1301,18 @@ int CzActorImage::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXml
 		else
 		if (name_hash == CzHashes::Geometry_Hash)
 			geometry = &(*it)->getValue();
+		else
+		if (name_hash == CzHashes::RenderAs_Hash)
+			RenderAs = (*it)->getValueAsInt();
+		else
+		if (name_hash == CzHashes::Filled_Hash)
+			filled = (*it)->getValueAsBool();
+		else
+		if (name_hash == CzHashes::CornerRadius_Hash)
+			corner_radius = (*it)->getValueAsFloat();
+		else
+		if (name_hash == CzHashes::Thickness_Hash)
+			thickness = (*it)->getValueAsFloat();
 	}
 
 	// Check for geometry
@@ -1316,7 +1373,7 @@ int CzActorImage::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXml
 	else
 	{
 		Init(image, (int)size.x, (int)size.y);
-		visual = (CzBitmapSprite*)Visual;;
+		visual = (CzBitmapSprite*)Visual;
 		if (src_rect.w != 0)
 		{
 			if (Visual != NULL)
@@ -1339,6 +1396,39 @@ int CzActorImage::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXml
 			if (anchor->getHash() != CzHashes::centre_Hash)
 				visual->setAnchor(CzSprite::TopLeft);
 		}
+		if (RenderAs != 0)
+		{
+			if (RenderAs == 1)
+			{
+				Geometry = new CzGeometry();
+				if (filled)
+					Geometry->generateEllipse((float)Size.x / 2, (float)Size.y / 2, 0, 360, 0, OriginalColour);
+				else
+					Geometry->generateEllipseWire((float)Size.x / 2, (float)Size.y / 2, 0, 360, 0, OriginalColour, thickness);
+				visual->setGeometry(Geometry);
+			}
+			else
+			if (RenderAs == 2)
+			{
+				Geometry = new CzGeometry();
+				if (corner_radius == 0)
+				{
+					if (filled)
+						Geometry->generateRect((float)Size.x, (float)Size.y, OriginalColour);
+					else
+						Geometry->generateRectWire((float)Size.x, (float)Size.y, OriginalColour, thickness);
+				}
+				else
+				{
+					if (filled)
+						Geometry->generateRoundedRect((float)Size.x, (float)Size.y, OriginalColour, corner_radius);
+					else
+						Geometry->generateRoundedRectWire((float)Size.x, (float)Size.y, OriginalColour, corner_radius, thickness);
+				}
+				visual->setGeometry(Geometry);
+			}
+		}
+		else
 		if (Geometry != NULL)
 		{
 			if (visual->getSpriteType() == CzSprite::ST_9Patch)
@@ -1347,7 +1437,30 @@ int CzActorImage::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXml
 				CzDebug::Log(CZ_DEBUG_CHANNEL_WARNING, "ActorImage - Geometry is not compatible with 9-patch rendering, geometry was ignored - ", geometry->c_str(), DebugInfo.c_str());
 			}
 			else
-				visual->setGeometry(Geometry);
+			{
+				if (!filled)
+				{
+					CzGeometry* geom = new CzGeometry();
+					geom->generatePolygonWire(OriginalColour, Geometry->Verts, Geometry->VertCount, thickness);
+					visual->setGeometry(geom);
+				}
+				else
+					visual->setGeometry(Geometry);
+			}
+		}
+
+		if (image == NULL && Geometry == NULL)
+			Visual->setNoDraw(true);
+
+	}
+
+	if (anim_frames != NULL)
+	{
+		int count = anim_frames->getAsListOfInt(CzXmlTools::IntListPool);
+		AnimFrames = new int [count];
+		for (int t = 0; t < count; t++)
+		{
+			AnimFrames[t] = CzXmlTools::IntListPool[t];
 		}
 	}
 

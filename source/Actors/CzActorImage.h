@@ -67,6 +67,9 @@ class CzActorImage : public CzActor
 	// Properties
 protected:
 	CzGeometry*			Geometry;				///< Visual geometry
+	float				CurrentFrame;			///< Current frame of bitmap animation
+	float				FramePlaybackSpeed;		///< Bitmap frame animation playback speed
+	int*				AnimFrames;				///< Bitmap animation frames
 public:
 	bool				setProperty(unsigned int property_name, const CzXomlProperty& data, bool delta);
 	bool				setProperty(unsigned int property_name, const CzString& data, bool delta);
@@ -79,8 +82,16 @@ protected:
 	bool				UpdateBinding(unsigned int property_name, CzXomlVariable* var);
 	void				UpdateAspect();
 public:
-	CzActorImage() : CzActor(), Geometry(NULL)	{ setActualClassType("actorimage"); }
-	virtual ~CzActorImage()			{}
+	CzActorImage() : CzActor(), Geometry(NULL), CurrentFrame(-0.001f), FramePlaybackSpeed(0), AnimFrames(0)	{ setActualClassType("actorimage"); }
+	virtual ~CzActorImage()
+	{
+		SAFE_DELETE_ARRAY(AnimFrames);
+		if (Geometry != NULL)
+		{
+			if (Geometry->getParent() == NULL)
+				delete Geometry;
+		}
+	}
 
 	virtual bool		Init(IzBrush* brush, int width, int height);
 	virtual bool		Init(CzImage* image, int width, int height);
@@ -95,6 +106,13 @@ public:
 	virtual void		SetFromBrush(IzBrush* brush, bool resize = true);
 	CzGeometry*			getGeometry()			{ return Geometry; }
 	void				setGeometry(CzGeometry* geom);
+	void				setCurrentFrame(float frame) { CurrentFrame = frame; }
+	float				getCurrentFrame() const { return CurrentFrame; }
+	void				setFramePlaybackSpeed(float speed) { FramePlaybackSpeed = speed; }
+	float				getFramePlaybackSpeed() const { return FramePlaybackSpeed; }
+
+	// Update the actor
+	bool				Update(float dt);
 
 	// Event handlers
 	virtual void		NotifyOrientationChange(CzScene::eOrientation old_orientation, CzScene::eOrientation new_orientation);

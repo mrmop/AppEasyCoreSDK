@@ -114,13 +114,16 @@ void CzPlatformRender::DrawPrimitives(CzRenderPrim* prims, CzRenderMaterial* mat
 			IwGxSetColStream(NULL);
 		IwGxSetNormStream(NULL);
 
-		CzTexture texture = materials->Image->getTexture();
-		CIwTexture* mt = static_cast<CIwTexture*>(texture);
-		bool filter;
-		if (materials->Image->isFilterSet())
-			filter = mt->GetFiltering();
-		else
-			filter = materials->Filter;
+		bool filter = materials->Filter;
+		CzTexture texture = NULL;
+		CIwTexture* mt = NULL;
+		if (materials->Image != NULL)
+		{
+			texture = materials->Image->getTexture();
+			mt = static_cast<CIwTexture*>(texture);
+			if (materials->Image->isFilterSet())
+				filter = mt->GetFiltering();
+		}
 
 		// Only create new render material if something important has changed
 		if (texture != CurrentTexture || CurrentAlphaMode != materials->AlphaMode || CurrentFilter != filter || CurrentTexture == NULL || CurrentTiled != materials->Tiled)
@@ -173,13 +176,16 @@ void CzPlatformRender::DrawPrimitives(CzRenderPrim3* prims, CzRenderMaterial* ma
 		IwGxSetColStream((CIwColour*)prims->Colours);
 		IwGxSetNormStream((CIwFVec3*)prims->Normals);
 
-		CzTexture texture = materials->Image->getTexture();
-		CIwTexture* mt = static_cast<CIwTexture*>(texture);
-		bool filter;
-		if (materials->Image->isFilterSet())
-			filter = mt->GetFiltering();
-		else
-			filter = materials->Filter;
+		bool filter = materials->Filter;
+		CzTexture texture = NULL;
+		CIwTexture* mt = NULL;
+		if (materials->Image != NULL)
+		{
+			texture = materials->Image->getTexture();
+			mt = static_cast<CIwTexture*>(texture);
+			if (materials->Image->isFilterSet())
+				filter = mt->GetFiltering();
+		}
 
 		// Only create new render material if something important has changed
 		if (texture != CurrentTexture || CurrentAlphaMode != materials->AlphaMode || CurrentFilter != filter || CurrentTexture == NULL || CurrentTiled != materials->Tiled)

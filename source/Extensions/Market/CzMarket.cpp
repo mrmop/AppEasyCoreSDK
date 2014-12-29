@@ -322,9 +322,7 @@ int CzMarket::LoadFromXoml(IzXomlResource* parent, bool load_children, CzXmlNode
 				}
 				if (attrib_hash == CzHashes::WindowsId_Hash)
 				{
-					if (os == CzDeviceType_WinMobile // wp7.x ?
-						|| os == CzDeviceType_Windows 
-						|| os==CzDeviceType_WP8)
+					if (os == CzDeviceType_WP8 || os == CzDeviceType_WP81 || os == CzDeviceType_WS8 || os == CzDeviceType_WS81)
 						product->ProductID = (*it)->getValue();
 				}
 				else

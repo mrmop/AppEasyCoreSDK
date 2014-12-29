@@ -103,6 +103,14 @@ public:
 	void				CalculateDimensions(float& min_x, float& max_x, float& min_y, float& max_y);
 
 	void				setCounts(int vertices, int indices);
+
+	void				generateEllipse(float radius_x, float radius_y, float start_angle, float end_angle, int resolution, CzColour& colour);
+	void				generateEllipseWire(float radius_x, float radius_y, float start_angle, float end_angle, int resolution, CzColour& colour, float thickness);
+	void				generateRect(float width, float height, CzColour& colour);
+	void				generateRectWire(float width, float height, CzColour& colour, float thickness);
+	void				generateRoundedRect(float width, float height, CzColour& colour, float radius);
+	void				generateRoundedRectWire(float width, float height, CzColour& colour, float radius, float thickness);
+	void				generatePolygonWire(CzColour& colour, CzVec2* verts, int count, float thickness);
 };
 
 /**
