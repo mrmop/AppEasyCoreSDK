@@ -1,4 +1,4 @@
-AppEasy Core SDK v1.0
+AppEasy Core SDK v1.5
 
 Welcome to the AppEasy Core SDK a cross platform game and app engine. AppEasy Core SDK is a cross platform game and application development SDK that enables developers to rapidly create applications for desktop and mobile devices easily using a mixture of XML mark-up language (XOML), Lua and / or C++. 
 
@@ -82,10 +82,6 @@ The AppEasy Core SDK comes complete with:
 - An example game
 - XML schema for XOML
 
-C++ API documentation can be found at http://www.appeasymobile.com/appeasy-api/index.html
+C++ API documentation can be found at http://www.drmop.com/appeasy-api/
 Lua API documentation can be found at http://www.appeasymobile.com/resources/lua-api-reference
 XOML API documentation can be found at http://www.appeasymobile.com/resources/xoml-reference
-
-Whilst free support is not provided, a community support forum is available at http://www.appeasymobile.com/forum/iwgame-engine-appeasy-core
-
- 
